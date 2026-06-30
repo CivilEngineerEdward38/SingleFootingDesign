@@ -1,0 +1,194 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "J:\\APP\\DOTNET 10\\PECC\\SINGLE FOOTING\\SINGLE FOOTING\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{4A96D269-F7D9-4E7B-93E3-F8FCA4DC5CAE}|SINGLE FOOTING\\ACAD API.csproj|j:\\app\\dotnet 10\\pecc\\single footing\\single footing\\single footing\\single footing\\view\\rebarview.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|",
+      "RelativeMoniker": "D:0:0:{4A96D269-F7D9-4E7B-93E3-F8FCA4DC5CAE}|SINGLE FOOTING\\ACAD API.csproj|solutionrelative:single footing\\single footing\\view\\rebarview.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4A96D269-F7D9-4E7B-93E3-F8FCA4DC5CAE}|SINGLE FOOTING\\ACAD API.csproj|j:\\app\\dotnet 10\\pecc\\single footing\\single footing\\single footing\\single footing\\view\\settingview.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|",
+      "RelativeMoniker": "D:0:0:{4A96D269-F7D9-4E7B-93E3-F8FCA4DC5CAE}|SINGLE FOOTING\\ACAD API.csproj|solutionrelative:single footing\\single footing\\view\\settingview.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4A96D269-F7D9-4E7B-93E3-F8FCA4DC5CAE}|SINGLE FOOTING\\ACAD API.csproj|j:\\app\\dotnet 10\\pecc\\single footing\\single footing\\single footing\\single footing\\view\\rebarview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{4A96D269-F7D9-4E7B-93E3-F8FCA4DC5CAE}|SINGLE FOOTING\\ACAD API.csproj|solutionrelative:single footing\\single footing\\view\\rebarview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4A96D269-F7D9-4E7B-93E3-F8FCA4DC5CAE}|SINGLE FOOTING\\ACAD API.csproj|j:\\app\\dotnet 10\\pecc\\single footing\\single footing\\single footing\\single footing\\viewmodel\\settingviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4A96D269-F7D9-4E7B-93E3-F8FCA4DC5CAE}|SINGLE FOOTING\\ACAD API.csproj|solutionrelative:single footing\\single footing\\viewmodel\\settingviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4A96D269-F7D9-4E7B-93E3-F8FCA4DC5CAE}|SINGLE FOOTING\\ACAD API.csproj|j:\\app\\dotnet 10\\pecc\\single footing\\single footing\\single footing\\single footing\\viewmodel\\rebarviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4A96D269-F7D9-4E7B-93E3-F8FCA4DC5CAE}|SINGLE FOOTING\\ACAD API.csproj|solutionrelative:single footing\\single footing\\viewmodel\\rebarviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4A96D269-F7D9-4E7B-93E3-F8FCA4DC5CAE}|SINGLE FOOTING\\ACAD API.csproj|j:\\app\\dotnet 10\\pecc\\single footing\\single footing\\single footing\\single footing\\viewmodel\\ghichuviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4A96D269-F7D9-4E7B-93E3-F8FCA4DC5CAE}|SINGLE FOOTING\\ACAD API.csproj|solutionrelative:single footing\\single footing\\viewmodel\\ghichuviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4A96D269-F7D9-4E7B-93E3-F8FCA4DC5CAE}|SINGLE FOOTING\\ACAD API.csproj|j:\\app\\dotnet 10\\pecc\\single footing\\single footing\\single footing\\single footing\\viewmodel\\mongdonviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4A96D269-F7D9-4E7B-93E3-F8FCA4DC5CAE}|SINGLE FOOTING\\ACAD API.csproj|solutionrelative:single footing\\single footing\\viewmodel\\mongdonviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4A96D269-F7D9-4E7B-93E3-F8FCA4DC5CAE}|SINGLE FOOTING\\ACAD API.csproj|j:\\app\\dotnet 10\\pecc\\single footing\\single footing\\single footing\\single footing\\view\\doc.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{4A96D269-F7D9-4E7B-93E3-F8FCA4DC5CAE}|SINGLE FOOTING\\ACAD API.csproj|solutionrelative:single footing\\single footing\\view\\doc.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4A96D269-F7D9-4E7B-93E3-F8FCA4DC5CAE}|SINGLE FOOTING\\ACAD API.csproj|j:\\app\\dotnet 10\\pecc\\single footing\\single footing\\single footing\\single footing\\view\\windowsinglefooting.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{4A96D269-F7D9-4E7B-93E3-F8FCA4DC5CAE}|SINGLE FOOTING\\ACAD API.csproj|solutionrelative:single footing\\single footing\\view\\windowsinglefooting.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            }
+          ]
+        },
+        {
+          "DockedWidth": 269,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "SettingView.xaml.cs",
+              "DocumentMoniker": "J:\\APP\\DOTNET 10\\PECC\\SINGLE FOOTING\\SINGLE FOOTING\\SINGLE FOOTING\\SINGLE FOOTING\\View\\SettingView.xaml.cs",
+              "RelativeDocumentMoniker": "SINGLE FOOTING\\SINGLE FOOTING\\View\\SettingView.xaml.cs",
+              "ToolTip": "J:\\APP\\DOTNET 10\\PECC\\SINGLE FOOTING\\SINGLE FOOTING\\SINGLE FOOTING\\SINGLE FOOTING\\View\\SettingView.xaml.cs",
+              "RelativeToolTip": "SINGLE FOOTING\\SINGLE FOOTING\\View\\SettingView.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-29T07:13:19.709Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "RebarView.xaml.cs",
+              "DocumentMoniker": "J:\\APP\\DOTNET 10\\PECC\\SINGLE FOOTING\\SINGLE FOOTING\\SINGLE FOOTING\\SINGLE FOOTING\\View\\RebarView.xaml.cs",
+              "RelativeDocumentMoniker": "SINGLE FOOTING\\SINGLE FOOTING\\View\\RebarView.xaml.cs",
+              "ToolTip": "J:\\APP\\DOTNET 10\\PECC\\SINGLE FOOTING\\SINGLE FOOTING\\SINGLE FOOTING\\SINGLE FOOTING\\View\\RebarView.xaml.cs",
+              "RelativeToolTip": "SINGLE FOOTING\\SINGLE FOOTING\\View\\RebarView.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-29T07:13:06.293Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "SettingViewModel.cs",
+              "DocumentMoniker": "J:\\APP\\DOTNET 10\\PECC\\SINGLE FOOTING\\SINGLE FOOTING\\SINGLE FOOTING\\SINGLE FOOTING\\ViewModel\\SettingViewModel.cs",
+              "RelativeDocumentMoniker": "SINGLE FOOTING\\SINGLE FOOTING\\ViewModel\\SettingViewModel.cs",
+              "ToolTip": "J:\\APP\\DOTNET 10\\PECC\\SINGLE FOOTING\\SINGLE FOOTING\\SINGLE FOOTING\\SINGLE FOOTING\\ViewModel\\SettingViewModel.cs",
+              "RelativeToolTip": "SINGLE FOOTING\\SINGLE FOOTING\\ViewModel\\SettingViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-29T07:10:03.957Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "GhiChuViewModel.cs",
+              "DocumentMoniker": "J:\\APP\\DOTNET 10\\PECC\\SINGLE FOOTING\\SINGLE FOOTING\\SINGLE FOOTING\\SINGLE FOOTING\\ViewModel\\GhiChuViewModel.cs",
+              "RelativeDocumentMoniker": "SINGLE FOOTING\\SINGLE FOOTING\\ViewModel\\GhiChuViewModel.cs",
+              "ToolTip": "J:\\APP\\DOTNET 10\\PECC\\SINGLE FOOTING\\SINGLE FOOTING\\SINGLE FOOTING\\SINGLE FOOTING\\ViewModel\\GhiChuViewModel.cs",
+              "RelativeToolTip": "SINGLE FOOTING\\SINGLE FOOTING\\ViewModel\\GhiChuViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-29T07:09:48.258Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "RebarViewModel.cs",
+              "DocumentMoniker": "J:\\APP\\DOTNET 10\\PECC\\SINGLE FOOTING\\SINGLE FOOTING\\SINGLE FOOTING\\SINGLE FOOTING\\ViewModel\\RebarViewModel.cs",
+              "RelativeDocumentMoniker": "SINGLE FOOTING\\SINGLE FOOTING\\ViewModel\\RebarViewModel.cs",
+              "ToolTip": "J:\\APP\\DOTNET 10\\PECC\\SINGLE FOOTING\\SINGLE FOOTING\\SINGLE FOOTING\\SINGLE FOOTING\\ViewModel\\RebarViewModel.cs",
+              "RelativeToolTip": "SINGLE FOOTING\\SINGLE FOOTING\\ViewModel\\RebarViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-29T07:09:39.431Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Doc.xaml",
+              "DocumentMoniker": "J:\\APP\\DOTNET 10\\PECC\\SINGLE FOOTING\\SINGLE FOOTING\\SINGLE FOOTING\\SINGLE FOOTING\\View\\Doc.xaml",
+              "RelativeDocumentMoniker": "SINGLE FOOTING\\SINGLE FOOTING\\View\\Doc.xaml",
+              "ToolTip": "J:\\APP\\DOTNET 10\\PECC\\SINGLE FOOTING\\SINGLE FOOTING\\SINGLE FOOTING\\SINGLE FOOTING\\View\\Doc.xaml",
+              "RelativeToolTip": "SINGLE FOOTING\\SINGLE FOOTING\\View\\Doc.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-06-29T07:09:13.8Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "RebarView.xaml",
+              "DocumentMoniker": "J:\\APP\\DOTNET 10\\PECC\\SINGLE FOOTING\\SINGLE FOOTING\\SINGLE FOOTING\\SINGLE FOOTING\\View\\RebarView.xaml",
+              "RelativeDocumentMoniker": "SINGLE FOOTING\\SINGLE FOOTING\\View\\RebarView.xaml",
+              "ToolTip": "J:\\APP\\DOTNET 10\\PECC\\SINGLE FOOTING\\SINGLE FOOTING\\SINGLE FOOTING\\SINGLE FOOTING\\View\\RebarView.xaml",
+              "RelativeToolTip": "SINGLE FOOTING\\SINGLE FOOTING\\View\\RebarView.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-06-29T07:03:21.328Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "MongDonViewModel.cs",
+              "DocumentMoniker": "J:\\APP\\DOTNET 10\\PECC\\SINGLE FOOTING\\SINGLE FOOTING\\SINGLE FOOTING\\SINGLE FOOTING\\ViewModel\\MongDonViewModel.cs",
+              "RelativeDocumentMoniker": "SINGLE FOOTING\\SINGLE FOOTING\\ViewModel\\MongDonViewModel.cs",
+              "ToolTip": "J:\\APP\\DOTNET 10\\PECC\\SINGLE FOOTING\\SINGLE FOOTING\\SINGLE FOOTING\\SINGLE FOOTING\\ViewModel\\MongDonViewModel.cs",
+              "RelativeToolTip": "SINGLE FOOTING\\SINGLE FOOTING\\ViewModel\\MongDonViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADcAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-29T06:57:38.351Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "WinDowSingleFooting.xaml",
+              "DocumentMoniker": "J:\\APP\\DOTNET 10\\PECC\\SINGLE FOOTING\\SINGLE FOOTING\\SINGLE FOOTING\\SINGLE FOOTING\\View\\WinDowSingleFooting.xaml",
+              "RelativeDocumentMoniker": "SINGLE FOOTING\\SINGLE FOOTING\\View\\WinDowSingleFooting.xaml",
+              "ToolTip": "J:\\APP\\DOTNET 10\\PECC\\SINGLE FOOTING\\SINGLE FOOTING\\SINGLE FOOTING\\SINGLE FOOTING\\View\\WinDowSingleFooting.xaml",
+              "RelativeToolTip": "SINGLE FOOTING\\SINGLE FOOTING\\View\\WinDowSingleFooting.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-06-29T06:55:50.594Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedWidth": 1101,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

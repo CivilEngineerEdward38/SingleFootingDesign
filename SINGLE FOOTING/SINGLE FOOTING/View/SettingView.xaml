@@ -1,0 +1,122 @@
+﻿<UserControl x:Class="ACAD_API.SINGLE_FOOTING.View.SettingView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ACAD_API.SINGLE_FOOTING.ViewModel"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="700"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             x:Name="SettingUC" Background="SeaShell">
+    <UserControl.Resources>
+        <ResourceDictionary Source="/SINGLE FOOTING;component/SINGLE FOOTING/MyResource/Styles.xaml"/>
+    </UserControl.Resources>
+    <Grid>
+        <!--Khai báo lưới 2x2-->
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <!--Kết thúc khai báo lưới 2x2 -->
+
+        <!-- Gruop Box hàng 0 cột 0 Gom lại các thông số về kích thước móng vào một groupbox để dễ quản lý-->
+        <GroupBox Grid.Row="0" Grid.Column="0" Header="Kích thước móng" Margin="5" >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <!--region Bm = Lm -->
+                <TextBlock Grid.Row="0" Text="Bm = Lm" Style="{StaticResource DataGridTextBlockStyle}"/>
+                <TextBox Grid.Row="0" Grid.Column="1" Style="{StaticResource TextBoxStyle}" Text="{Binding SingleFootingModel.SettingModel.BmHm , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat={}{0:F1}}" />
+                <TextBlock Grid.Row="0" Grid.Column="2" Style="{StaticResource DataGridTextBlockStyle}" Text="(m)"/>
+                <!--endregion-->
+                <!--region Hm -->
+                <TextBlock Grid.Row="1" Text="Hm" Style="{StaticResource DataGridTextBlockStyle}"/>
+                <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource TextBoxStyle}" Text="{Binding SingleFootingModel.SettingModel.Hm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat={}{0:F1}}"/>
+                <TextBlock Grid.Row="1" Grid.Column="2" Style="{StaticResource DataGridTextBlockStyle}" Text="(m)"/>
+                <!--endregion-->
+                <!--region d -->
+                <TextBlock Grid.Row="2" Text="d" Style="{StaticResource DataGridTextBlockStyle}"/>
+                <TextBox Grid.Row="2" Grid.Column="1" Style="{StaticResource TextBoxStyle}"  Text="{Binding SingleFootingModel.SettingModel.D, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat={}{0:F1}}"/>
+                <TextBlock Grid.Row="2" Grid.Column="2" Style="{StaticResource DataGridTextBlockStyle}" Text="(m)"/>
+                <!--endregion-->
+                <!--region Bc = Hc -->
+                <TextBlock Grid.Row="3" Text="Bc = Hc" Style="{StaticResource DataGridTextBlockStyle}"/>
+                <TextBox Grid.Row="3" Grid.Column="1" Style="{StaticResource TextBoxStyle}"  Text="{Binding SingleFootingModel.SettingModel.BcHc , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat={}{0:F1}}"/>
+                <TextBlock Grid.Row="3" Grid.Column="2" Style="{StaticResource DataGridTextBlockStyle}" Text="(m)"/>
+                <!--endregion-->
+                <!--region Hb -->
+                <TextBlock Grid.Row="4" Text="Hb" Style="{StaticResource DataGridTextBlockStyle}"/>
+                <TextBox Grid.Row="4" Grid.Column="1" Style="{StaticResource TextBoxStyle}" Text="{Binding SingleFootingModel.SettingModel.Hb  , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat={}{0:F1}}"/>
+                <TextBlock Grid.Row="4" Grid.Column="2" Style="{StaticResource DataGridTextBlockStyle}" Text="(m)"/>
+                <!--endregion-->
+                <!--region Hv -->
+                <TextBlock Grid.Row="5" Text="Hv" Style="{StaticResource DataGridTextBlockStyle}"/>
+                <TextBox Grid.Row="5" Grid.Column="1" Style="{StaticResource TextBoxStyle}" Text="{Binding SingleFootingModel.SettingModel.Hv  , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat={}{0:F1}}"/>
+                <TextBlock Grid.Row="5" Grid.Column="2" Style="{StaticResource DataGridTextBlockStyle}" Text="(m)"/>
+                <!--endregion-->
+                <!--region Tỷ lệ bản vẽ  -->
+                <TextBlock Grid.Row="6" Text="Tỷ lệ bản vẽ " Style="{StaticResource DataGridTextBlockStyle}"/>
+                <ComboBox Grid.Row="6" Grid.Column="1" Style="{StaticResource ComboBoxStyle}" SelectionChanged="ComboBox_SelectionChanged"
+                  ItemsSource="{Binding SingleFootingModel.SettingModel.TyLeBV}" SelectedItem="{Binding SingleFootingModel.SettingModel.ChonTyLe}"/>
+                <TextBlock Grid.Row="6" Grid.Column="2" Style="{StaticResource DataGridTextBlockStyle}"/>
+                <!--endregion-->
+                <!--region Hatch scale -->
+                <TextBlock Grid.Row="7" Text="Hatch sacle" Style="{StaticResource DataGridTextBlockStyle}"/>
+                <TextBox Grid.Row="7" Grid.Column="1" Style="{StaticResource TextBoxStyle}" Text="{Binding SingleFootingModel.SettingModel.HatchScale   , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat={}{0:F1}}"/>
+                <TextBlock Grid.Row="7" Grid.Column="2"/>
+                <!--endregion-->
+                <!--region BTBV Đáy -->
+                <TextBlock Grid.Row="8" Text="BTBV Đáy" Style="{StaticResource DataGridTextBlockStyle}"/>
+                <TextBox Grid.Row="8" Grid.Column="1" Style="{StaticResource TextBoxStyle}" Text="{Binding SingleFootingModel.SettingModel.BTBVDay , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock Grid.Row="8" Grid.Column="2" Style="{StaticResource DataGridTextBlockStyle}" Text="(m)"/>
+                <!--endregion-->
+                <!--region BTBV Khác  -->
+                <TextBlock Grid.Row="9" Text="BTBV khác " Style="{StaticResource DataGridTextBlockStyle}"/>
+                <TextBox Grid.Row="9" Grid.Column="1" Style="{StaticResource TextBoxStyle}"  Text="{Binding SingleFootingModel.SettingModel.BTBVConLai  , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock Grid.Row="9" Grid.Column="2" Style="{StaticResource DataGridTextBlockStyle}" Text="(m)"/>
+                <!--endregion-->
+            </Grid>
+        </GroupBox>
+        <!--Gruop Box hàng 1 Cột 0: Loại móng-->
+        <GroupBox Grid.Row="1" Grid.Column="0" Header="Loại móng" Margin="5">
+            <StackPanel>
+                <!-- Tự động sắp xếp các control, những control thêm vô sẽ tự động nằm ở phí ấu những control trước đó. -->
+                <RadioButton Content="Móng đúng tâm" VerticalAlignment="Center"/>
+                <RadioButton Content="Móng lệch tâm 2 phương" VerticalAlignment="Center"/>
+            </StackPanel>
+        </GroupBox>
+        <!--Gruop box hàng 1 cột gộp -->
+        <GroupBox Grid.Row="0" Grid.Column="1" Grid.RowSpan="2">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Canvas Grid.Row="0" Grid.Column="0" x:Name="MatDungMong" Width="370" Height="280"/>
+                <Canvas Grid.Row="1" Grid.Column="0" x:Name="MatBangMong" Width="370" Height="280"/>
+            </Grid>
+        </GroupBox>
+
+
+
+    </Grid>
+</UserControl>

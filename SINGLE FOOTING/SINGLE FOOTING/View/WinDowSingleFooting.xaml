@@ -1,0 +1,90 @@
+﻿<Window x:Class="ACAD_API.SINGLE_FOOTING.View.WinDowSingleFooting"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ACAD_API.SINGLE_FOOTING.View"
+        mc:Ignorable="d"
+        Title="MongDonWindow" Height="700" Width="832"
+       xmlns:VModel="clr-namespace:ACAD_API.SINGLE_FOOTING.ViewModel"
+        xmlns:view="clr-namespace:ACAD_API.SINGLE_FOOTING.View"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        ShowInTaskbar="True"
+        FontSize="11"
+        FontFamily="Tohoma"
+        WindowStyle="None"
+        AllowsTransparency="True" x:Name="MainWindow"
+        >
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../MyResource/Styles.xaml">
+                    <DataTemplate x:Name="taskBarMVVM" DataType="{x:Type VModel:TaskBarControlViewModel}">
+                        <view:TaskbarControl/>
+                    </DataTemplate>
+                    <DataTemplate x:Name="DocMVMM" DataType="{x:Type VModel:GhiChuViewModel}">
+                        <view:Doc/>
+                    </DataTemplate>
+                    <DataTemplate x:Name="reBarMVVM" DataType="{x:Type VModel:RebarViewModel}">
+                        <view:RebarView/>
+                    </DataTemplate>
+                    <DataTemplate x:Name="settingMVVM" DataType="{x:Type VModel:SettingViewModel}">
+                        <view:SettingView/>
+                    </DataTemplate>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <!--Khai báo grid local-->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+        <!--Khai báo grid local-->
+        <ContentControl Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="{Binding TaskBarControlViewModel}">
+        </ContentControl>
+        <Border Grid.Row="1" Grid.Column="0">
+            <StackPanel>
+                <ListView x:Name="MenuSelectionChanged">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding ChuyenManHinhCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <!--#region Form -->
+                    <ListViewItem>
+                        <DockPanel>
+                            <Image/>
+                            <TextBlock Text="Hình dạng móng" Style="{Binding DataGridTextBlockStyle}"/>
+                        </DockPanel>
+                    </ListViewItem>
+                    <!--#endregion-->
+                    <!--#region rebar arranganement -->
+                    <ListViewItem>
+                        <DockPanel>
+                            <Image/>
+                            <TextBlock Text="Bố trí thép" Style="{Binding DataGridTextBlockStyle}"/>
+                        </DockPanel>
+                    </ListViewItem>
+                    <!--#endregion-->
+                </ListView>
+            </StackPanel>
+        </Border>
+        <!--Selection changed-->
+        <ContentControl Grid.Row="1" Grid.Column="1" Content="{Binding MenuCacUserControl}" />
+        <!--Selection changed-->
+        <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="Save" Style="{StaticResource ButtonStyle}" Height="30" Width="100"/>
+            <Button Content="Draw" Style="{StaticResource ButtonStyle}" Height="30" Width="100"/>
+            <Button Content="Cancel" Style="{StaticResource ButtonStyle}" Height="30" Width="100"/>
+        </StackPanel>
+    </Grid>
+</Window>
