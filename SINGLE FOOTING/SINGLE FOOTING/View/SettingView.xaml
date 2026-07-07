@@ -11,8 +11,16 @@
     <UserControl.Resources>
         <ResourceDictionary Source="/SINGLE FOOTING;component/SINGLE FOOTING/MyResource/Styles.xaml"/>
     </UserControl.Resources>
+    <!--Tạo sự kiện load can vas-->
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadSettingViewCommand}" CommandParameter="{Binding ElementName=MainWindow}">
+            </i:InvokeCommandAction>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <!--Tạo sự kiện load can vas-->
     <Grid>
-        <!--Khai báo lưới 2x2-->
+        <!--Khai báo lưới global 2x2-->
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition Height="auto"/>
@@ -21,7 +29,7 @@
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <!--Kết thúc khai báo lưới 2x2 -->
+        <!--Kết thúc khai báo lưới global 2x2 -->
 
         <!-- Gruop Box hàng 0 cột 0 Gom lại các thông số về kích thước móng vào một groupbox để dễ quản lý-->
         <GroupBox Grid.Row="0" Grid.Column="0" Header="Kích thước móng" Margin="5" >

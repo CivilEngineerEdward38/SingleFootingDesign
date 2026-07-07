@@ -73,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LIBRARY\BaseViewModel.cs" />
+    <Compile Include="LIBRARY\FindChildClass.cs" />
     <Compile Include="LIBRARY\RelayCommandment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -87,6 +88,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="SINGLE FOOTING\Canvas\DrawCanvas.cs" />
     <Compile Include="SINGLE FOOTING\Command\CommandStatement.cs" />
     <Compile Include="SINGLE FOOTING\Model\SettingModel.cs" />
     <Compile Include="SINGLE FOOTING\Model\SingleFootingModel.cs" />
