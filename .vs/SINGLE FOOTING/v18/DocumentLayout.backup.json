@@ -3,23 +3,23 @@
   "WorkspaceRootPath": "J:\\APP\\DOTNET 10\\PECC\\SINGLE FOOTING\\SINGLE FOOTING\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{4A96D269-F7D9-4E7B-93E3-F8FCA4DC5CAE}|SINGLE FOOTING\\ACAD API.csproj|J:\\APP\\DOTNET 10\\PECC\\SINGLE FOOTING\\SINGLE FOOTING\\single footing\\library\\findchildclass.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4A96D269-F7D9-4E7B-93E3-F8FCA4DC5CAE}|SINGLE FOOTING\\ACAD API.csproj|solutionrelative:single footing\\library\\findchildclass.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4A96D269-F7D9-4E7B-93E3-F8FCA4DC5CAE}|SINGLE FOOTING\\ACAD API.csproj|j:\\app\\dotnet 10\\pecc\\single footing\\single footing\\single footing\\single footing\\canvas\\drawcanvas.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4A96D269-F7D9-4E7B-93E3-F8FCA4DC5CAE}|SINGLE FOOTING\\ACAD API.csproj|solutionrelative:single footing\\single footing\\canvas\\drawcanvas.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4A96D269-F7D9-4E7B-93E3-F8FCA4DC5CAE}|SINGLE FOOTING\\ACAD API.csproj|J:\\APP\\DOTNET 10\\PECC\\SINGLE FOOTING\\SINGLE FOOTING\\single footing\\single footing\\canvas\\drawcanvas.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4A96D269-F7D9-4E7B-93E3-F8FCA4DC5CAE}|SINGLE FOOTING\\ACAD API.csproj|solutionrelative:single footing\\single footing\\canvas\\drawcanvas.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4A96D269-F7D9-4E7B-93E3-F8FCA4DC5CAE}|SINGLE FOOTING\\ACAD API.csproj|J:\\APP\\DOTNET 10\\PECC\\SINGLE FOOTING\\SINGLE FOOTING\\single footing\\single footing\\model\\settingmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4A96D269-F7D9-4E7B-93E3-F8FCA4DC5CAE}|SINGLE FOOTING\\ACAD API.csproj|solutionrelative:single footing\\single footing\\model\\settingmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4A96D269-F7D9-4E7B-93E3-F8FCA4DC5CAE}|SINGLE FOOTING\\ACAD API.csproj|J:\\APP\\DOTNET 10\\PECC\\SINGLE FOOTING\\SINGLE FOOTING\\single footing\\single footing\\viewmodel\\settingviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4A96D269-F7D9-4E7B-93E3-F8FCA4DC5CAE}|SINGLE FOOTING\\ACAD API.csproj|solutionrelative:single footing\\single footing\\viewmodel\\settingviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4A96D269-F7D9-4E7B-93E3-F8FCA4DC5CAE}|SINGLE FOOTING\\ACAD API.csproj|j:\\app\\dotnet 10\\pecc\\single footing\\single footing\\single footing\\single footing\\model\\settingmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4A96D269-F7D9-4E7B-93E3-F8FCA4DC5CAE}|SINGLE FOOTING\\ACAD API.csproj|solutionrelative:single footing\\single footing\\model\\settingmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4A96D269-F7D9-4E7B-93E3-F8FCA4DC5CAE}|SINGLE FOOTING\\ACAD API.csproj|J:\\APP\\DOTNET 10\\PECC\\SINGLE FOOTING\\SINGLE FOOTING\\single footing\\library\\findchildclass.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4A96D269-F7D9-4E7B-93E3-F8FCA4DC5CAE}|SINGLE FOOTING\\ACAD API.csproj|solutionrelative:single footing\\library\\findchildclass.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4A96D269-F7D9-4E7B-93E3-F8FCA4DC5CAE}|SINGLE FOOTING\\ACAD API.csproj|j:\\app\\dotnet 10\\pecc\\single footing\\single footing\\single footing\\single footing\\view\\settingview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "AbsoluteMoniker": "D:0:0:{4A96D269-F7D9-4E7B-93E3-F8FCA4DC5CAE}|SINGLE FOOTING\\ACAD API.csproj|J:\\APP\\DOTNET 10\\PECC\\SINGLE FOOTING\\SINGLE FOOTING\\single footing\\single footing\\view\\settingview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{4A96D269-F7D9-4E7B-93E3-F8FCA4DC5CAE}|SINGLE FOOTING\\ACAD API.csproj|solutionrelative:single footing\\single footing\\view\\settingview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
@@ -34,7 +34,7 @@
       "DocumentGroups": [
         {
           "DockedHeight": 445,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Bookmark",
@@ -46,7 +46,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "SettingModel.cs",
               "DocumentMoniker": "J:\\APP\\DOTNET 10\\PECC\\SINGLE FOOTING\\SINGLE FOOTING\\SINGLE FOOTING\\SINGLE FOOTING\\Model\\SettingModel.cs",
               "RelativeDocumentMoniker": "SINGLE FOOTING\\SINGLE FOOTING\\Model\\SettingModel.cs",
@@ -79,31 +79,29 @@
               "ToolTip": "J:\\APP\\DOTNET 10\\PECC\\SINGLE FOOTING\\SINGLE FOOTING\\SINGLE FOOTING\\SINGLE FOOTING\\View\\SettingView.xaml",
               "RelativeToolTip": "SINGLE FOOTING\\SINGLE FOOTING\\View\\SettingView.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-07-07T02:12:14.185Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-07T02:12:14.185Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "FindChildClass.cs",
               "DocumentMoniker": "J:\\APP\\DOTNET 10\\PECC\\SINGLE FOOTING\\SINGLE FOOTING\\SINGLE FOOTING\\LIBRARY\\FindChildClass.cs",
               "RelativeDocumentMoniker": "SINGLE FOOTING\\LIBRARY\\FindChildClass.cs",
               "ToolTip": "J:\\APP\\DOTNET 10\\PECC\\SINGLE FOOTING\\SINGLE FOOTING\\SINGLE FOOTING\\LIBRARY\\FindChildClass.cs",
               "RelativeToolTip": "SINGLE FOOTING\\LIBRARY\\FindChildClass.cs",
-              "ViewState": "AgIAACEAAAAAAAAAAAAgwA4AAAAcAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T02:19:47.951Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-07T02:19:47.951Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "DrawCanvas.cs",
               "DocumentMoniker": "J:\\APP\\DOTNET 10\\PECC\\SINGLE FOOTING\\SINGLE FOOTING\\SINGLE FOOTING\\SINGLE FOOTING\\Canvas\\DrawCanvas.cs",
               "RelativeDocumentMoniker": "SINGLE FOOTING\\SINGLE FOOTING\\Canvas\\DrawCanvas.cs",
-              "ToolTip": "J:\\APP\\DOTNET 10\\PECC\\SINGLE FOOTING\\SINGLE FOOTING\\SINGLE FOOTING\\SINGLE FOOTING\\Canvas\\DrawCanvas.cs",
-              "RelativeToolTip": "SINGLE FOOTING\\SINGLE FOOTING\\Canvas\\DrawCanvas.cs",
-              "ViewState": "AgIAABYAAAAAAAAAAAAQwB0AAAACAAAAAAAAAA==",
+              "ToolTip": "J:\\APP\\DOTNET 10\\PECC\\SINGLE FOOTING\\SINGLE FOOTING\\SINGLE FOOTING\\SINGLE FOOTING\\Canvas\\DrawCanvas.cs*",
+              "RelativeToolTip": "SINGLE FOOTING\\SINGLE FOOTING\\Canvas\\DrawCanvas.cs*",
+              "ViewState": "AgIAAJUAAAAAAAAAAAAwwJ0AAAA7AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-06-30T07:13:37.212Z",
               "EditorCaption": ""
@@ -117,8 +115,7 @@
               "ToolTip": "J:\\APP\\DOTNET 10\\PECC\\SINGLE FOOTING\\SINGLE FOOTING\\SINGLE FOOTING\\SINGLE FOOTING\\View\\WinDowSingleFooting.xaml",
               "RelativeToolTip": "SINGLE FOOTING\\SINGLE FOOTING\\View\\WinDowSingleFooting.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-07-07T02:10:03.963Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-07T02:10:03.963Z"
             }
           ]
         },
