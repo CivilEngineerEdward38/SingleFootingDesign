@@ -85,7 +85,22 @@ namespace ACAD_API.SINGLE_FOOTING.Model
             get { return _hatchScale; }
             set { _hatchScale = value; OnPropertyChanged(); }
         }
+        #region RadioButton
+        private bool _typeofA;
 
+        public bool TypeOfA
+        {
+            get { return _typeofA; }
+            set { _typeofA = value; OnPropertyChanged(); }
+        }
+        private bool _typeofB;
+        public bool TypeOfB
+        {
+            get { return _typeofB; }
+            set { _typeofB = value; OnPropertyChanged(); }
+        }
+
+        #endregion
 
         public SettingModel()
         {
@@ -101,6 +116,9 @@ namespace ACAD_API.SINGLE_FOOTING.Model
             TyLeBV = new List<int> { 25, 50, 75, 100, 150, 200 };
             ChonTyLe = TyLeBV[3];
             HatchScale = 5;
+            //initial type of Singlefooting
+            TypeOfA = true;
+            TypeOfB = false;
         }
     }
 }

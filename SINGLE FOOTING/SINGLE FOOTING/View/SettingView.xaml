@@ -108,8 +108,22 @@
         <GroupBox Grid.Row="1" Grid.Column="0" Header="Loại móng" Margin="5">
             <StackPanel>
                 <!-- Tự động sắp xếp các control, những control thêm vô sẽ tự động nằm ở phí ấu những control trước đó. -->
-                <RadioButton Content="Móng đúng tâm" VerticalAlignment="Center"/>
-                <RadioButton Content="Móng lệch tâm 2 phương" VerticalAlignment="Center"/>
+                <RadioButton Content="Móng trụ cổ thẳng" VerticalAlignment="Center" IsChecked="{Binding SingleFootingModel.SettingModel.TypeOfA, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding MongTruCoThangClickCommand}" CommandParameter="{Binding ElementName=MainWindow}">
+                            </i:InvokeCommandAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </RadioButton>
+                <RadioButton Content="Móng trụ cổ mở rộng " VerticalAlignment="Center"  IsChecked="{Binding SingleFootingModel.SettingModel.TypeOfB, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding MongTruCoMoRongClickCommand}" CommandParameter="{Binding ElementName=MainWindow}">
+                            </i:InvokeCommandAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </RadioButton>
             </StackPanel>
         </GroupBox>
         <!--Gruop box hàng 1 cột gộp -->

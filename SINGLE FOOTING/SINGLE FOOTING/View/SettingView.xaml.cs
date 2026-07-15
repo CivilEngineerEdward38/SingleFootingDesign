@@ -34,5 +34,10 @@ namespace ACAD_API.SINGLE_FOOTING.View
         {
 
         }
+
+        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
