@@ -22,11 +22,13 @@ namespace ACAD_API.SINGLE_FOOTING.ViewModel
         public ICommand LoadSettingViewCommand { get; set; }  //load sự kiện 
         public ICommand MongTruCoThangClickCommand { get; set; }  //sự kiện click đổi canvas 
         public ICommand MongTruCoMoRongClickCommand { get; set; }  //sự kiện click đổi canvas 
-
-        public RelayCommand<WinDowSingleFooting> MongLechTam2PhuongCommand { get; }
+        public ICommand BmLm_textchange_Command { get; set; }  //sự kiện click đổi canvas 
+        public ICommand Hm_textchange_Command { get; set; }  //sự kiện click đổi canvas 
+        public ICommand D_textchange_Command { get; set; }  //sự kiện click đổi canvas 
+        public ICommand BcHc_textchange_Command { get; set; }  //sự kiện click đổi canvas 
+        public ICommand Hb_textchange_Command { get; set; }  //sự kiện click đổi canvas 
+        public ICommand Hv_textchange_Command { get; set; }  //sự kiện click đổi canvas 
         #endregion
-
-
         public SettingViewModel(SingleFootingModel singleFootingModel)
         {
             SingleFootingModel = singleFootingModel;
@@ -53,7 +55,54 @@ namespace ACAD_API.SINGLE_FOOTING.ViewModel
                 uc.MatDungMong.Children.Clear();
                 DrawSettingCanvasMB(uc);
                 DrawSettingCanvasMD(uc);
-
+            });
+            BmLm_textchange_Command = new RelayCommand<WinDowSingleFooting>((p) => { return true; }, (p) =>
+            {
+                SettingView uc = FindChildClass.FindChild<SettingView>(p, "SettingUC");
+                uc.MatBangMong.Children.Clear();
+                uc.MatDungMong.Children.Clear();
+                DrawSettingCanvasMB(uc);
+                DrawSettingCanvasMD(uc);
+            });
+            Hm_textchange_Command = new RelayCommand<WinDowSingleFooting>((p) => { return true; }, (p) =>
+            {
+                SettingView uc = FindChildClass.FindChild<SettingView>(p, "SettingUC");
+                uc.MatBangMong.Children.Clear();
+                uc.MatDungMong.Children.Clear();
+                DrawSettingCanvasMB(uc);
+                DrawSettingCanvasMD(uc);
+            });
+            D_textchange_Command = new RelayCommand<WinDowSingleFooting>((p) => { return true; }, (p) =>
+            {
+                SettingView uc = FindChildClass.FindChild<SettingView>(p, "SettingUC");
+                uc.MatBangMong.Children.Clear();
+                uc.MatDungMong.Children.Clear();
+                DrawSettingCanvasMB(uc);
+                DrawSettingCanvasMD(uc);
+            });
+            BcHc_textchange_Command = new RelayCommand<WinDowSingleFooting>((p) => { return true; }, (p) =>
+            {
+                SettingView uc = FindChildClass.FindChild<SettingView>(p, "SettingUC");
+                uc.MatBangMong.Children.Clear();
+                uc.MatDungMong.Children.Clear();
+                DrawSettingCanvasMB(uc);
+                DrawSettingCanvasMD(uc);
+            });
+            Hb_textchange_Command = new RelayCommand<WinDowSingleFooting>((p) => { return true; }, (p) =>
+            {
+                SettingView uc = FindChildClass.FindChild<SettingView>(p, "SettingUC");
+                uc.MatBangMong.Children.Clear();
+                uc.MatDungMong.Children.Clear();
+                DrawSettingCanvasMB(uc);
+                DrawSettingCanvasMD(uc);
+            });
+            Hv_textchange_Command = new RelayCommand<WinDowSingleFooting>((p) => { return true; }, (p) =>
+            {
+                SettingView uc = FindChildClass.FindChild<SettingView>(p, "SettingUC");
+                uc.MatBangMong.Children.Clear();
+                uc.MatDungMong.Children.Clear();
+                DrawSettingCanvasMB(uc);
+                DrawSettingCanvasMD(uc);
             });
         }
         private void DrawSettingCanvasMD(SettingView uc)

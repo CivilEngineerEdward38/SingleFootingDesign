@@ -53,32 +53,74 @@
                 </Grid.RowDefinitions>
                 <!--region Bm = Lm -->
                 <TextBlock Grid.Row="0" Text="Bm = Lm" Style="{StaticResource DataGridTextBlockStyle}"/>
-                <TextBox Grid.Row="0" Grid.Column="1" Style="{StaticResource TextBoxStyle}" Text="{Binding SingleFootingModel.SettingModel.BmHm , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat={}{0:F1}}" />
+                <TextBox Grid.Row="0" Grid.Column="1" Style="{StaticResource TextBoxStyle}" Text="{Binding SingleFootingModel.SettingModel.BmHm , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat={}{0:F1}}" >
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="TextChanged">
+                            <i:InvokeCommandAction Command="{Binding BmLm_textchange_Command}" CommandParameter="{Binding ElementName=MainWindow}">
+                            </i:InvokeCommandAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </TextBox>
                 <TextBlock Grid.Row="0" Grid.Column="2" Style="{StaticResource DataGridTextBlockStyle}" Text="(m)"/>
                 <!--endregion-->
                 <!--region Hm -->
                 <TextBlock Grid.Row="1" Text="Hm" Style="{StaticResource DataGridTextBlockStyle}"/>
-                <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource TextBoxStyle}" Text="{Binding SingleFootingModel.SettingModel.Hm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat={}{0:F1}}"/>
+                <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource TextBoxStyle}" Text="{Binding SingleFootingModel.SettingModel.Hm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat={}{0:F1}}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="TextChanged">
+                            <i:InvokeCommandAction Command="{Binding Hm_textchange_Command}" CommandParameter="{Binding ElementName=MainWindow}">
+                            </i:InvokeCommandAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </TextBox>
                 <TextBlock Grid.Row="1" Grid.Column="2" Style="{StaticResource DataGridTextBlockStyle}" Text="(m)"/>
                 <!--endregion-->
                 <!--region d -->
                 <TextBlock Grid.Row="2" Text="d" Style="{StaticResource DataGridTextBlockStyle}"/>
-                <TextBox Grid.Row="2" Grid.Column="1" Style="{StaticResource TextBoxStyle}"  Text="{Binding SingleFootingModel.SettingModel.D, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat={}{0:F1}}"/>
+                <TextBox Grid.Row="2" Grid.Column="1" Style="{StaticResource TextBoxStyle}"  Text="{Binding SingleFootingModel.SettingModel.D, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat={}{0:F1}}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="TextChanged">
+                            <i:InvokeCommandAction Command="{Binding D_textchange_Command}" CommandParameter="{Binding ElementName=MainWindow}">
+                            </i:InvokeCommandAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </TextBox>
                 <TextBlock Grid.Row="2" Grid.Column="2" Style="{StaticResource DataGridTextBlockStyle}" Text="(m)"/>
                 <!--endregion-->
                 <!--region Bc = Hc -->
                 <TextBlock Grid.Row="3" Text="Bc = Hc" Style="{StaticResource DataGridTextBlockStyle}"/>
-                <TextBox Grid.Row="3" Grid.Column="1" Style="{StaticResource TextBoxStyle}"  Text="{Binding SingleFootingModel.SettingModel.BcHc , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat={}{0:F1}}"/>
+                <TextBox Grid.Row="3" Grid.Column="1" Style="{StaticResource TextBoxStyle}"  Text="{Binding SingleFootingModel.SettingModel.BcHc , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat={}{0:F1}}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="TextChanged">
+                            <i:InvokeCommandAction Command="{Binding BcHc_textchange_Command}" CommandParameter="{Binding ElementName=MainWindow}">
+                            </i:InvokeCommandAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </TextBox>
                 <TextBlock Grid.Row="3" Grid.Column="2" Style="{StaticResource DataGridTextBlockStyle}" Text="(m)"/>
                 <!--endregion-->
                 <!--region Hb -->
                 <TextBlock Grid.Row="4" Text="Hb" Style="{StaticResource DataGridTextBlockStyle}"/>
-                <TextBox Grid.Row="4" Grid.Column="1" Style="{StaticResource TextBoxStyle}" Text="{Binding SingleFootingModel.SettingModel.Hb  , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat={}{0:F1}}"/>
+                <TextBox Grid.Row="4" Grid.Column="1" Style="{StaticResource TextBoxStyle}" Text="{Binding SingleFootingModel.SettingModel.Hb  , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat={}{0:F1}}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="TextChanged">
+                            <i:InvokeCommandAction Command="{Binding Hb_textchange_Command}" CommandParameter="{Binding ElementName=MainWindow}">
+                            </i:InvokeCommandAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </TextBox>
                 <TextBlock Grid.Row="4" Grid.Column="2" Style="{StaticResource DataGridTextBlockStyle}" Text="(m)"/>
                 <!--endregion-->
                 <!--region Hv -->
                 <TextBlock Grid.Row="5" Text="Hv" Style="{StaticResource DataGridTextBlockStyle}"/>
-                <TextBox Grid.Row="5" Grid.Column="1" Style="{StaticResource TextBoxStyle}" Text="{Binding SingleFootingModel.SettingModel.Hv  , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat={}{0:F1}}"/>
+                <TextBox Grid.Row="5" Grid.Column="1" Style="{StaticResource TextBoxStyle}" Text="{Binding SingleFootingModel.SettingModel.Hv  , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat={}{0:F1}}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="TextChanged">
+                            <i:InvokeCommandAction Command="{Binding Hv_textchange_Command}" CommandParameter="{Binding ElementName=MainWindow}">
+                            </i:InvokeCommandAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </TextBox>
                 <TextBlock Grid.Row="5" Grid.Column="2" Style="{StaticResource DataGridTextBlockStyle}" Text="(m)"/>
                 <!--endregion-->
                 <!--region Tỷ lệ bản vẽ  -->
