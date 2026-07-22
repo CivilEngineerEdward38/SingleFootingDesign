@@ -1,6 +1,8 @@
-﻿using ACAD.SINGLE_FOOTING;
-using ACAD.SINGLE_FOOTING.Model;
+﻿using ACAD.SINGLE_FOOTING.Model;
+using ACAD_API.SINGLE_FOOTING;
+using ACAD_API.SINGLE_FOOTING.Model;
 using ACAD_API.SINGLE_FOOTING.View;
+using ACAD_API.SINGLE_FOOTING.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;

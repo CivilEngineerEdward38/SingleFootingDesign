@@ -16,28 +16,28 @@
         FontFamily="Tohoma"
         WindowStyle="None"
         AllowsTransparency="True" x:Name="MainWindow"
-        >
-    <Window.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../MyResource/Styles.xaml">
-                    <DataTemplate x:Name="taskBarMVVM" DataType="{x:Type VModel:TaskBarControlViewModel}">
-                        <view:TaskbarControl/>
-                    </DataTemplate>
-                    <DataTemplate x:Name="DocMVMM" DataType="{x:Type VModel:GhiChuViewModel}">
-                        <view:Doc/>
-                    </DataTemplate>
-                    <DataTemplate x:Name="reBarMVVM" DataType="{x:Type VModel:RebarViewModel}">
-                        <view:RebarView/>
-                    </DataTemplate>
-                    <DataTemplate x:Name="settingMVVM" DataType="{x:Type VModel:SettingViewModel}">
-                        <view:SettingView/>
-                    </DataTemplate>
-                </ResourceDictionary>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Window.Resources>
-    <Grid>
+            >
+        <Window.Resources>
+            <ResourceDictionary>
+                <ResourceDictionary.MergedDictionaries>
+                    <ResourceDictionary Source="../MyResource/Styles.xaml">
+                        <DataTemplate x:Name="taskBarMVVM" DataType="{x:Type VModel:TaskBarControlViewModel}">
+                            <view:TaskbarControl/>
+                        </DataTemplate>
+                        <DataTemplate x:Name="DocMVMM" DataType="{x:Type VModel:GhiChuViewModel}">
+                            <view:Doc/>
+                        </DataTemplate>
+                        <DataTemplate x:Name="reBarMVVM" DataType="{x:Type VModel:RebarViewModel}">
+                            <view:RebarView/>
+                        </DataTemplate>
+                        <DataTemplate x:Name="settingMVVM" DataType="{x:Type VModel:SettingViewModel}">
+                            <view:SettingView/>
+                        </DataTemplate>
+                    </ResourceDictionary>
+                </ResourceDictionary.MergedDictionaries>
+            </ResourceDictionary>
+        </Window.Resources>
+        <Grid>
         <!--Khai báo grid local-->
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>

@@ -22,7 +22,7 @@ namespace ACAD_API.SINGLE_FOOTING.View
     {
         public TaskbarControl()
         {
-           
+            InitializeComponent();
         }
       
     }
