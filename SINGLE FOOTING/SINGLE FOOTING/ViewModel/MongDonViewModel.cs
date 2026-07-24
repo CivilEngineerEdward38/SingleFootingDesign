@@ -3,6 +3,7 @@ using ACAD_API.SINGLE_FOOTING;
 using ACAD_API.SINGLE_FOOTING.Model;
 using ACAD_API.SINGLE_FOOTING.View;
 using ACAD_API.SINGLE_FOOTING.ViewModel;
+using Autodesk.AutoCAD.Geometry;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media.Media3D;
 
 namespace ACAD_API.SINGLE_FOOTING.ViewModel
 {
@@ -63,9 +65,21 @@ namespace ACAD_API.SINGLE_FOOTING.ViewModel
             set { _singleFootingModel = value; OnPropertyChanged(); }
         }
 
+        //điểm đặt vẽ 
+        private Point3d _mainPoint;
+
+        public Point3d MainPoint
+        {
+            get { return _mainPoint; }
+            set { _mainPoint = value; OnPropertyChanged(); }
+        }
+
+
 
         #region Icommand
         public ICommand ChuyenManHinhCommand { get; set; }
+        public ICommand VeMongCommand { get; set; }
+        
         #endregion
         public MongDonViewModel()
         {
@@ -92,9 +106,20 @@ namespace ACAD_API.SINGLE_FOOTING.ViewModel
 
                 }
             });
+            VeMongCommand = new RelayCommand<WinDowSingleFooting>((p) => { return true; }, (p) =>
+            {
+                p.Hide();
+                MainPoint = ClCAD.GetPointsFromUser("Chọn 1 điểm bất kì trên màn hình");
+                VeMongDon();
+            });
+        }
 
+        private void VeMongDon()
+        {
+            SingleFootingModel.SettingModel.VeMatBangMongCoThang(MainPoint);
         }
     }
+
 }
 
 

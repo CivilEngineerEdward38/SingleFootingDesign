@@ -20,6 +20,7 @@ namespace ACAD.SINGLE_FOOTING.Model
 		public SingleFootingModel()
 		{
 			SettingModel = new SettingModel();
+			SettingModel.CreateLayer();
 		}
 
 	}

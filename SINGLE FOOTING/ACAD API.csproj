@@ -73,6 +73,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LIBRARY\BaseViewModel.cs" />
+    <Compile Include="LIBRARY\ClBlock.cs" />
+    <Compile Include="LIBRARY\ClCAD.cs" />
     <Compile Include="LIBRARY\FindChildClass.cs" />
     <Compile Include="LIBRARY\RelayCommandment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">

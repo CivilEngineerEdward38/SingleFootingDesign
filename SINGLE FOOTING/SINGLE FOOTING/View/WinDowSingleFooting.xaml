@@ -83,7 +83,7 @@
         <!--Selection changed-->
         <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Content="Save" Style="{StaticResource ButtonStyle}" Height="30" Width="100"/>
-            <Button Content="Draw" Style="{StaticResource ButtonStyle}" Height="30" Width="100"/>
+            <Button Content="Draw" Style="{StaticResource ButtonStyle}" Height="30" Width="100" Command="{Binding VeMongCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
             <Button Content="Cancel" Style="{StaticResource ButtonStyle}" Height="30" Width="100"/>
         </StackPanel>
     </Grid>
