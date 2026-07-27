@@ -21,7 +21,9 @@ namespace ACAD.SINGLE_FOOTING.Model
 		{
 			SettingModel = new SettingModel();
 			SettingModel.CreateLayer();
-		}
+			SettingModel.CreateTextStyle(); // phải chạy trước
+            SettingModel.CreateDimStyle(SettingModel.TyLeBV);// dùng chung 1 danh sách duy nhất
+        }
 
-	}
+    }
 }
