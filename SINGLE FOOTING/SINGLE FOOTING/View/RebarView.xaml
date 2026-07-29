@@ -37,9 +37,9 @@
                 </Grid.ColumnDefinitions>
                 <!--Chọn thép-->
                 <TextBlock Grid.Row="0" Grid.Column="0" Text="Chọn Ø:" Style="{StaticResource DataGridTextBlockStyle }"/>
-                <ComboBox Grid.Row="0" Grid.Column="1" Style="{StaticResource ComboBoxStyle}" Width="57.6"/>
+                <ComboBox Grid.Row="0" Grid.Column="1" Style="{StaticResource ComboBoxStyle}" Width="57.6" ItemsSource="{Binding SingleFootingModel.RebarModel.AllDuongKinhThep}" SelectedItem="{Binding SingleFootingModel.RebarModel.DuongKinhThepBan, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                 <TextBlock Grid.Column="2" Text="@" Margin="13,0,0,0"/>
-                <TextBox Grid.Row="0" Grid.Column="3" Style="{StaticResource TextBoxStyle}" Width="65.6" Margin="10,0,4,0"/>
+                <TextBox Grid.Row="0" Grid.Column="3" Style="{StaticResource TextBoxStyle}" Width="65.6" Margin="10,0,4,0" Text="{Binding SingleFootingModel.RebarModel.KhoangCachThepBan, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                 <TextBlock Grid.Row="0" Grid.Column="4" Text="(mm)" Style="{StaticResource DataGridTextBlockStyle}"/>
                 <!--Ghi chú-->
                 <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5" Text="Ghi chú: Ø là đường kính thép, @ là khoảng cách giữa các thanh thép" Style="{StaticResource DataGridTextBlockStyle}"/>
@@ -66,17 +66,17 @@
                     </Grid.RowDefinitions>
                     <!--Đường kính thép-->
                     <TextBlock Grid.Row="0" Grid.Column="0" Text="Chọn Ø:" Style="{StaticResource DataGridTextBlockStyle}"/>
-                    <ComboBox Grid.Row="0" Grid.Column="1" Style="{StaticResource ComboBoxStyle}"/>
-                    <TextBlock Grid.Row="0" Grid.Column="2" Text="@" HorizontalAlignment="center" Style="{StaticResource DataGridTextBlockStyle}"/>
-                    <TextBox Grid.Row="0" Grid.Column="3" Style="{StaticResource TextBoxStyle}"/>
-                    <TextBlock Grid.Row="0" Grid.Column="4" Text="(mm)" Style="{StaticResource DataGridTextBlockStyle}"/>
+                    <ComboBox Grid.Row="0" Grid.Column="1" Style="{StaticResource ComboBoxStyle}" ItemsSource="{Binding SingleFootingModel.RebarModel.AllDuongKinhThep}" SelectedItem="{Binding SingleFootingModel.RebarModel.DuongKinhThepCoMong, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBlock Grid.Row="0" Grid.Column="2" Text="có n = " HorizontalAlignment="center" Style="{StaticResource DataGridTextBlockStyle}"/>
+                    <TextBox Grid.Row="0" Grid.Column="3" Style="{StaticResource TextBoxStyle}" Text="{Binding SingleFootingModel.RebarModel.SLThepCoMong, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBlock Grid.Row="0" Grid.Column="4" Text="(cây)" Style="{StaticResource DataGridTextBlockStyle}"/>
                     <!--Ghi chú-->
                     <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5" Text="Tổng số thanh trên một cổ là móng là x thanh Ø " Style="{StaticResource DataGridTextBlockStyle}"/>
                     <!--Thép đai-->
                     <TextBlock Grid.Row="2" Grid.Column="0" Text="Đường kính thép đai Ø" Grid.ColumnSpan="3" Style="{StaticResource DataGridTextBlockStyle}"/>
-                    <ComboBox Grid.Row="2" Grid.Column="3" Style="{StaticResource ComboBoxStyle}"/>
+                    <ComboBox Grid.Row="2" Grid.Column="3" Style="{StaticResource ComboBoxStyle}" ItemsSource="{Binding SingleFootingModel.RebarModel.AllDuongKinhThep}" SelectedItem="{Binding SingleFootingModel.RebarModel.DuongKinhThepDai, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     <TextBlock Grid.Row="3" Text="Khoảng cách thép đai Ø" Grid.ColumnSpan="2" Style="{StaticResource DataGridTextBlockStyle}"/>
-                    <TextBox Grid.Row="3" Grid.Column="3" Style="{StaticResource TextBoxStyle}"/>
+                    <TextBox Grid.Row="3" Grid.Column="3" Style="{StaticResource TextBoxStyle}" Text="{Binding SingleFootingModel.RebarModel.KhoangCachRaiDai, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     <TextBlock Grid.Row="3" Grid.Column="4" Text="(mm)" Style="{StaticResource DataGridTextBlockStyle}"/>
                     <!--#region -->
                     <Canvas Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="5" Height="150" Width="280" x:Name="ThepCoMong"/>

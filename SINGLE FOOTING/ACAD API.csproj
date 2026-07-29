@@ -92,6 +92,7 @@
     </Compile>
     <Compile Include="SINGLE FOOTING\Canvas\DrawCanvas.cs" />
     <Compile Include="SINGLE FOOTING\Command\CommandStatement.cs" />
+    <Compile Include="SINGLE FOOTING\Model\RebarModel.cs" />
     <Compile Include="SINGLE FOOTING\Model\SettingModel.cs" />
     <Compile Include="SINGLE FOOTING\Model\SingleFootingModel.cs" />
     <Compile Include="SINGLE FOOTING\ViewModel\GhiChuViewModel.cs" />

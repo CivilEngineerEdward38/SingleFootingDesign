@@ -86,7 +86,7 @@ namespace ACAD_API.SINGLE_FOOTING.ViewModel
             SingleFootingModel = new SingleFootingModel();
             SettingViewModel = new SettingViewModel(SingleFootingModel); //khởi tạo một object SettingViewModel và gàn vào biến SettingViewModel
             GhiChuViewModel = new GhiChuViewModel();
-            RebarViewModel = new RebarViewModel();
+            RebarViewModel = new RebarViewModel(SingleFootingModel);
             TaskBarControlViewModel = new TaskBarControlViewModel();
             MenuCacUserControl = SettingViewModel;
             // khởi tạo lệnh ChuyenManHinhCommand với một RelayCommand, trong đó có hai tham số: một hàm kiểm tra điều kiện thực thi và một hàm thực thi lệnh. Hàm kiểm tra điều kiện thực thi luôn trả về true, có nghĩa là lệnh luôn có thể được thực thi. Hàm thực thi lệnh sẽ kiểm tra giá trị của SelectedIndex của MenuSelectionChanged trong đối tượng p (có kiểu WinDowSingleFooting) và gán MenuCacUserControl tương ứng với giá trị đó. 

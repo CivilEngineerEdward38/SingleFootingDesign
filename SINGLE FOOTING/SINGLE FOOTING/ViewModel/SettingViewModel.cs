@@ -21,13 +21,13 @@ namespace ACAD_API.SINGLE_FOOTING.ViewModel
         #region Command
         public ICommand LoadSettingViewCommand { get; set; }  //load sự kiện 
         public ICommand MongTruCoThangClickCommand { get; set; }  //sự kiện click đổi canvas 
-        public ICommand MongTruCoMoRongClickCommand { get; set; }  //sự kiện click đổi canvas 
-        public ICommand BmLm_textchange_Command { get; set; }  //sự kiện click đổi canvas 
-        public ICommand Hm_textchange_Command { get; set; }  //sự kiện click đổi canvas 
-        public ICommand D_textchange_Command { get; set; }  //sự kiện click đổi canvas 
-        public ICommand BcHc_textchange_Command { get; set; }  //sự kiện click đổi canvas 
-        public ICommand Hb_textchange_Command { get; set; }  //sự kiện click đổi canvas 
-        public ICommand Hv_textchange_Command { get; set; }  //sự kiện click đổi canvas 
+        public ICommand MongTruCoMoRongClickCommand { get; set; } 
+        public ICommand BmLm_textchange_Command { get; set; } 
+        public ICommand Hm_textchange_Command { get; set; } 
+        public ICommand D_textchange_Command { get; set; } 
+        public ICommand BcHc_textchange_Command { get; set; } 
+        public ICommand Hb_textchange_Command { get; set; } 
+        public ICommand Hv_textchange_Command { get; set; } 
         #endregion
         public SettingViewModel(SingleFootingModel singleFootingModel)
         {
