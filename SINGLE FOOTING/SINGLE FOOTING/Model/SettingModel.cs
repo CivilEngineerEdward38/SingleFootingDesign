@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Media3D;
 
 namespace ACAD_API.SINGLE_FOOTING.Model
@@ -150,6 +153,7 @@ namespace ACAD_API.SINGLE_FOOTING.Model
         #region Method 
         public void VeMatBangMongCoThang(Point3d ptDiemVe)
         {
+            #region Point
             Point3d p0 = ptDiemVe;
             // Hệ số quy đổi kích thước thực (m) -> đơn vị vẽ theo tỷ lệ đang chọn
             double heSo = 1000.0 / ChonTyLe;
@@ -183,10 +187,11 @@ namespace ACAD_API.SINGLE_FOOTING.Model
             Point3d p15 = new Point3d(p0.X + bmhmVe / 2 + mepBTLotMongVe, p0.Y + bmhmVe / 2 + mepBTLotMongVe, 0);
             Point3d p16 = new Point3d(p0.X + bmhmVe / 2 + mepBTLotMongVe, p0.Y - bmhmVe / 2 - mepBTLotMongVe, 0);
             // 5. Trục tim
-            Point3d p17 = new Point3d(p0.X - bmhmVe / 2 - btbvVe * 2, p0.Y, 0);
-            Point3d p18 = new Point3d(p0.X + bmhmVe / 2 + btbvVe * 2, p0.Y, 0);
-            Point3d p19 = new Point3d(p0.X, p0.Y - bmhmVe / 2 - btbvVe * 2, 0);
-            Point3d p20 = new Point3d(p0.X, p0.Y + bmhmVe / 2 + btbvVe * 2, 0);
+            Point3d p17 = new Point3d(p0.X - bmhmVe / 2 - btbvVe * 4, p0.Y, 0);
+            Point3d p18 = new Point3d(p0.X + bmhmVe / 2 + btbvVe * 4, p0.Y, 0);
+            Point3d p19 = new Point3d(p0.X, p0.Y - bmhmVe / 2 - btbvVe * 4, 0);
+            Point3d p20 = new Point3d(p0.X, p0.Y + bmhmVe / 2 + btbvVe * 4, 0);
+            #endregion
             // --- VẼ ĐƯỜNG BIÊN ---
             ClCAD.SetLayerCurrent("MAIN");
             ClCAD.CreatePolylineFromListPoints(new List<Point3d> { p1, p2, p3, p4 }, true);
@@ -233,7 +238,7 @@ namespace ACAD_API.SINGLE_FOOTING.Model
             ClCAD.CreatePolylineFromListPoints(new List<Point3d> { pThep5_Mo, pThep5, pThep6, pThep7 }, false);
             ClCAD.CreateLine(pThep8, pThep9);
             ClCAD.CreatePolylineFromListPoints(new List<Point3d> { pThep10, pThep11 }, false);
-            #region
+            #region DIM
             ClCAD.SetLayerCurrent("DIM");
             string strScale = string.Format("TL1-{0}", ChonTyLe.ToString());
             ClCAD.SetDimStyleCurrent(strScale);
@@ -251,8 +256,8 @@ namespace ACAD_API.SINGLE_FOOTING.Model
                 new Point3d(p1.X, p13.Y, 0),
                 new Point3d(p4.X, p13.Y, 0)
             };
-            ClCAD.CreateDimension_X(dsX, ChonTyLe, 1,2);
-            ClCAD.CreateDimension_X(dsX2, ChonTyLe, 2,2);
+            ClCAD.CreateDimension_X(dsX, ChonTyLe, 1, 2, false);
+            ClCAD.CreateDimension_X(dsX2, ChonTyLe, 2, 2, false);
             List<Point3d> dsY = new List<Point3d>()
             {
                 new Point3d(p13.X, p14.Y, 0), // Đỉnh BT lót (trên)
@@ -266,9 +271,131 @@ namespace ACAD_API.SINGLE_FOOTING.Model
                 new Point3d(p13.X, p2.Y, 0),
                 new Point3d(p13.X, p1.Y, 0)
             };
-            ClCAD.CreateDimension_Y(dsY, ChonTyLe, 1,2);
-            ClCAD.CreateDimension_Y(dsY2, ChonTyLe, 2,2);
+            ClCAD.CreateDimension_Y(dsY, ChonTyLe, 1, 2, false);
+            ClCAD.CreateDimension_Y(dsY2, ChonTyLe, 2, 2, false);
+            List<Point3d> dsCMphuongX = new List<Point3d>()
+            {
+                new Point3d(p6.X, p6.Y, 0),
+                new Point3d(p7.X, p7.Y, 0)
+            };
+            ClCAD.CreateDimension_X(dsCMphuongX, ChonTyLe, 1, 2, true);
+            List<Point3d> dsCMphuongY = new List<Point3d>()
+            {
+                new Point3d(p11.X, p11.Y, 0),
+                new Point3d(p12.X, p12.Y, 0)
+            };
+            ClCAD.CreateDimension_Y(dsCMphuongY, ChonTyLe, 1, 2, true);
             #endregion
+        }
+        public void VeMatDungMongCoThang(Point3d ptDiemVe)
+        {
+            #region Point
+            Point3d p0 = ptDiemVe;    //qa trái là trừ, qua phải là cộng, lên là cộng xuống là trừ 
+            // Hệ số quy đổi kích thước thực (m) -> đơn vị vẽ theo tỷ lệ đang chọn
+            double heSo = 1000.0 / ChonTyLe;
+            double V(double kichThuocThucMet) => kichThuocThucMet * heSo;
+            // Các kích thước thực -> quy đổi sang kích thước vẽ
+            double bmhmVe = V(BmHm);
+            double bchcVe = V(BcHc);
+            double hvVe = V(Hv);
+            double hmVe = V(Hm);
+            double hbVe = V(Hb);
+            double mepCoMongVe = V(0.1);
+            double mepBTLotMongVe = V(0.1);
+            double dVe = V(D);
+            double btbvVe = BTBVDay / ChonTyLe; // BTBVDay là mm thực: (BTBVDay/1000)*heSo = BTBVDay/ChonTyLe
+            double yDayMong = p0.Y;
+            // Tính toán độc lập các tầng cao độ (Y) tính từ đáy móng đi lên (đã chia scale)
+            double yDeMong = yDayMong + hbVe;
+            double yVatMong = yDayMong + hvVe;
+            double yCos00 = yDayMong + hmVe;
+            double yDinhCoMong = yCos00 + dVe; // Cổ móng nằm trên mặt đất 
+            // 3. TÍNH TOÁN TỌA ĐỘ CÁC ĐIỂM ĐỘC LẬP để dễ bảo trì -> Vẽ Khung móng 
+            // Các điểm bên TRÁI trục đối xứng (X âm so với p0.X)
+            Point3d p1 = new Point3d(p0.X - bmhmVe / 2, yDayMong, 0);
+            Point3d p2 = new Point3d(p0.X - bmhmVe / 2, yVatMong, 0);
+            Point3d p3 = new Point3d(p0.X - bchcVe / 2 - mepCoMongVe, yDeMong, 0);
+            Point3d p4 = new Point3d(p0.X - bchcVe / 2, yDeMong, 0);
+            Point3d p5 = new Point3d(p0.X - bchcVe / 2, yDinhCoMong, 0);
+            Point3d p6 = new Point3d(p0.X + bchcVe / 2, yDinhCoMong, 0);
+            Point3d p7 = new Point3d(p0.X + bchcVe / 2, yDeMong, 0);
+            Point3d p8 = new Point3d(p0.X + bchcVe / 2 + mepCoMongVe, yDeMong, 0);
+            Point3d p9 = new Point3d(p0.X + bmhmVe / 2, yVatMong, 0);
+            Point3d p10 = new Point3d(p0.X + bmhmVe / 2, yDayMong, 0);
+            //Lớp bê tông bảo vệ 
+            Point3d p11 = new Point3d(p0.X - bmhmVe / 2 - mepBTLotMongVe, yDayMong, 0);
+            Point3d p12 = new Point3d(p0.X + bmhmVe / 2 + mepBTLotMongVe, yDayMong, 0);
+            Point3d p13 = new Point3d(p0.X + bmhmVe / 2 + mepBTLotMongVe, yDayMong - btbvVe * 2, 0);
+            Point3d p14 = new Point3d(p0.X - bmhmVe / 2 - mepBTLotMongVe, yDayMong - btbvVe * 2, 0);
+            //Trục đứng
+            Point3d p15 = new Point3d(p0.X, yDayMong - 0.5 * heSo, 0);
+            Point3d p16 = new Point3d(p0.X, yDinhCoMong + 0.5 * heSo, 0);
+            #endregion
+            ClCAD.SetLayerCurrent("MAIN");
+            ClCAD.CreatePolylineFromListPoints(new List<Point3d> { p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p1 }, false);
+            ClCAD.CreatePolylineFromListPoints(new List<Point3d> { p11, p12, p13, p14, p11 }, false);
+            ClCAD.SetLayerCurrent("CENTER");
+            ClCAD.CreatePolylineFromListPoints(new List<Point3d> { p15, p16 }, false);
+
+            #region Dim
+            ClCAD.SetLayerCurrent("DIM");
+            string strScale = string.Format("TL1-{0}", ChonTyLe.ToString());
+            ClCAD.SetDimStyleCurrent(strScale);
+            //Phương ngang 
+            List<Point3d> dsX = new List<Point3d>()
+            {
+                new Point3d(p14.X, p14.Y, 0), // Đỉnh BT lót (trên)
+                new Point3d(p1.X , p14.Y, 0),  // Đỉnh móng
+                new Point3d(p0.X , p14.Y, 0),  // Tim móng
+                new Point3d(p10.X , p14.Y, 0),  // Đáy móng
+                new Point3d(p12.X , p14.Y, 0)  // Đáy BT lót (dưới)
+            };
+            List<Point3d> dsX2 = new List<Point3d>()
+            {
+                new Point3d(p1.X, p14.Y, 0),
+                new Point3d(p10.X, p14.Y, 0)
+            };
+            ClCAD.CreateDimension_X(dsX, ChonTyLe, 1, 2, false);
+            ClCAD.CreateDimension_X(dsX2, ChonTyLe, 2, 2, false);
+            //Phương đứng 
+            List<Point3d> dsY = new List<Point3d>()
+            {
+                new Point3d(p11.X, p1.Y, 0), // Đỉnh BT lót (trên)
+                new Point3d(p2.X , p2.Y, 0),  // Đỉnh móng
+                new Point3d(p3.X , p3.Y, 0),  // Tim móng
+                new Point3d(p5.X , p5.Y, 0),  // Đáy móng
+            };
+            List<Point3d> dsY2 = new List<Point3d>()
+            {
+                new Point3d(p14.X, p14.Y, 0),
+                new Point3d(p11.X, p11.Y, 0),
+                new Point3d(p5.X, p5.Y, 0)
+            };
+            ClCAD.CreateDimension_Y1(dsY, ChonTyLe, 1, 2, false);
+            ClCAD.CreateDimension_Y(dsY2, ChonTyLe, 2, 2, false);
+            //Mép cổ móng bên trái 
+            List<Point3d> dsMepCoTrai = new List<Point3d>()
+            {
+                new Point3d(p3.X, p3.Y, 0),
+                new Point3d(p4.X, p4.Y, 0),
+            };
+            ClCAD.CreateDimension_X(dsMepCoTrai, ChonTyLe, 1, 2, true);
+            //Mép cổ móng bên phải 
+            List<Point3d> dsMepCoPhai = new List<Point3d>()
+            {
+                new Point3d(p7.X, p7.Y, 0),
+                new Point3d(p8.X, p8.Y, 0),
+            };
+            ClCAD.CreateDimension_X(dsMepCoPhai, ChonTyLe, 1, 2, true);
+            //Dim cổ móng
+            List<Point3d> dsDimBcHc = new List<Point3d>()
+            {
+                new Point3d(p5.X, p5.Y, 0),
+                new Point3d(p6.X, p6.Y, 0),
+            };
+            ClCAD.CreateDimension_X(dsDimBcHc, ChonTyLe, 2, 2, true);
+            #endregion
+
         }
         #endregion
     }

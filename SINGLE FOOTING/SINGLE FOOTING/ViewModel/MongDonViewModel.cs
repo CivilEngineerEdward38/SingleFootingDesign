@@ -116,7 +116,23 @@ namespace ACAD_API.SINGLE_FOOTING.ViewModel
 
         private void VeMongDon()
         {
-            SingleFootingModel.SettingModel.VeMatBangMongCoThang(MainPoint);
+            double heSo = 1000.0 / SingleFootingModel.SettingModel.ChonTyLe;
+
+            double khoangCach = 1.5;      // cách mặt bằng 1.5m thực
+
+            double maxKT = Math.Max(
+                SingleFootingModel.SettingModel.BmHm,
+                SingleFootingModel.SettingModel.BmHm);
+
+            Point3d pMatBang = MainPoint;
+
+            Point3d pMatDung = new Point3d(
+                MainPoint.X,
+                MainPoint.Y + (maxKT + khoangCach) * heSo,
+                0);
+
+            SingleFootingModel.SettingModel.VeMatBangMongCoThang(pMatBang);
+            SingleFootingModel.SettingModel.VeMatDungMongCoThang(pMatDung);
         }
     }
 

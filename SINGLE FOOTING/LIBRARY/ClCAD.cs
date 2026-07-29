@@ -6,6 +6,7 @@ using Autodesk.AutoCAD.Geometry;
 using Autodesk.AutoCAD.Windows.Help;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Documents;
 //using System.Windows.Shapes;   //không thêm thư viện này, CAD sẽ không biết lấy polyline hay line của cái thư viện nào
 
@@ -358,12 +359,13 @@ public class ClCAD
             tr.Commit();
         }
     }
-    public static void CreateDimension_X(List<Point3d> dsX, double chonTyLe, int ihang, double textHeight)
+    public static void CreateDimension_X(List<Point3d> dsX, double chonTyLe, int ihang, double textHeight, bool phiaTren = true)
     {
         double kcDim = textHeight * 3;
+        double huong = phiaTren ? 1 : -1;
         for (int i = 0; i < dsX.Count - 1; i++)
         {
-            DimX(dsX[i], dsX[i + 1], -ihang * kcDim);
+            DimX(dsX[i], dsX[i + 1], huong * ihang * kcDim);
         }
     }
     public static void DimY(Point3d P1, Point3d P2, double Denta_X)
@@ -391,12 +393,34 @@ public class ClCAD
             tr.Commit();
         }
     }
-    public static void CreateDimension_Y(List<Point3d> dsX, double chonTyLe, int ihang, double textHeight)
+    public static void CreateDimension_Y(List<Point3d> dsX, double chonTyLe, int ihang, double textHeight, bool benPhai = true)
     {
         double kcDim = textHeight * 3;
+        double huong = benPhai ? 1 : -1;
         for (int i = 0; i < dsX.Count - 1; i++)
         {
-            DimY(dsX[i], dsX[i + 1], -ihang * kcDim);
+            DimY(dsX[i], dsX[i + 1], huong * ihang * kcDim);
+        }
+    }
+    public static void CreateDimension_Y1(List<Point3d> dsX, double chonTyLe, int ihang, double textHeight, bool benPhai = true)
+    {
+        //Hàm này tương tự Dimcontinue tránh bị nhảy Dim
+        double kcDim = textHeight * 3;
+        double huong = benPhai ? 1 : -1;
+
+        // Mốc X biên của toàn bộ điểm (max nếu dim bên phải, min nếu dim bên trái)
+        double xBien = benPhai ? dsX.Max(p => p.X) : dsX.Min(p => p.X);
+        double xDim = xBien + huong * ihang * kcDim;
+
+        for (int i = 0; i < dsX.Count - 1; i++)
+        {
+            // X cục bộ mà hàm DimY sẽ tự tính bên trong (max hoặc min của P1,P2)
+            double xLocal = benPhai
+                ? Math.Max(dsX[i].X, dsX[i + 1].X)
+                : Math.Min(dsX[i].X, dsX[i + 1].X);
+
+            double dentaX = xDim - xLocal;
+            DimY(dsX[i], dsX[i + 1], dentaX);
         }
     }
 
