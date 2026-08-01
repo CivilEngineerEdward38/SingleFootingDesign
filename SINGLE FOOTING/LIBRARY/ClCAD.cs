@@ -423,5 +423,15 @@ public class ClCAD
             DimY(dsX[i], dsX[i + 1], dentaX);
         }
     }
+    #region Block
+    public static Circle CreateCircleReturnCircle(Point3d pCenter, double radius)
+    {
+        Circle DT = new Autodesk.AutoCAD.DatabaseServices.Circle();
+        DT.SetDatabaseDefaults();
+        DT.Center = pCenter;
+        DT.Radius = radius;
+        return DT;
+    }
+    #endregion
 
 }

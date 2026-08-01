@@ -133,6 +133,8 @@ namespace ACAD_API.SINGLE_FOOTING.ViewModel
 
             SingleFootingModel.SettingModel.VeMatBangMongCoThang(pMatBang);
             SingleFootingModel.SettingModel.VeMatDungMongCoThang(pMatDung);
+            SingleFootingModel.RebarModel.VeThepMatDungMongCoThang(pMatDung, SingleFootingModel.SettingModel.BTBVDay, SingleFootingModel.SettingModel.BTBVConLai, SingleFootingModel.SettingModel.BmHm, SingleFootingModel.SettingModel.BcHc, SingleFootingModel.SettingModel.Hb, SingleFootingModel.SettingModel.Hv, SingleFootingModel.SettingModel.Hm, SingleFootingModel.SettingModel.D, SingleFootingModel.RebarModel.DuongKinhThepBan, SingleFootingModel.RebarModel.KhoangCachThepBan, SingleFootingModel.SettingModel.ChonTyLe);
+
         }
     }
 

@@ -132,6 +132,7 @@ namespace ACAD_API.SINGLE_FOOTING.Model
             ClCAD.CreateLayer("DIM", 4, "Continuous", Autodesk.AutoCAD.DatabaseServices.LineWeight.ByLineWeightDefault, true);
             ClCAD.CreateLayer("COTTHEP", 2, "Continuous", Autodesk.AutoCAD.DatabaseServices.LineWeight.ByLineWeightDefault, true);
             ClCAD.CreateLayer("CENTER", 4, "CENTER", Autodesk.AutoCAD.DatabaseServices.LineWeight.ByLineWeightDefault, true);
+            ClCAD.CreateLayer("HIDDEN", 4, "HIDDEN", Autodesk.AutoCAD.DatabaseServices.LineWeight.ByLineWeightDefault, true);
         }
         public static void CreateTextStyle()
         {
@@ -336,7 +337,10 @@ namespace ACAD_API.SINGLE_FOOTING.Model
             ClCAD.CreatePolylineFromListPoints(new List<Point3d> { p11, p12, p13, p14, p11 }, false);
             ClCAD.SetLayerCurrent("CENTER");
             ClCAD.CreatePolylineFromListPoints(new List<Point3d> { p15, p16 }, false);
-
+            //thêm nét đứt 
+            ClCAD.SetLayerCurrent("HIDDEN");
+            ClCAD.CreatePolylineFromListPoints(new List<Point3d> { p4, p8 }, false);
+            ClCAD.CreatePolylineFromListPoints(new List<Point3d> { p2, p9 }, false);
             #region Dim
             ClCAD.SetLayerCurrent("DIM");
             string strScale = string.Format("TL1-{0}", ChonTyLe.ToString());
