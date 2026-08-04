@@ -242,26 +242,8 @@ namespace SINGLE_FOOTING.SINGLE_FOOTING.Model
             int indexXienPhaiBatDau = 0;
             int indexXienPhaiKetThuc = SLThanhxien - 1;
             // Mép an toàn quy đổi (100mm), thay cho hằng số "100.0" thiếu quy đổi ở bản cũ
-            double mepAnToanVe = 0.1 * heSoQuyDoi;
-            // Tính số thanh đứng ở giữa
-            int SLThanhDung = (int)(bmhmVe / kcRaiXienVe) + 1
-                - ((int)((bmhmVe / 2.0 - bchcVe / 2.0 - mepAnToanVe) / kcRaiXienVe) + 1) * 2;
-            if (SLThanhDung < 0)
-            {
-                throw new InvalidOperationException($"SLThanhDung tính ra âm ({SLThanhDung}). Kiểm tra lại bmhmVe/bchcVe/kcRaiXienVe.");
-            }
-            int indexCuoiDuoi = SLThanhxien + SLThanhDung - 1;
-            if (indexCuoiDuoi < 0 || indexCuoiDuoi >= dsP.Count)
-            {
-                throw new InvalidOperationException($"indexCuoiDuoi ({indexCuoiDuoi}) vượt biên dsP.Count ({dsP.Count}). " +$"SLThanhxien={SLThanhxien}, SLThanhDung={SLThanhDung}.");
-            }
-            Point3d pDuoiCuoi = dsP[indexCuoiDuoi];
-            // ================== VẼ THÉP XIÊN  ==================
-            // Đảm bảo mỗi cặp điểm truyền vào LayoutReinforcementXien có X tăng dần,
-            // vì hàm này dừng ngay khi xTarget > ptEnd.X
-            Editor ed = CadApp.DocumentManager.MdiActiveDocument.Editor;
-            // 3. In các thông báo ra Command Line bằng ed
-            // ===== GỌI HÀM RẢI THÉP XIÊN, X LẤY THẲNG TỪ dsP (thép đáy) =====
+            int indexGiuaStart = SLThanhxien;
+            int indexGiuaEnd = dsP.Count - SLThanhxien - 1;
             List<Point3d> dsXienTrai = LayoutReinforcementXien(
                 dsP, indexXienTraiBatDau, indexXienTraiKetThuc,
                 theptronxiendautien, theptronxienthuhai,
@@ -270,15 +252,28 @@ namespace SINGLE_FOOTING.SINGLE_FOOTING.Model
                 dsP, indexXienPhaiBatDau, indexXienPhaiKetThuc,
                 theptronxienthuba, theptronxiencuoi,
                 nameBlock, remove: false, heSoPhongTo: 1.0);
-            List<Point3d> dsThepTren = new List<Point3d>();
-            double deltaY1 = hbVe + hvVe - 2 * btbvVe - dkThepBan * 2;
-            Point3d pTrenBatDau = new Point3d(pDuoiCuoi.X, pDuoiCuoi.Y + deltaY1, 0.0);
-            for (int i = 0; i < SLThanhDung; i++)
-            {
-                Point3d p = new Point3d(pTrenBatDau.X + i * kcRaiXienVe, pTrenBatDau.Y, 0.0);
-                ClBlock.InsertBlock(nameBlock, p, 1, 0);
-                dsThepTren.Add(p);
-            }
+            //vị trí đặt thép phần giữa cổ móng 
+            List<Point3d> dsthepGiua = LayoutReinforcementXien(
+                dsP, indexGiuaStart, indexGiuaEnd,
+                theptronxienthuhai, theptronxienthuba,
+                nameBlock, remove: false, heSoPhongTo: 1.0);
+            double chieuDaiNeo = 100 / scale;
+            double khoangLuiTren = dkThepBan * 2.5 / DrawingScaleDefault;
+            double yChanThepC = p4a.Y;
+            //VeThepChuCRai(dsXienTrai, 600, scale, yChanThepC, khoangLuiTren, chieuDaiNeo, p0.X);
+            //VeThepChuCRai(dsthepGiua, 600, scale, yChanThepC, khoangLuiTren, chieuDaiNeo, p0.X);
+            //VeThepChuCRai(dsXienPhai, 600, scale, yChanThepC, khoangLuiTren, chieuDaiNeo, p0.X);
+            
+            int soThanhLuiMep = 2; // lùi 2 thanh từ mép, bắt đầu từ thanh thứ 3
+
+            VeThepChuCRai(dsXienTrai, 600, scale, yChanThepC, khoangLuiTren, chieuDaiNeo, p0.X,
+                soThanhLuiMep, mepODauList: false);   // mép trái nằm ở CUỐI dsXienTrai
+
+            VeThepChuCRai(dsthepGiua, 600, scale, yChanThepC, khoangLuiTren, chieuDaiNeo, p0.X,
+                soThanhLuiMep: 0, mepODauList: true);
+
+            VeThepChuCRai(dsXienPhai, 600, scale, yChanThepC, khoangLuiTren, chieuDaiNeo, p0.X,
+                soThanhLuiMep, mepODauList: true);    // mép phải nằm ở ĐẦU dsXienPhai
             #endregion
         }
 
@@ -449,6 +444,63 @@ namespace SINGLE_FOOTING.SINGLE_FOOTING.Model
                 dsP.Add(diemve);
             }
             return dsP;
+        }
+        /// <summary>
+        /// huong = -1: cả 2 đầu neo hướng về bên TRÁI (âm X)
+        /// huong = +1: cả 2 đầu neo hướng về bên PHẢI (dương X)
+        /// </summary>
+        public void VeThepChuC(Point3d pDuoi, Point3d pTren, double chieuDaiNeo, int huong)
+        {
+            double half = chieuDaiNeo / 2.0 * huong;
+
+            Point3d p1 = new Point3d(pDuoi.X - half, pDuoi.Y, 0);  // đuôi neo tự do (dưới)
+            Point3d p2 = new Point3d(pDuoi.X + half, pDuoi.Y, 0);  // góc nối vào thanh đứng (dưới)
+            Point3d p3 = new Point3d(pTren.X + half, pTren.Y, 0);  // góc nối vào thanh đứng (trên)
+            Point3d p4 = new Point3d(pTren.X - half, pTren.Y, 0);  // đuôi neo tự do (trên)
+
+            List<Point3d> points = new List<Point3d> { p1, p2, p3, p4 };
+            ClCAD.CreatePolylineFromListPoints(points, false);
+        }
+        /// <summary>
+        /// mepOKauList = true: phần tử mép ngoài móng nằm ở ĐẦU list (index 0) - dùng cho dsXienPhai.
+        /// mepOKauList = false: phần tử mép ngoài móng nằm ở CUỐI list - dùng cho dsXienTrai.
+        /// soThanhLuiMep: số thanh thép tính từ mép ngoài KHÔNG đặt chữ C (thực tế người ta không chống
+        /// sát mép móng), ví dụ soThanhLuiMep = 2 nghĩa là bắt đầu tính từ thanh thứ 3.
+        /// </summary>
+        public void VeThepChuCRai(
+            List<Point3d> dsThepTren,
+            double kcRai,
+            double scale,
+            double yDuoi,
+            double khoangLuiTren,
+            double chieuDaiNeo,
+            double xTam,
+            int soThanhLuiMep,
+            bool mepODauList)
+        {
+            if (dsThepTren.Count < 2)
+                return;
+
+            double spacing = dsThepTren[1].DistanceTo(dsThepTren[0]);
+            if (spacing <= 1e-9)
+                return;
+
+            int step = Math.Max(1, (int)Math.Round((kcRai / scale) / spacing));
+            int count = dsThepTren.Count;
+
+            // Xác định điểm bắt đầu (lùi vào soThanhLuiMep từ mép ngoài) và chiều tiến (vào phía trong)
+            int startIndex = mepODauList ? soThanhLuiMep : count - 1 - soThanhLuiMep;
+            int dir = mepODauList ? 1 : -1;
+
+            for (int i = startIndex; i >= 0 && i < count; i += dir * step)
+            {
+                Point3d pBienTren = dsThepTren[i];
+                Point3d pTren = new Point3d(pBienTren.X, pBienTren.Y - khoangLuiTren, 0);
+                Point3d pDuoi = new Point3d(pTren.X, yDuoi, 0);
+
+                int huong = (pTren.X >= xTam) ? +1 : -1;
+                VeThepChuC(pDuoi, pTren, chieuDaiNeo, huong);
+            }
         }
         #endregion
     }
