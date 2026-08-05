@@ -187,7 +187,46 @@ public class ClCAD
             tr.Commit();
         }
     }
+    #region Thiết lập cho Leader
+    //Hàm lấy trung điểm trên đoạn thẳng từ P1 đến P2 với t là tỷ lệ bất kì thể hiện kích thước
+    public static Point3d GetPointOnSegment(Point3d p1, Point3d p2, double t)
+    {
+        return new Point3d(
+            p1.X + (p2.X - p1.X) * t,
+            p1.Y + (p2.Y - p1.Y) * t,
+            0);
+    }
+    public static ObjectId CreateLeader(List<Point3d> points)
+    {
+        Document doc = Application.DocumentManager.MdiActiveDocument;
+        Database db = doc.Database;
 
+        using (doc.LockDocument())
+        using (Transaction tr = db.TransactionManager.StartTransaction())
+        {
+            BlockTable bt = (BlockTable)tr.GetObject(db.BlockTableId, OpenMode.ForRead);
+            BlockTableRecord ms =
+                (BlockTableRecord)tr.GetObject(bt[BlockTableRecord.ModelSpace], OpenMode.ForWrite);
+
+            Leader leader = new Leader();
+
+            foreach (Point3d p in points)
+            {
+                leader.AppendVertex(p);
+            }
+
+            leader.HasArrowHead = true;
+            leader.SetDatabaseDefaults();
+
+            ms.AppendEntity(leader);
+            tr.AddNewlyCreatedDBObject(leader, true);
+
+            tr.Commit();
+
+            return leader.ObjectId;
+        }
+    }
+    #endregion
     public static Point3d GetPointsFromUser(string ThongBao)
     {
         PromptPointResult chonDiem = Application.DocumentManager.MdiActiveDocument.Editor.GetPoint(new PromptPointOptions(ThongBao));

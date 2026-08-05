@@ -133,6 +133,7 @@ namespace ACAD_API.SINGLE_FOOTING.Model
             ClCAD.CreateLayer("COTTHEP", 2, "Continuous", Autodesk.AutoCAD.DatabaseServices.LineWeight.ByLineWeightDefault, true);
             ClCAD.CreateLayer("CENTER", 4, "CENTER", Autodesk.AutoCAD.DatabaseServices.LineWeight.ByLineWeightDefault, true);
             ClCAD.CreateLayer("HIDDEN", 4, "HIDDEN", Autodesk.AutoCAD.DatabaseServices.LineWeight.ByLineWeightDefault, true);
+            ClCAD.CreateLayer("CHU", 3, "HIDDEN", Autodesk.AutoCAD.DatabaseServices.LineWeight.ByLineWeightDefault, true);
         }
         public static void CreateTextStyle()
         {

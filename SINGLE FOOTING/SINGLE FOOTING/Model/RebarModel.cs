@@ -260,20 +260,60 @@ namespace SINGLE_FOOTING.SINGLE_FOOTING.Model
             double chieuDaiNeo = 100 / scale;
             double khoangLuiTren = dkThepBan * 2.5 / DrawingScaleDefault;
             double yChanThepC = p4a.Y;
-            //VeThepChuCRai(dsXienTrai, 600, scale, yChanThepC, khoangLuiTren, chieuDaiNeo, p0.X);
-            //VeThepChuCRai(dsthepGiua, 600, scale, yChanThepC, khoangLuiTren, chieuDaiNeo, p0.X);
-            //VeThepChuCRai(dsXienPhai, 600, scale, yChanThepC, khoangLuiTren, chieuDaiNeo, p0.X);
-            
             int soThanhLuiMep = 2; // lùi 2 thanh từ mép, bắt đầu từ thanh thứ 3
-
             VeThepChuCRai(dsXienTrai, 600, scale, yChanThepC, khoangLuiTren, chieuDaiNeo, p0.X,
                 soThanhLuiMep, mepODauList: false);   // mép trái nằm ở CUỐI dsXienTrai
-
             VeThepChuCRai(dsthepGiua, 600, scale, yChanThepC, khoangLuiTren, chieuDaiNeo, p0.X,
                 soThanhLuiMep: 0, mepODauList: true);
-
             VeThepChuCRai(dsXienPhai, 600, scale, yChanThepC, khoangLuiTren, chieuDaiNeo, p0.X,
                 soThanhLuiMep, mepODauList: true);    // mép phải nằm ở ĐẦU dsXienPhai
+            #endregion
+            #region Point Tag thep
+            Point3d ptag1 = new Point3d(p13.X + btbvVe * 2, p13.Y - btbvVe * 5, 0);
+            Point3d p10t_temp = new Point3d(p10t.X-btbvVe*2.5, p10t.Y, 0);
+            Point3d pInTag = new Point3d(ptag1.X +12, ptag1.Y, 0);
+            //Point3d  = ClCAD.GetPointOnSegment(dsP[0], dsP[1], 0.5);
+            List<Point3d> dsPTag = new List<Point3d>() { dsP[0], p10t_temp, dsP[3] };
+            Point3d pInTag_Text = new Point3d(ptag1.X + btbvVe, ptag1.Y + btbvVe, 0); // điểm chèn text Ø12@200
+            #region Method tag thep
+            ClCAD.SetLayerCurrent("DIM");
+            for (int i = 0; i < dsPTag.Count; i++)
+            {
+                ClCAD.CreateLeader(new List<Point3d> { dsPTag[i], ptag1 });
+            }
+            ClCAD.CreateLine(ptag1, pInTag);
+            ClBlock.EnsureBlockSoThepMong();          // tạo block nếu chưa có
+            ClBlock.InsertBlockSoThepMong(pInTag, 1, ClBlock.TagSide.Right); // insert như hàm bạn đã có
+            ClBlock.CreateTagThep(pInTag_Text, dkThepBan, KhoangCachThepBan);
+            #endregion
+
+
+
+
+
+
+
+
+
+
+
+            //// bố chèn kí hiệu thép
+
+
+
+            //// chèn tag thép thanh còn lại
+            //Point3d pt1 = new Point3d(dsPTag[2].X - kcThepban / 2, pth1.Y, 0);
+            //Point3d pt2 = new Point3d(pt1.X, pt1.Y + chieuCaoBanDe + chieuCaoVat, 0);
+            //Point3d pt3 = new Point3d(pInTag.X, pt2.Y, 0);
+            //ClCAD.CreatePolylineFromListPoints(new List<Point3d> { pt1, pt2, pt3 }, false);
+            //if (kichThuocMong == kichthuocMong2 && dkThepBan == dkthepban2)
+            //{
+            //    ClBlock.InsertBlockTagThep(nameBlock, pt3, sh, 0, dkThepBan, kcthepban2, scale * 0.01, 0);
+            //}
+            //else
+            //{
+            //    ClBlock.InsertBlockTagThep(nameBlock, pt3, sh + 1, 0, dkthepban2, kcthepban2, scale * 0.01, 0);
+            //}
             #endregion
         }
 
@@ -467,16 +507,7 @@ namespace SINGLE_FOOTING.SINGLE_FOOTING.Model
         /// soThanhLuiMep: số thanh thép tính từ mép ngoài KHÔNG đặt chữ C (thực tế người ta không chống
         /// sát mép móng), ví dụ soThanhLuiMep = 2 nghĩa là bắt đầu tính từ thanh thứ 3.
         /// </summary>
-        public void VeThepChuCRai(
-            List<Point3d> dsThepTren,
-            double kcRai,
-            double scale,
-            double yDuoi,
-            double khoangLuiTren,
-            double chieuDaiNeo,
-            double xTam,
-            int soThanhLuiMep,
-            bool mepODauList)
+        public void VeThepChuCRai(List<Point3d> dsThepTren,double kcRai,double scale,double yDuoi,double khoangLuiTren,double chieuDaiNeo, double xTam, int soThanhLuiMep,bool mepODauList)
         {
             if (dsThepTren.Count < 2)
                 return;

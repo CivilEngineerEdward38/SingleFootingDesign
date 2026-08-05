@@ -1,4 +1,5 @@
 ﻿using Autodesk.AutoCAD.ApplicationServices;
+using Autodesk.AutoCAD.Colors;
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.Geometry;
 using System;
@@ -79,5 +80,199 @@ public class ClBlock
             tr.Commit();
         }
     }
+
+    public static void CreateTagThep(Point3d ptInsert, int dk, double kcach,
+    double textHeight = 2, double widthFactor = 0.9, string textStyleName = "PECC3_Tahoma")
+    {
+        ClCAD.CreateTextStyle(textStyleName, "Tahoma", 0, 1, false, false);
+
+        Document doc = Application.DocumentManager.MdiActiveDocument;
+        Database db = doc.Database;
+
+        using (doc.LockDocument())
+        using (Transaction tr = db.TransactionManager.StartTransaction())
+        {
+            BlockTableRecord btr = tr.GetObject(db.CurrentSpaceId, OpenMode.ForWrite) as BlockTableRecord;
+            TextStyleTable tst = tr.GetObject(db.TextStyleTableId, OpenMode.ForRead) as TextStyleTable;
+            ObjectId styleId = tst.Has(textStyleName) ? tst[textStyleName] : db.Textstyle;
+
+            LayerTable lt = tr.GetObject(db.LayerTableId, OpenMode.ForRead) as LayerTable;
+            string textLayer = lt.Has("CHU") ? "CHU" : "0";
+
+            string noidung = "%%C" + dk.ToString();
+            if (kcach > 0) noidung += "@" + kcach.ToString();
+
+            using (DBText dkText = new DBText())
+            {
+                dkText.SetDatabaseDefaults();
+                dkText.Position = ptInsert;
+                dkText.Height = textHeight;
+                dkText.WidthFactor = widthFactor;
+                dkText.TextString = noidung;
+                dkText.TextStyleId = styleId;
+                dkText.Layer = textLayer;
+                dkText.HorizontalMode = TextHorizontalMode.TextLeft;
+                dkText.VerticalMode = TextVerticalMode.TextBase;
+                btr.AppendEntity(dkText);
+                tr.AddNewlyCreatedDBObject(dkText, true);
+            }
+
+            tr.Commit();
+        }
+    }
+    public static void EnsureBlockSoThepMong(double circleRadius = 2.5)
+    {
+        string blockName = "SO-THEP MONG V2";
+        string attTag = "SO";
+
+        Document doc = Application.DocumentManager.MdiActiveDocument;
+        Database db = doc.Database;
+
+        using (doc.LockDocument())
+        using (Transaction tr = db.TransactionManager.StartTransaction())
+        {
+            BlockTable bt = tr.GetObject(db.BlockTableId, OpenMode.ForRead) as BlockTable;
+            if (bt.Has(blockName))
+            {
+                tr.Commit();
+                return; // đã có rồi, không tạo lại
+            }
+
+            // Đảm bảo style tồn tại trước
+            ClCAD.CreateTextStyle("PECC3_Tahoma", "Tahoma", 0, 1, false, false);
+            TextStyleTable tst = tr.GetObject(db.TextStyleTableId, OpenMode.ForRead) as TextStyleTable;
+            ObjectId styleId = tst.Has("PECC3_Tahoma") ? tst["PECC3_Tahoma"] : db.Textstyle;
+
+            bt.UpgradeOpen();
+            using (BlockTableRecord newBtr = new BlockTableRecord())
+            {
+                newBtr.Name = blockName;
+                newBtr.Origin = Point3d.Origin;
+
+                bt.Add(newBtr);
+                tr.AddNewlyCreatedDBObject(newBtr, true);
+
+                // --- Circle tại gốc block (0,0,0) ---
+                using (Circle circle = new Circle())
+                {
+                    circle.SetDatabaseDefaults();
+                    circle.Center = Point3d.Origin;
+                    circle.Radius = circleRadius;
+                    newBtr.AppendEntity(circle);
+                    tr.AddNewlyCreatedDBObject(circle, true);
+                }
+
+                // --- AttributeDefinition "SO", căn giữa tại gốc block ---
+                using (AttributeDefinition attDef = new AttributeDefinition())
+                {
+                    attDef.SetDatabaseDefaults();
+                    attDef.Position = Point3d.Origin;
+                    attDef.Tag = attTag;
+                    attDef.Prompt = "Nhap so hieu";
+                    attDef.TextString = "1";
+                    attDef.Height = 4;
+                    attDef.WidthFactor = 1;
+                    attDef.Color = Color.FromColorIndex(ColorMethod.ByAci, 3); // green
+                    attDef.TextStyleId = styleId;
+                    attDef.Justify = AttachmentPoint.MiddleCenter;
+                    attDef.AlignmentPoint = Point3d.Origin;
+                    attDef.Constant = false;
+                    attDef.Verifiable = false;
+                    attDef.Preset = false;
+
+                    newBtr.AppendEntity(attDef);
+                    tr.AddNewlyCreatedDBObject(attDef, true);
+                }
+            }
+
+            tr.Commit();
+        }
+    }
+
+    public enum TagSide { Left, Right }
+
+    public static void InsertBlockSoThepMong(Point3d pQuadrantPt, int sh, TagSide side = TagSide.Right,
+        double scale = 1.0, double rotation = 0)
+    {
+        string blockName = "SO-THEP MONG V2";
+        string attTag = "SO";
+
+        Document doc = Application.DocumentManager.MdiActiveDocument;
+        Database db = doc.Database;
+
+        using (doc.LockDocument())
+        using (Transaction tr = db.TransactionManager.StartTransaction())
+        {
+            BlockTable acBlkTbl = tr.GetObject(db.BlockTableId, OpenMode.ForRead) as BlockTable;
+            if (!acBlkTbl.Has(blockName))
+            {
+                MessageBox.Show("Block \"" + blockName + "\" chưa tồn tại trong bản vẽ này.");
+                return;
+            }
+
+            ObjectId blkRecId = acBlkTbl[blockName];
+            BlockTableRecord acBlkTblRec = tr.GetObject(blkRecId, OpenMode.ForRead) as BlockTableRecord;
+
+            // --- Đọc bán kính thật của Circle trong block definition ---
+            double circleRadius = 0;
+            foreach (ObjectId objId in acBlkTblRec)
+            {
+                DBObject dbObj = tr.GetObject(objId, OpenMode.ForRead);
+                if (dbObj is Circle circ)
+                {
+                    circleRadius = circ.Radius;
+                    break;
+                }
+            }
+
+            // --- Tính điểm chèn thật (tâm block) từ điểm quadrant mong muốn ---
+            double offset = circleRadius * scale;
+            Point3d ptInsert;
+            if (side == TagSide.Right)
+            {
+                // Circle nằm bên phải pQuadrantPt -> tâm lùi sang phải, quadrant trái chạm pQuadrantPt
+                ptInsert = new Point3d(pQuadrantPt.X + offset, pQuadrantPt.Y, pQuadrantPt.Z);
+            }
+            else
+            {
+                // Circle nằm bên trái pQuadrantPt -> tâm lùi sang trái, quadrant phải chạm pQuadrantPt
+                ptInsert = new Point3d(pQuadrantPt.X - offset, pQuadrantPt.Y, pQuadrantPt.Z);
+            }
+
+            using (BlockReference acBlkRef = new BlockReference(ptInsert, blkRecId))
+            {
+                acBlkRef.ScaleFactors = new Scale3d(scale, scale, scale);
+                acBlkRef.Rotation = rotation;
+
+                BlockTableRecord acCurSpaceBlkTblRec = tr.GetObject(db.CurrentSpaceId, OpenMode.ForWrite) as BlockTableRecord;
+                acCurSpaceBlkTblRec.AppendEntity(acBlkRef);
+                tr.AddNewlyCreatedDBObject(acBlkRef, true);
+
+                if (acBlkTblRec.HasAttributeDefinitions)
+                {
+                    foreach (ObjectId objId in acBlkTblRec)
+                    {
+                        DBObject dbObj = tr.GetObject(objId, OpenMode.ForRead);
+                        if (dbObj is AttributeDefinition acAtt && !acAtt.Constant)
+                        {
+                            if (acAtt.Tag == attTag)
+                            {
+                                using (AttributeReference acAttRef = new AttributeReference())
+                                {
+                                    acAttRef.SetAttributeFromBlock(acAtt, acBlkRef.BlockTransform);
+                                    acAttRef.Position = acAtt.Position.TransformBy(acBlkRef.BlockTransform);
+                                    acAttRef.TextString = sh.ToString();
+                                    acBlkRef.AttributeCollection.AppendAttribute(acAttRef);
+                                    tr.AddNewlyCreatedDBObject(acAttRef, true);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            tr.Commit();
+        }
+    }
 }
+
 
