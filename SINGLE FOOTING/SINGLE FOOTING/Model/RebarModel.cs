@@ -261,60 +261,70 @@ namespace SINGLE_FOOTING.SINGLE_FOOTING.Model
             double khoangLuiTren = dkThepBan * 2.5 / DrawingScaleDefault;
             double yChanThepC = p4a.Y;
             int soThanhLuiMep = 2; // lùi 2 thanh từ mép, bắt đầu từ thanh thứ 3
-            VeThepChuCRai(dsXienTrai, 600, scale, yChanThepC, khoangLuiTren, chieuDaiNeo, p0.X,
-                soThanhLuiMep, mepODauList: false);   // mép trái nằm ở CUỐI dsXienTrai
-            VeThepChuCRai(dsthepGiua, 600, scale, yChanThepC, khoangLuiTren, chieuDaiNeo, p0.X,
-                soThanhLuiMep: 0, mepODauList: true);
-            VeThepChuCRai(dsXienPhai, 600, scale, yChanThepC, khoangLuiTren, chieuDaiNeo, p0.X,
-                soThanhLuiMep, mepODauList: true);    // mép phải nằm ở ĐẦU dsXienPhai
+            List<Point3d> dsMidTrai = VeThepChuCRai(dsXienTrai, 600, scale, yChanThepC, khoangLuiTren, chieuDaiNeo, p0.X, soThanhLuiMep, mepODauList: false);
+            List<Point3d> dsMidGiua = VeThepChuCRai(dsthepGiua, 600, scale, yChanThepC, khoangLuiTren, chieuDaiNeo, p0.X,soThanhLuiMep: 0, mepODauList: true);
+            List<Point3d> dsMidPhai = VeThepChuCRai(dsXienPhai, 600, scale, yChanThepC, khoangLuiTren, chieuDaiNeo, p0.X, soThanhLuiMep, mepODauList: true);
+            // Gom tất cả chữ C lại - vì số hiệu 03 đại diện chung cho toàn bộ chữ C rải đều, không phân biệt vùng
+            List<Point3d> dsMidThepChuCAll = new List<Point3d>();
+            dsMidThepChuCAll.AddRange(dsMidTrai);
+            dsMidThepChuCAll.AddRange(dsMidGiua);
+            dsMidThepChuCAll.AddRange(dsMidPhai);
             #endregion
             #region Point Tag thep
+            //So hieu thep 01
+            Point3d ptag1_temp = new Point3d(p10t.X-btbvVe*2.5, p10t.Y, 0);
             Point3d ptag1 = new Point3d(p13.X + btbvVe * 2, p13.Y - btbvVe * 5, 0);
-            Point3d p10t_temp = new Point3d(p10t.X-btbvVe*2.5, p10t.Y, 0);
-            Point3d pInTag = new Point3d(ptag1.X +12, ptag1.Y, 0);
-            //Point3d  = ClCAD.GetPointOnSegment(dsP[0], dsP[1], 0.5);
-            List<Point3d> dsPTag = new List<Point3d>() { dsP[0], p10t_temp, dsP[3] };
-            Point3d pInTag_Text = new Point3d(ptag1.X + btbvVe, ptag1.Y + btbvVe, 0); // điểm chèn text Ø12@200
+            Point3d pTag1_Text = new Point3d(ptag1.X + btbvVe, ptag1.Y + btbvVe, 0); // điểm chèn text Ø12@200
+            Point3d pInTag1 = new Point3d(ptag1.X +12, ptag1.Y, 0);
+            List<Point3d> dsPTag1 = new List<Point3d>() { dsP[0], ptag1_temp, dsP[3] };
+            //So hieu thep 02
+            Point3d ptag2_temp = ClCAD.GetPointOnSegment(lstBTBV[4], lstBTBV[3], 0.1);
+            Point3d ptag2 = new Point3d(ptag1.X, yDeMong, 0);
+            Point3d pTag2_Text = new Point3d(ptag2.X + btbvVe, ptag2.Y + btbvVe, 0); // điểm chèn text Ø12@200
+            Point3d pInTag2 = new Point3d(ptag2.X + 12, ptag2.Y, 0);
+            List<Point3d> dsPTag2 = new List<Point3d>() { dsXienPhai[0], ptag2_temp, dsXienPhai[3] };
+            //So hieu thep 03 
+            Point3d ptag3 = new Point3d(p3.X - 3 , yDeMong +4, 0);
+            Point3d pInTag3 = new Point3d(ptag3.X - 11.5, ptag3.Y, 0);
+            Point3d pTag3_Text = new Point3d(pInTag3.X + btbvVe, pInTag3.Y + btbvVe, 0); // điểm chèn text Ø12@200
+            //List<Point3d> dsPTag3 = new List<Point3d>() { dsXienPhai[0], ptag2_temp, dsXienPhai[3] };
+            Point3d pTargetThepChuC3 = ChonThepChuCGanNhat(dsMidThepChuCAll, ptag3.X);
+            //So hieu thep 04
+            Point3d pTag4 =new Point3d(p4.X+btbvConlaiVe, (yDinhCoMong + yDeMong) / 2, 0);
+            Point3d pTag4_temp = new Point3d(pTag4.X + bchcVe-btbvConlaiVe, pTag4.Y, 0);
+            Point3d pInTag4 = new Point3d(pInTag3.X, pTag4.Y, 0);
+            Point3d pInTag4_text = new Point3d(pInTag4.X + btbvVe, pInTag4.Y + btbvVe, 0); // điểm chèn text Ø12@200
+            //So hieu thep 05
+
+            #endregion
             #region Method tag thep
             ClCAD.SetLayerCurrent("DIM");
-            for (int i = 0; i < dsPTag.Count; i++)
+            for (int i = 0; i < dsPTag1.Count; i++)
             {
-                ClCAD.CreateLeader(new List<Point3d> { dsPTag[i], ptag1 });
+                ClCAD.CreateLeader(new List<Point3d> { dsPTag1[i], ptag1 });
             }
-            ClCAD.CreateLine(ptag1, pInTag);
+            for (int i = 0; i < dsPTag2.Count; i++)
+            {
+                ClCAD.CreateLeader(new List<Point3d> { dsPTag2[i], ptag2 });
+            }
+            ClCAD.CreateLeader(new List<Point3d> { pTargetThepChuC3, ptag3 });
+            ClCAD.CreateLine(ptag1, pInTag1);
+            ClCAD.CreateLine(ptag2, pInTag2);
+            ClCAD.CreateLine(ptag3, pInTag3);
+            ClCAD.CreateLine(pInTag4, pTag4_temp);
+            ClBlock.InsertArchTickBlock(pTag4, 0.5, 0);
+            ClBlock.InsertArchTickBlock(pTag4_temp, 0.5, 0);
             ClBlock.EnsureBlockSoThepMong();          // tạo block nếu chưa có
-            ClBlock.InsertBlockSoThepMong(pInTag, 1, ClBlock.TagSide.Right); // insert như hàm bạn đã có
-            ClBlock.CreateTagThep(pInTag_Text, dkThepBan, KhoangCachThepBan);
+            ClBlock.InsertBlockSoThepMong(pInTag1, 1, ClBlock.TagSide.Right); // insert như hàm bạn đã có
+            ClBlock.CreateTagThep(pTag1_Text, dkThepBan, KhoangCachThepBan);
+            ClBlock.InsertBlockSoThepMong(pInTag2, 2, ClBlock.TagSide.Right); 
+            ClBlock.CreateTagThep(pTag2_Text, dkThepBan, KhoangCachThepBan);
+            ClBlock.InsertBlockSoThepMong(pInTag3, 3, ClBlock.TagSide.Left); 
+            ClBlock.CreateTagThep(pTag3_Text, dkThepBan, 600);
+            ClBlock.InsertBlockSoThepMong(pInTag4, 4, ClBlock.TagSide.Left);
+            ClBlock.CreateTagThep(pInTag4_text, SLThepCoMong, DuongKinhThepCoMong);
             #endregion
-
-
-
-
-
-
-
-
-
-
-
-            //// bố chèn kí hiệu thép
-
-
-
-            //// chèn tag thép thanh còn lại
-            //Point3d pt1 = new Point3d(dsPTag[2].X - kcThepban / 2, pth1.Y, 0);
-            //Point3d pt2 = new Point3d(pt1.X, pt1.Y + chieuCaoBanDe + chieuCaoVat, 0);
-            //Point3d pt3 = new Point3d(pInTag.X, pt2.Y, 0);
-            //ClCAD.CreatePolylineFromListPoints(new List<Point3d> { pt1, pt2, pt3 }, false);
-            //if (kichThuocMong == kichthuocMong2 && dkThepBan == dkthepban2)
-            //{
-            //    ClBlock.InsertBlockTagThep(nameBlock, pt3, sh, 0, dkThepBan, kcthepban2, scale * 0.01, 0);
-            //}
-            //else
-            //{
-            //    ClBlock.InsertBlockTagThep(nameBlock, pt3, sh + 1, 0, dkthepban2, kcthepban2, scale * 0.01, 0);
-            //}
-            #endregion
+           
         }
 
         #region Define layoutreinforcement
@@ -489,7 +499,7 @@ namespace SINGLE_FOOTING.SINGLE_FOOTING.Model
         /// huong = -1: cả 2 đầu neo hướng về bên TRÁI (âm X)
         /// huong = +1: cả 2 đầu neo hướng về bên PHẢI (dương X)
         /// </summary>
-        public void VeThepChuC(Point3d pDuoi, Point3d pTren, double chieuDaiNeo, int huong)
+        public Point3d VeThepChuC(Point3d pDuoi, Point3d pTren, double chieuDaiNeo, int huong)
         {
             double half = chieuDaiNeo / 2.0 * huong;
 
@@ -500,6 +510,9 @@ namespace SINGLE_FOOTING.SINGLE_FOOTING.Model
 
             List<Point3d> points = new List<Point3d> { p1, p2, p3, p4 };
             ClCAD.CreatePolylineFromListPoints(points, false);
+            // Điểm giữa đoạn nối đứng (p2-p3) - dùng làm target cho leader số hiệu thép
+            Point3d pMid = new Point3d(pDuoi.X + half, (pDuoi.Y + pTren.Y) / 2.0, 0);
+            return pMid;
         }
         /// <summary>
         /// mepOKauList = true: phần tử mép ngoài móng nằm ở ĐẦU list (index 0) - dùng cho dsXienPhai.
@@ -507,19 +520,20 @@ namespace SINGLE_FOOTING.SINGLE_FOOTING.Model
         /// soThanhLuiMep: số thanh thép tính từ mép ngoài KHÔNG đặt chữ C (thực tế người ta không chống
         /// sát mép móng), ví dụ soThanhLuiMep = 2 nghĩa là bắt đầu tính từ thanh thứ 3.
         /// </summary>
-        public void VeThepChuCRai(List<Point3d> dsThepTren,double kcRai,double scale,double yDuoi,double khoangLuiTren,double chieuDaiNeo, double xTam, int soThanhLuiMep,bool mepODauList)
+        public List<Point3d> VeThepChuCRai(List<Point3d> dsThepTren, double kcRai, double scale, double yDuoi, double khoangLuiTren, double chieuDaiNeo, double xTam, int soThanhLuiMep, bool mepODauList)
         {
+            List<Point3d> dsMidThepChuC = new List<Point3d>(); // gom điểm giữa từng chữ C đã vẽ
+
             if (dsThepTren.Count < 2)
-                return;
+                return dsMidThepChuC;
 
             double spacing = dsThepTren[1].DistanceTo(dsThepTren[0]);
             if (spacing <= 1e-9)
-                return;
+                return dsMidThepChuC;
 
             int step = Math.Max(1, (int)Math.Round((kcRai / scale) / spacing));
             int count = dsThepTren.Count;
 
-            // Xác định điểm bắt đầu (lùi vào soThanhLuiMep từ mép ngoài) và chiều tiến (vào phía trong)
             int startIndex = mepODauList ? soThanhLuiMep : count - 1 - soThanhLuiMep;
             int dir = mepODauList ? 1 : -1;
 
@@ -530,8 +544,35 @@ namespace SINGLE_FOOTING.SINGLE_FOOTING.Model
                 Point3d pDuoi = new Point3d(pTren.X, yDuoi, 0);
 
                 int huong = (pTren.X >= xTam) ? +1 : -1;
-                VeThepChuC(pDuoi, pTren, chieuDaiNeo, huong);
+                Point3d pMid = VeThepChuC(pDuoi, pTren, chieuDaiNeo, huong);
+                dsMidThepChuC.Add(pMid);
             }
+
+            return dsMidThepChuC;
+        }
+        /// <summary>
+        /// Chọn điểm giữa chữ C gần nhất theo phương X so với 1 tọa độ tham chiếu (thường là X của vòng tròn số hiệu).
+        /// Sort theo X trước để đảm bảo chọn đúng lân cận hình học, không phụ thuộc thứ tự sinh ra trong mảng gốc.
+        /// </summary>
+        public Point3d ChonThepChuCGanNhat(List<Point3d> dsMidThepChuC, double xThamChieu)
+        {
+            if (dsMidThepChuC == null || dsMidThepChuC.Count == 0)
+                return Point3d.Origin; // hoặc throw, tùy anh muốn xử lý
+
+            List<Point3d> dsSortX = dsMidThepChuC.OrderBy(p => p.X).ToList();
+
+            Point3d ketQua = dsSortX[0];
+            double minKhoangCach = Math.Abs(dsSortX[0].X - xThamChieu);
+            for (int i = 1; i < dsSortX.Count; i++)
+            {
+                double kc = Math.Abs(dsSortX[i].X - xThamChieu);
+                if (kc < minKhoangCach)
+                {
+                    minKhoangCach = kc;
+                    ketQua = dsSortX[i];
+                }
+            }
+            return ketQua;
         }
         #endregion
     }

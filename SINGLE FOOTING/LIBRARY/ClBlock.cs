@@ -273,6 +273,196 @@ public class ClBlock
             tr.Commit();
         }
     }
+    public static ObjectId EnsureArchTickBlock(Transaction tr)
+    {
+        Database db = HostApplicationServices.WorkingDatabase;
+        BlockTable bt = (BlockTable)tr.GetObject(db.BlockTableId, OpenMode.ForRead);
+        const string blockName = "_ARCHTICK";
+        if (bt.Has(blockName))
+            return bt[blockName];
+        bt.UpgradeOpen();
+        BlockTableRecord btr = new BlockTableRecord
+        {
+            Name = blockName,
+            Origin = Point3d.Origin
+        };
+        ObjectId id = bt.Add(btr);
+        tr.AddNewlyCreatedDBObject(btr, true);
+        Polyline pl = new Polyline();
+        pl.AddVertexAt(0, new Point2d(-0.75, -0.75), 0, 0, 0);
+        pl.AddVertexAt(1, new Point2d(0.75, 0.75), 0, 0, 0);
+        pl.ConstantWidth = 0.18;
+        pl.Layer = "0";
+        pl.Color = Color.FromColorIndex(ColorMethod.ByBlock, 0);
+        btr.AppendEntity(pl);
+        tr.AddNewlyCreatedDBObject(pl, true);
+        return id;
+    }
+    public static void InsertArchTickBlock(Point3d ptInsert, double scale = 1.2, double rotation = 13.0)
+    {
+        Document doc = Application.DocumentManager.MdiActiveDocument;
+        Database db = doc.Database;
+        using (Transaction tr = db.TransactionManager.StartTransaction())
+        {
+            ObjectId blockId = EnsureArchTickBlock(tr);
+            BlockTableRecord currentSpace =
+                (BlockTableRecord)tr.GetObject(db.CurrentSpaceId, OpenMode.ForWrite);
+            BlockReference br = new BlockReference(ptInsert, blockId);
+            // Scale
+            br.ScaleFactors = new Scale3d(scale);
+            // Rotation (độ -> radian)
+            br.Rotation = rotation * Math.PI / 180.0;
+            // Layer của block
+            br.Layer = "DIM";
+            // Để layer quyết định màu
+            br.ColorIndex = 256;     // ByLayer
+            currentSpace.AppendEntity(br);
+            tr.AddNewlyCreatedDBObject(br, true);
+            tr.Commit();
+        }
+    }
+    public static ObjectId EnsureLayer(Transaction tr, Database db, string layerName, short colorIndex = 7)
+    {
+        LayerTable lt = (LayerTable)tr.GetObject(db.LayerTableId, OpenMode.ForRead);
+        if (lt.Has(layerName))
+            return lt[layerName];
+
+        lt.UpgradeOpen();
+        LayerTableRecord ltr = new LayerTableRecord
+        {
+            Name = layerName,
+            Color = Autodesk.AutoCAD.Colors.Color.FromColorIndex(
+                Autodesk.AutoCAD.Colors.ColorMethod.ByAci, colorIndex)
+        };
+        ObjectId ltrId = lt.Add(ltr);
+        tr.AddNewlyCreatedDBObject(ltr, true);
+        return ltrId;
+    }
+
+    public static ObjectId EnsureBlockMCHL(Transaction tr, Database db)
+    {
+        BlockTable bt = (BlockTable)tr.GetObject(db.BlockTableId, OpenMode.ForRead);
+        string blockName = "PECC3_MCHL";
+        if (bt.Has(blockName))
+            return bt[blockName];
+
+        string styleName = "VNIHC";
+        TextStyleTable st = (TextStyleTable)tr.GetObject(db.TextStyleTableId, OpenMode.ForRead);
+        if (!st.Has(styleName))
+            throw new System.Exception($"TextStyle '{styleName}' chưa được tạo. Hãy gọi CreateTextStyle trước.");
+        ObjectId textStyleId = st[styleName];
+
+        EnsureLayer(tr, db, "MAIN");
+        EnsureLayer(tr, db, "HA");
+
+        bt.UpgradeOpen();
+        BlockTableRecord btr = new BlockTableRecord
+        {
+            Name = blockName,
+            Origin = Point3d.Origin
+        };
+        ObjectId btrId = bt.Add(btr);
+        tr.AddNewlyCreatedDBObject(btr, true);
+
+        // --- A. Nét gạch ngang dưới (Trace) — ngắn lại ---
+        double halfLength = 4.3;
+        double halfWidth = 0.3;
+        Trace lineBase = new Trace(
+            new Point3d(-halfLength, -halfWidth, 0),
+            new Point3d(halfLength, -halfWidth, 0),
+            new Point3d(-halfLength, halfWidth, 0),
+            new Point3d(halfLength, halfWidth, 0)
+        );
+        lineBase.Layer = "MAIN";
+        btr.AppendEntity(lineBase);
+        tr.AddNewlyCreatedDBObject(lineBase, true);
+
+        // --- B. Mũi tên — giữ nguyên ---
+        Line arrowStem = new Line(new Point3d(2, -6, 0), new Point3d(2, -1.5, 0));
+        arrowStem.Layer = "MAIN";
+        btr.AppendEntity(arrowStem);
+        tr.AddNewlyCreatedDBObject(arrowStem, true);
+
+        Solid arrowHead = new Solid(
+            new Point3d(1, -2, 0),
+            new Point3d(3, -2, 0),
+            new Point3d(2, -0.2, 0),
+            new Point3d(2, -0.2, 0)
+        );
+        arrowHead.Layer = "MAIN";
+        btr.AppendEntity(arrowHead);
+        tr.AddNewlyCreatedDBObject(arrowHead, true);
+
+        // --- C. Attribute Definition "TEN" — sát lại gần mũi tên hơn ---
+        AttributeDefinition attDef = new AttributeDefinition
+        {
+            Tag = "TEN",
+            Prompt = "TEN MAT CAT",
+            TextString = "1",
+            Position = new Point3d(-2, -3.2, 0),
+            Height = 4.0,
+            WidthFactor = 1.0,
+            TextStyleId = textStyleId,
+            Justify = AttachmentPoint.MiddleCenter,
+            Layer = "MAIN"
+        };
+        attDef.AlignmentPoint = attDef.Position;
+        btr.AppendEntity(attDef);
+        tr.AddNewlyCreatedDBObject(attDef, true);
+        return btrId;
+    }
+
+    public static void InsertMCHLBlock(Point3d ptInsert, string tenMatCat = "1")
+    {
+        // Đảm bảo style VNIHC tồn tại TRƯỚC, ngoài transaction chính
+        ClCAD.CreateTextStyle("VNIHC", "VNI-Helve-Condense", 0, 0.7, false, false);
+
+        Document doc = Application.DocumentManager.MdiActiveDocument;
+        Database db = doc.Database;
+
+        using (doc.LockDocument())
+        using (Transaction tr = db.TransactionManager.StartTransaction())
+        {
+            ObjectId blockId = EnsureBlockMCHL(tr, db);
+            BlockTableRecord curSpace = (BlockTableRecord)tr.GetObject(db.CurrentSpaceId, OpenMode.ForWrite);
+
+            using (BlockReference br = new BlockReference(ptInsert, blockId))
+            {
+                br.ScaleFactors = new Scale3d(-0.8, 0.8, 0.8);
+                br.Rotation = 180.0 * Math.PI / 180.0;
+                br.Layer = "HA";
+
+                curSpace.AppendEntity(br);
+                tr.AddNewlyCreatedDBObject(br, true);
+
+                BlockTableRecord btr = (BlockTableRecord)tr.GetObject(blockId, OpenMode.ForRead);
+                if (btr.HasAttributeDefinitions)
+                {
+                    foreach (ObjectId objId in btr)
+                    {
+                        DBObject obj = tr.GetObject(objId, OpenMode.ForRead);
+                        if (obj is AttributeDefinition attDef)
+                        {
+                            using (AttributeReference attRef = new AttributeReference())
+                            {
+                                attRef.SetAttributeFromBlock(attDef, br.BlockTransform);
+
+                                if (attDef.Tag == "TEN")
+                                {
+                                    attRef.TextString = tenMatCat;
+                                }
+
+                                br.AttributeCollection.AppendAttribute(attRef);
+                                tr.AddNewlyCreatedDBObject(attRef, true);
+                            }
+                        }
+                    }
+                }
+            }
+
+            tr.Commit();
+        }
+    }
 }
 
 

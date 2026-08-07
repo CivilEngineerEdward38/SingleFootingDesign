@@ -446,20 +446,127 @@ public class ClCAD
         //Hàm này tương tự Dimcontinue tránh bị nhảy Dim
         double kcDim = textHeight * 3;
         double huong = benPhai ? 1 : -1;
-
         // Mốc X biên của toàn bộ điểm (max nếu dim bên phải, min nếu dim bên trái)
         double xBien = benPhai ? dsX.Max(p => p.X) : dsX.Min(p => p.X);
         double xDim = xBien + huong * ihang * kcDim;
-
         for (int i = 0; i < dsX.Count - 1; i++)
         {
             // X cục bộ mà hàm DimY sẽ tự tính bên trong (max hoặc min của P1,P2)
             double xLocal = benPhai
                 ? Math.Max(dsX[i].X, dsX[i + 1].X)
                 : Math.Min(dsX[i].X, dsX[i + 1].X);
-
             double dentaX = xDim - xLocal;
             DimY(dsX[i], dsX[i + 1], dentaX);
+        }
+    }
+    public static void DimY_WithLabel(Point3d P1,Point3d P2,double Denta_X,string label, string tenTextStyle, double huong,  string layerDim = "DIM", string layerText = "CHU")
+    {
+        if (P1.Y == P2.Y) return;
+        Document doc = Application.DocumentManager.MdiActiveDocument;
+        Database db = doc.Database;
+        using (doc.LockDocument())
+        using (Transaction tr = db.TransactionManager.StartTransaction())
+        {
+            BlockTable bt =
+                (BlockTable)tr.GetObject(db.BlockTableId, OpenMode.ForRead);
+            BlockTableRecord ms =
+                (BlockTableRecord)tr.GetObject(bt[BlockTableRecord.ModelSpace], OpenMode.ForWrite);
+            //==========================
+            // Tạo DIM
+            //==========================
+            RotatedDimension dim = new RotatedDimension();
+            dim.SetDatabaseDefaults();
+            dim.XLine1Point = P1;
+            dim.XLine2Point = P2;
+            dim.Rotation = Math.PI / 2;
+            double x =
+                Denta_X > 0
+                ? Math.Max(P1.X, P2.X)
+                : Math.Min(P1.X, P2.X);
+            Point3d pDimLine = new Point3d(
+                x + Denta_X,
+                (P1.Y + P2.Y) / 2.0,
+                0);
+            dim.DimLinePoint = pDimLine;
+            dim.DimensionStyle = db.Dimstyle;
+            dim.Layer = layerDim;
+            ms.AppendEntity(dim);
+            tr.AddNewlyCreatedDBObject(dim, true);
+            //==========================
+            // Tạo LABEL
+            //==========================
+            if (!string.IsNullOrWhiteSpace(label))
+            {
+                DimStyleTableRecord dimStyle =
+                    (DimStyleTableRecord)tr.GetObject(db.Dimstyle, OpenMode.ForRead);
+
+                // Khoảng cách đúng bằng khoảng cách text DIM (giống cách số dim cách extension line)
+                double offset = dimStyle.Dimtxt / 2.0 + dimStyle.Dimgap;
+
+                // SỬA: cộng thay vì trừ, để label đi tiếp ra xa CÙNG HƯỚNG với dim line, không mirror ngược lại
+                Point3d pLabel = new Point3d(
+                    pDimLine.X + huong * offset,
+                    pDimLine.Y,
+                    0);
+
+                TextStyleTable tst =
+                    (TextStyleTable)tr.GetObject(db.TextStyleTableId, OpenMode.ForRead);
+
+                if (!tst.Has(tenTextStyle))
+                    throw new Exception($"Không tồn tại TextStyle: {tenTextStyle}");
+
+                ObjectId styleId = tst[tenTextStyle];
+
+                TextStyleTableRecord ts =
+                    (TextStyleTableRecord)tr.GetObject(styleId, OpenMode.ForRead);
+
+                DBText txt = new DBText();
+                txt.SetDatabaseDefaults();
+                txt.TextString = label;
+                txt.Position = pLabel;
+                txt.AlignmentPoint = pLabel;
+                txt.HorizontalMode = TextHorizontalMode.TextCenter;
+                txt.VerticalMode = TextVerticalMode.TextVerticalMid;
+                txt.Rotation = Math.PI / 2;
+                txt.Layer = layerText;
+                txt.TextStyleId = styleId;
+                txt.Height = ts.TextSize > 0
+                    ? ts.TextSize
+                    : dimStyle.Dimtxt;
+
+                ms.AppendEntity(txt);
+                tr.AddNewlyCreatedDBObject(txt, true);
+            }
+            tr.Commit();
+        }
+    }
+    public static void CreateDimension_Y1_WithLabel( List<Point3d> dsX,  List<string> labels,string tenTextStyle,   double chonTyLe,  int ihang, double textHeight,  bool benPhai = true)
+    {
+        if (dsX == null || dsX.Count < 2)
+            return;
+        if (labels == null || labels.Count != dsX.Count - 1)
+            throw new ArgumentException(
+                "labels.Count phải bằng dsX.Count - 1");
+        double kcDim = textHeight * 3;
+        double huong = benPhai ? 1 : -1;
+        double xBien = benPhai
+            ? dsX.Max(p => p.X)
+            : dsX.Min(p => p.X);
+        double xDim = xBien + huong * ihang * kcDim;
+        for (int i = 0; i < dsX.Count - 1; i++)
+        {
+            double xLocal =
+                benPhai
+                ? Math.Max(dsX[i].X, dsX[i + 1].X)
+                : Math.Min(dsX[i].X, dsX[i + 1].X);
+            double dentaX = xDim - xLocal;
+            DimY_WithLabel(
+                dsX[i],
+                dsX[i + 1],
+                dentaX,
+                labels[i],
+                tenTextStyle,
+                huong);
         }
     }
     #region Block

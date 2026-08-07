@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -134,10 +135,13 @@ namespace ACAD_API.SINGLE_FOOTING.Model
             ClCAD.CreateLayer("CENTER", 4, "CENTER", Autodesk.AutoCAD.DatabaseServices.LineWeight.ByLineWeightDefault, true);
             ClCAD.CreateLayer("HIDDEN", 4, "HIDDEN", Autodesk.AutoCAD.DatabaseServices.LineWeight.ByLineWeightDefault, true);
             ClCAD.CreateLayer("CHU", 3, "HIDDEN", Autodesk.AutoCAD.DatabaseServices.LineWeight.ByLineWeightDefault, true);
+            ClCAD.CreateLayer("HA", 4, "Continuous", Autodesk.AutoCAD.DatabaseServices.LineWeight.ByLineWeightDefault, true);
         }
         public static void CreateTextStyle()
         {
             ClCAD.CreateTextStyle("PECC3_Tahoma", "Tahoma", 0, 1, false, false);
+            ClCAD.CreateTextStyle("PECC3_Tahoma_Bold", "Tahoma", 0, 1, false, true);
+            ClCAD.CreateTextStyle("VNIHC", "VNI-Helve-Condense", 0, 0.7, false, false);
         }
         public static void CreateDimStyle(List<int> dsTyLe)
         {
@@ -399,9 +403,13 @@ namespace ACAD_API.SINGLE_FOOTING.Model
                 new Point3d(p6.X, p6.Y, 0),
             };
             ClCAD.CreateDimension_X(dsDimBcHc, ChonTyLe, 2, 2, true);
+            // Chèn block tại điểm chọn với giá trị mặt cắt "1"
+           
+            ClBlock.InsertMCHLBlock(p5, "1");
             #endregion
 
         }
+     
         #endregion
     }
 }
