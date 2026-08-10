@@ -2,16 +2,18 @@
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.EditorInput;
 using Autodesk.AutoCAD.EditorInput;
+using Autodesk.AutoCAD.EditorInput;
 using Autodesk.AutoCAD.Geometry;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using Application = Autodesk.AutoCAD.ApplicationServices.Application;
 using CadApp = Autodesk.AutoCAD.ApplicationServices.Application;
-using Autodesk.AutoCAD.EditorInput;
 namespace SINGLE_FOOTING.SINGLE_FOOTING.Model
 {
     public class RebarModel : BaseViewModel
@@ -152,7 +154,7 @@ namespace SINGLE_FOOTING.SINGLE_FOOTING.Model
             Point3d p4anchor = new Point3d(p4a.X - 0.4 * heSoQuyDoi, p4a.Y, 0);
             Point3d p7anchor = new Point3d(p7a.X + 0.4 * heSoQuyDoi, p7a.Y, 0);
             #endregion
-            #region Vẽ thép polyline 
+            #region Vẽ thép polyline + stick 
             ClCAD.SetLayerCurrent("COTTHEP");
             ClCAD.CreatePolylineFromListPoints(new List<Point3d> { p1t, p10t }, false);
             //Rải thép từ đỉnh cổ móng xuống 2000mm tăng cường khu vực bulongneo 
@@ -162,6 +164,14 @@ namespace SINGLE_FOOTING.SINGLE_FOOTING.Model
             double kcRaiVe = KhoangCachRaiDai / scale;  // 200 mm -> đơn vị vẽ
             int soThanh = (int)(chieuDaiRaiVe / (kcRaiVe / 2)) + 1;
             double spacing = chieuDaiRaiVe / (soThanh - 1);
+            List<Point3d> dsStickPoints = new List<Point3d>();
+            double xStick = p6t.X - bchcVe / 4;
+            double stickScale = 0.5;
+            double stickRotation = 0.0;
+            int soTick100 = soThanh / 2;
+            int startTick100 = soThanh - soTick100;
+            double? yStickFirst = null;
+            double? yStickLast = null;
             for (int i = 0; i < soThanh; i++)
             {
                 double y = p5t.Y - i * spacing;
@@ -170,12 +180,28 @@ namespace SINGLE_FOOTING.SINGLE_FOOTING.Model
                 ClCAD.CreatePolylineFromListPoints(
                     new List<Point3d> { pTrai, pPhai },
                     false);
+                // Chỉ lấy NỬA CUỐI của đoạn @100
+                if (i >= startTick100)
+                {
+                    Point3d pStick = new Point3d(xStick, y, 0);
+
+                    ClBlock.InsertArchTickBlock(
+                        pStick,
+                        stickScale,
+                        stickRotation);
+                    // Lưu đầu và cuối của dải stick
+                    if (yStickFirst == null)
+                        yStickFirst = y;
+
+                    yStickLast = y;
+                }
             }
             //Phần còn lại của cổ móng 
             double chieuDaiConLaiCM = pa100Lt.Y - p4a200t.Y;
             double kcRaiVeConLai = KhoangCachRaiDai / scale;
             int soThanhConLaiCM = (int)(chieuDaiConLaiCM / kcRaiVeConLai) + 1;
             double spacingConLai = chieuDaiConLaiCM / (soThanhConLaiCM - 1);
+            int soTick200 = soThanhConLaiCM / 2;
             for (int i = 0; i < soThanhConLaiCM; i++)
             {
                 double y = pa100Lt.Y - i * spacingConLai;
@@ -184,6 +210,25 @@ namespace SINGLE_FOOTING.SINGLE_FOOTING.Model
                 ClCAD.CreatePolylineFromListPoints(
                     new List<Point3d> { pTrai, pPhai },
                     false);
+                if (i < soTick200)
+                {
+                    Point3d pStick = new Point3d(xStick, y, 0);
+                    ClBlock.InsertArchTickBlock(
+                        pStick,
+                        stickScale,
+                        stickRotation);
+                    if (yStickFirst == null)
+                        yStickFirst = y;
+
+                    yStickLast = y;
+                }
+            }
+            ClCAD.SetLayerCurrent("DIM");
+            if (yStickFirst.HasValue && yStickLast.HasValue)
+            {
+                ClCAD.CreateLine(
+                    new Point3d(xStick, yStickFirst.Value, 0),
+                    new Point3d(xStick, yStickLast.Value, 0));
             }
             #endregion
             #region Rải thép tròn 
@@ -262,7 +307,7 @@ namespace SINGLE_FOOTING.SINGLE_FOOTING.Model
             double yChanThepC = p4a.Y;
             int soThanhLuiMep = 2; // lùi 2 thanh từ mép, bắt đầu từ thanh thứ 3
             List<Point3d> dsMidTrai = VeThepChuCRai(dsXienTrai, 600, scale, yChanThepC, khoangLuiTren, chieuDaiNeo, p0.X, soThanhLuiMep, mepODauList: false);
-            List<Point3d> dsMidGiua = VeThepChuCRai(dsthepGiua, 600, scale, yChanThepC, khoangLuiTren, chieuDaiNeo, p0.X,soThanhLuiMep: 0, mepODauList: true);
+            List<Point3d> dsMidGiua = VeThepChuCRai(dsthepGiua, 600, scale, yChanThepC, khoangLuiTren, chieuDaiNeo, p0.X, soThanhLuiMep: 0, mepODauList: true);
             List<Point3d> dsMidPhai = VeThepChuCRai(dsXienPhai, 600, scale, yChanThepC, khoangLuiTren, chieuDaiNeo, p0.X, soThanhLuiMep, mepODauList: true);
             // Gom tất cả chữ C lại - vì số hiệu 03 đại diện chung cho toàn bộ chữ C rải đều, không phân biệt vùng
             List<Point3d> dsMidThepChuCAll = new List<Point3d>();
@@ -272,10 +317,10 @@ namespace SINGLE_FOOTING.SINGLE_FOOTING.Model
             #endregion
             #region Point Tag thep
             //So hieu thep 01
-            Point3d ptag1_temp = new Point3d(p10t.X-btbvVe*2.5, p10t.Y, 0);
+            Point3d ptag1_temp = new Point3d(p10t.X - btbvVe * 2.5, p10t.Y, 0);
             Point3d ptag1 = new Point3d(p13.X + btbvVe * 2, p13.Y - btbvVe * 5, 0);
             Point3d pTag1_Text = new Point3d(ptag1.X + btbvVe, ptag1.Y + btbvVe, 0); // điểm chèn text Ø12@200
-            Point3d pInTag1 = new Point3d(ptag1.X +12, ptag1.Y, 0);
+            Point3d pInTag1 = new Point3d(ptag1.X + 12, ptag1.Y, 0);
             List<Point3d> dsPTag1 = new List<Point3d>() { dsP[0], ptag1_temp, dsP[3] };
             //So hieu thep 02
             Point3d ptag2_temp = ClCAD.GetPointOnSegment(lstBTBV[4], lstBTBV[3], 0.1);
@@ -284,18 +329,38 @@ namespace SINGLE_FOOTING.SINGLE_FOOTING.Model
             Point3d pInTag2 = new Point3d(ptag2.X + 12, ptag2.Y, 0);
             List<Point3d> dsPTag2 = new List<Point3d>() { dsXienPhai[0], ptag2_temp, dsXienPhai[3] };
             //So hieu thep 03 
-            Point3d ptag3 = new Point3d(p3.X - 3 , yDeMong +4, 0);
+            Point3d ptag3 = new Point3d(p3.X - 3, yDeMong + 4, 0);
             Point3d pInTag3 = new Point3d(ptag3.X - 11.5, ptag3.Y, 0);
             Point3d pTag3_Text = new Point3d(pInTag3.X + btbvVe, pInTag3.Y + btbvVe, 0); // điểm chèn text Ø12@200
-            //List<Point3d> dsPTag3 = new List<Point3d>() { dsXienPhai[0], ptag2_temp, dsXienPhai[3] };
             Point3d pTargetThepChuC3 = ChonThepChuCGanNhat(dsMidThepChuCAll, ptag3.X);
             //So hieu thep 04
-            Point3d pTag4 =new Point3d(p4.X+btbvConlaiVe, (yDinhCoMong + yDeMong) / 2, 0);
-            Point3d pTag4_temp = new Point3d(pTag4.X + bchcVe-btbvConlaiVe, pTag4.Y, 0);
+            Point3d pTag4 = new Point3d(p4.X + btbvConlaiVe, (yDinhCoMong + yDeMong) / 2, 0);
+            Point3d pTag4_temp = new Point3d(pTag4.X + bchcVe - btbvConlaiVe, pTag4.Y, 0);
             Point3d pInTag4 = new Point3d(pInTag3.X, pTag4.Y, 0);
             Point3d pInTag4_text = new Point3d(pInTag4.X + btbvVe, pInTag4.Y + btbvVe, 0); // điểm chèn text Ø12@200
-            //So hieu thep 05
-
+            //So hieu thep 08
+            Point3d pLuoithepL = new Point3d(p5t.X + dkThepBan * 1.25 / DrawingScaleDefault, p5t.Y - dkThepBan * 1.25 / DrawingScaleDefault, 0);
+            Point3d pLuoithepR = new Point3d(p6t.X - dkThepBan * 1.25 / DrawingScaleDefault, p6t.Y - dkThepBan * 1.25 / DrawingScaleDefault, 0);
+            Point3d pLuoithepL2 = new Point3d(pLuoithepL.X, pLuoithepL.Y - 103 / scale, 0);
+            Point3d pLuoithepR2 = new Point3d(pLuoithepR.X, pLuoithepR.Y - 103 / scale, 0);
+            string luoithep = "COTTHEP" + (5 * dkThepBan).ToString();
+            double kcLuoithep = 100 / scale;
+            ClCAD.SetLayerCurrent("DIM");
+            ClBlock.CreateBlock_Thep(dkThepBan * 2.5);
+            List<Point3d> dsLuoithep = LayOutReinforcement(pLuoithepL, pLuoithepR, kcLuoithep, luoithep, scale: scale, heSoPhongTo: 0.5, remove: false);
+            dsLuoithep.Reverse();
+            List<Point3d> dsLuoithep2 = LayOutReinforcement(pLuoithepL2, pLuoithepR2, kcLuoithep, luoithep, scale: scale, heSoPhongTo: 0.5, remove: false);
+            dsLuoithep2.Reverse();
+            Point3d ptag8 = new Point3d(pLuoithepR.X + btbvVe * 3, pLuoithepR.Y + btbvVe * 5, 0);
+            Point3d pTag8_Text = new Point3d(ptag8.X, ptag8.Y + btbvVe, 0); // điểm chèn text Ø12@200
+            Point3d pInTag8 = new Point3d(ptag8.X + 10, ptag8.Y, 0);
+            List<Point3d> dsPTag8 = new List<Point3d>() { pLuoithepR, pLuoithepR2 };
+            //So hieu thep 05,06,07
+            Point3d pTag5 = new Point3d(xStick, (yStickFirst.Value + yStickLast.Value) / 2.0, 0);
+            Point3d pInTag5 = new Point3d(pTag5.X + 21, pTag5.Y, 0);
+            Point3d pInTag5_text = new Point3d(p7.X + btbvVe, pTag5.Y + btbvVe, 0); // điểm chèn text Ø12@200
+            Point3d pInTag6 = new Point3d(pInTag5.X + 5, pInTag5.Y, 0);
+            Point3d pInTag7 = new Point3d(pInTag6.X + 5, pInTag5.Y, 0);
             #endregion
             #region Method tag thep
             ClCAD.SetLayerCurrent("DIM");
@@ -307,24 +372,38 @@ namespace SINGLE_FOOTING.SINGLE_FOOTING.Model
             {
                 ClCAD.CreateLeader(new List<Point3d> { dsPTag2[i], ptag2 });
             }
+            for (int i = 0; i < dsPTag8.Count; i++)
+            {
+                ClCAD.CreateLeader(new List<Point3d> { dsPTag8[i], ptag8 });
+            }
             ClCAD.CreateLeader(new List<Point3d> { pTargetThepChuC3, ptag3 });
             ClCAD.CreateLine(ptag1, pInTag1);
             ClCAD.CreateLine(ptag2, pInTag2);
             ClCAD.CreateLine(ptag3, pInTag3);
             ClCAD.CreateLine(pInTag4, pTag4_temp);
+            ClCAD.CreateLine(ptag8, pInTag8);
+            ClCAD.CreateLine(pTag5, pInTag5);
             ClBlock.InsertArchTickBlock(pTag4, 0.5, 0);
             ClBlock.InsertArchTickBlock(pTag4_temp, 0.5, 0);
             ClBlock.EnsureBlockSoThepMong();          // tạo block nếu chưa có
             ClBlock.InsertBlockSoThepMong(pInTag1, 1, ClBlock.TagSide.Right); // insert như hàm bạn đã có
             ClBlock.CreateTagThep(pTag1_Text, dkThepBan, KhoangCachThepBan);
-            ClBlock.InsertBlockSoThepMong(pInTag2, 2, ClBlock.TagSide.Right); 
+            ClBlock.InsertBlockSoThepMong(pInTag2, 2, ClBlock.TagSide.Right);
             ClBlock.CreateTagThep(pTag2_Text, dkThepBan, KhoangCachThepBan);
-            ClBlock.InsertBlockSoThepMong(pInTag3, 3, ClBlock.TagSide.Left); 
+            ClBlock.InsertBlockSoThepMong(pInTag3, 3, ClBlock.TagSide.Left);
             ClBlock.CreateTagThep(pTag3_Text, dkThepBan, 600);
             ClBlock.InsertBlockSoThepMong(pInTag4, 4, ClBlock.TagSide.Left);
             ClBlock.CreateTagThep(pInTag4_text, SLThepCoMong, DuongKinhThepCoMong);
+            ClBlock.CreateTagThep(pTag8_Text, 8, 100);
+            ClBlock.InsertBlockSoThepMong(pInTag8, 8, ClBlock.TagSide.Right);
+            ClBlock.CreateTagThepDai(pInTag5_text, 8, "(100-200)");
+
+            ClBlock.InsertBlockSoThepMong(pInTag5, 5, ClBlock.TagSide.Right);
+            ClBlock.InsertBlockSoThepMong(pInTag6, 6, ClBlock.TagSide.Right);
+            ClBlock.InsertBlockSoThepMong(pInTag7, 7, ClBlock.TagSide.Right);
+
             #endregion
-           
+
         }
 
         #region Define layoutreinforcement
@@ -346,7 +425,7 @@ namespace SINGLE_FOOTING.SINGLE_FOOTING.Model
         #endregion
         #region Method 
         public List<Point3d> LayOutReinforcement(
-            Point3d ptStart, Point3d ptEnd, double kcThepVe,string nameBlock,
+            Point3d ptStart, Point3d ptEnd, double kcThepVe, string nameBlock,
             double scale, double heSoPhongTo = 1.0, bool remove = false)
         {
             List<Point3d> dsP = new List<Point3d>();
@@ -364,12 +443,12 @@ namespace SINGLE_FOOTING.SINGLE_FOOTING.Model
             for (int i = start; i < soLuong; i++)
             {
                 Point3d diemve = ptStart + buoc * i;
-                ClBlock.InsertBlock(nameBlock,diemve,heSoChenThep,0);
+                ClBlock.InsertBlock(nameBlock, diemve, heSoChenThep, 0);
                 dsP.Add(diemve);
             }
             return dsP;
         }
-  
+
         //phù hợp cho block thép cố định của bản vẽ. (tức kích thước bản vẽ giấy không đổi cho toàn bộ tỉ lệ)
         public const double DrawingScaleDefault = 75;
         //Các hàm dùng để bố trí thanh thép số 2 (thép mu rùa)
@@ -463,7 +542,7 @@ namespace SINGLE_FOOTING.SINGLE_FOOTING.Model
             }
             return result;
         }
-       
+
         /// <summary>
         /// Rải thép xiên sao cho mỗi điểm thép xiên có cùng tọa độ X với điểm thép ngang (đáy) tương ứng
         /// trong dsPNgang, đảm bảo thẳng hàng theo phương đứng để nối bằng thép chữ C.

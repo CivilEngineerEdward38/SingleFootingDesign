@@ -206,5 +206,13 @@
     <Resource Include="SINGLE FOOTING\Img\close-37-32.png" />
     <Resource Include="SINGLE FOOTING\Img\information-284-32.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="SINGLE FOOTING\Img\Domain layer.jpg" />
+    <Resource Include="SINGLE FOOTING\Img\luonggiacsintheta.jpg" />
+    <Resource Include="SINGLE FOOTING\Img\note-62-32.png" />
+    <Resource Include="SINGLE FOOTING\Img\Point rebar.jpg" />
+    <Resource Include="SINGLE FOOTING\Img\Pointrebar 2.jpg" />
+    <Resource Include="SINGLE FOOTING\Img\tag rebar.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

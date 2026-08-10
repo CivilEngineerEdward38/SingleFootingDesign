@@ -197,6 +197,7 @@ namespace ACAD_API.SINGLE_FOOTING.Model
             Point3d p18 = new Point3d(p0.X + bmhmVe / 2 + btbvVe * 4, p0.Y, 0);
             Point3d p19 = new Point3d(p0.X, p0.Y - bmhmVe / 2 - btbvVe * 4, 0);
             Point3d p20 = new Point3d(p0.X, p0.Y + bmhmVe / 2 + btbvVe * 4, 0);
+
             #endregion
             // --- VẼ ĐƯỜNG BIÊN ---
             ClCAD.SetLayerCurrent("MAIN");
@@ -336,6 +337,9 @@ namespace ACAD_API.SINGLE_FOOTING.Model
             //Trục đứng
             Point3d p15 = new Point3d(p0.X, yDayMong - 0.5 * heSo, 0);
             Point3d p16 = new Point3d(p0.X, yDinhCoMong + 0.5 * heSo, 0);
+            //Insert mat cat 
+            Point3d p5MC1 = new Point3d(p5.X - 400 / ChonTyLe, p5.Y - 500 / ChonTyLe, 0);
+            Point3d p6MC1 = new Point3d(p6.X + 400 / ChonTyLe, p6.Y - 500 / ChonTyLe, 0);
             #endregion
             ClCAD.SetLayerCurrent("MAIN");
             ClCAD.CreatePolylineFromListPoints(new List<Point3d> { p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p1 }, false);
@@ -404,12 +408,11 @@ namespace ACAD_API.SINGLE_FOOTING.Model
             };
             ClCAD.CreateDimension_X(dsDimBcHc, ChonTyLe, 2, 2, true);
             // Chèn block tại điểm chọn với giá trị mặt cắt "1"
-           
-            ClBlock.InsertMCHLBlock(p5, "1");
+            ClBlock.InsertMCHLBlock(p5MC1, "1");
+            ClBlock.InsertMCHLBlock(p6MC1, "1");
             #endregion
-
         }
-     
+
         #endregion
     }
 }

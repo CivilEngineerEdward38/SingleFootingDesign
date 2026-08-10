@@ -120,6 +120,46 @@ public class ClBlock
             tr.Commit();
         }
     }
+    public static void CreateTagThepDai(Point3d ptInsert, int dk, string kcach,
+ double textHeight = 2, double widthFactor = 0.9, string textStyleName = "PECC3_Tahoma")
+    {
+        ClCAD.CreateTextStyle(textStyleName, "Tahoma", 0, 1, false, false);
+
+        Document doc = Application.DocumentManager.MdiActiveDocument;
+        Database db = doc.Database;
+
+        using (doc.LockDocument())
+        using (Transaction tr = db.TransactionManager.StartTransaction())
+        {
+            BlockTableRecord btr = tr.GetObject(db.CurrentSpaceId, OpenMode.ForWrite) as BlockTableRecord;
+            TextStyleTable tst = tr.GetObject(db.TextStyleTableId, OpenMode.ForRead) as TextStyleTable;
+            ObjectId styleId = tst.Has(textStyleName) ? tst[textStyleName] : db.Textstyle;
+
+            LayerTable lt = tr.GetObject(db.LayerTableId, OpenMode.ForRead) as LayerTable;
+            string textLayer = lt.Has("CHU") ? "CHU" : "0";
+
+            string noidung = "%%C" + dk.ToString();
+            if (!string.IsNullOrEmpty(kcach))
+                noidung += "@" + kcach;
+
+            using (DBText dkText = new DBText())
+            {
+                dkText.SetDatabaseDefaults();
+                dkText.Position = ptInsert;
+                dkText.Height = textHeight;
+                dkText.WidthFactor = widthFactor;
+                dkText.TextString = noidung;
+                dkText.TextStyleId = styleId;
+                dkText.Layer = textLayer;
+                dkText.HorizontalMode = TextHorizontalMode.TextLeft;
+                dkText.VerticalMode = TextVerticalMode.TextBase;
+                btr.AppendEntity(dkText);
+                tr.AddNewlyCreatedDBObject(dkText, true);
+            }
+
+            tr.Commit();
+        }
+    }
     public static void EnsureBlockSoThepMong(double circleRadius = 2.5)
     {
         string blockName = "SO-THEP MONG V2";
