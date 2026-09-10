@@ -20,7 +20,7 @@
         <Window.Resources>
             <ResourceDictionary>
                 <ResourceDictionary.MergedDictionaries>
-                    <ResourceDictionary Source="../MyResource/Styles.xaml">
+                    <ResourceDictionary Source="../../Style/Styles.xaml">
                         <DataTemplate x:Name="taskBarMVVM" DataType="{x:Type VModel:TaskBarControlViewModel}">
                             <view:TaskbarControl/>
                         </DataTemplate>

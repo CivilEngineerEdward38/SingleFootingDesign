@@ -9,7 +9,7 @@
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              Background="AliceBlue">
     <UserControl.Resources>
-        <ResourceDictionary Source="../MyResource/Styles.xaml"/>
+        <ResourceDictionary Source="../../Style/Styles.xaml"/>
     </UserControl.Resources>
     <Grid>
         <!--Định nghĩa lưới global-->

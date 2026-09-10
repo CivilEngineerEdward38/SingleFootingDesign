@@ -77,6 +77,7 @@
     <Compile Include="LIBRARY\ClCAD.cs" />
     <Compile Include="LIBRARY\FindChildClass.cs" />
     <Compile Include="LIBRARY\RelayCommandment.cs" />
+    <Compile Include="LIBRARY\WPF\Converted\StringContentToColorcs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -115,6 +116,15 @@
     <Compile Include="SINGLE FOOTING\View\WinDowSingleFooting.xaml.cs">
       <DependentUpon>WinDowSingleFooting.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SLAB BEAM RAFT FOOTING\Model\ThongSoMongBancs.cs" />
+    <Compile Include="SLAB BEAM RAFT FOOTING\ViewModel\MongBanViewModel.cs" />
+    <Compile Include="SLAB BEAM RAFT FOOTING\ViewModel\TaskBarControlViewModel.cs" />
+    <Compile Include="SLAB BEAM RAFT FOOTING\View\MongBanWindow.xaml.cs">
+      <DependentUpon>MongBanWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SLAB BEAM RAFT FOOTING\View\TaskBarViewMongBan.xaml.cs">
+      <DependentUpon>TaskBarViewMongBan.xaml</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -129,55 +139,55 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="SINGLE FOOTING\MyResource\ButtonStyle.xaml">
+    <Page Include="Style\ButtonStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
-    <Page Include="SINGLE FOOTING\MyResource\ButtonStyleIcon.xaml">
+    <Page Include="Style\ButtonStyleIcon.xaml">
       <SubType>Designer</SubType>
       <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
-    <Page Include="SINGLE FOOTING\MyResource\Canvas.xaml">
+    <Page Include="Style\Canvas.xaml">
       <SubType>Designer</SubType>
       <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
-    <Page Include="SINGLE FOOTING\MyResource\CheckBoxStyle.xaml">
+    <Page Include="Style\CheckBoxStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
-    <Page Include="SINGLE FOOTING\MyResource\ComboBoxStyle.xaml">
+    <Page Include="Style\ComboBoxStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
-    <Page Include="SINGLE FOOTING\MyResource\DataGridStyle.xaml">
+    <Page Include="Style\DataGridStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
-    <Page Include="SINGLE FOOTING\MyResource\ProgressBarStyle.xaml">
+    <Page Include="Style\ProgressBarStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
-    <Page Include="SINGLE FOOTING\MyResource\RadiobuttonStyle.xaml">
+    <Page Include="Style\RadiobuttonStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
-    <Page Include="SINGLE FOOTING\MyResource\Styles.xaml">
+    <Page Include="Style\Styles.xaml">
       <SubType>Designer</SubType>
       <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
-    <Page Include="SINGLE FOOTING\MyResource\TextBlockStyle.xaml">
+    <Page Include="Style\TextBlockStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
-    <Page Include="SINGLE FOOTING\MyResource\TextBoxStyle.xaml">
+    <Page Include="Style\TextBoxStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
-    <Page Include="SINGLE FOOTING\MyResource\TreeViewStyle.xaml">
+    <Page Include="Style\TreeViewStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
-    <Page Include="SINGLE FOOTING\MyResource\WrapPanelStyle.xaml">
+    <Page Include="Style\WrapPanelStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
@@ -201,18 +211,34 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="SLAB BEAM RAFT FOOTING\View\MongBanWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SLAB BEAM RAFT FOOTING\View\TaskBarViewMongBan.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="SINGLE FOOTING\Img\close-37-32.png" />
-    <Resource Include="SINGLE FOOTING\Img\information-284-32.png" />
+    <Resource Include="Img\close-37-32.png" />
+    <Resource Include="Img\information-284-32.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="SINGLE FOOTING\Img\Domain layer.jpg" />
-    <Resource Include="SINGLE FOOTING\Img\luonggiacsintheta.jpg" />
-    <Resource Include="SINGLE FOOTING\Img\note-62-32.png" />
-    <Resource Include="SINGLE FOOTING\Img\Point rebar.jpg" />
-    <Resource Include="SINGLE FOOTING\Img\Pointrebar 2.jpg" />
-    <Resource Include="SINGLE FOOTING\Img\tag rebar.jpg" />
+    <Resource Include="Img\Domain layer.jpg" />
+    <Resource Include="Img\luonggiacsintheta.jpg" />
+    <Resource Include="Img\note-62-32.png" />
+    <Resource Include="Img\Point rebar.jpg" />
+    <Resource Include="Img\Pointrebar 2.jpg" />
+    <Resource Include="Img\tag rebar.jpg" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Img\close.png" />
+    <Resource Include="Img\Dailoai1.png" />
+    <Resource Include="Img\Dailoai2.png" />
+    <Resource Include="Img\delete.png" />
+    <Content Include="Img\logo.svg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

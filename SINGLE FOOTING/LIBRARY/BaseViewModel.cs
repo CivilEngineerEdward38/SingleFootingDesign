@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 public class BaseViewModel : INotifyPropertyChanged
 {
-    public event PropertyChangedEventHandler PropertyChanged;
+    public event PropertyChangedEventHandler PropertyChanged; //bắt buộc phải có event này để binding dữ liệu từ ViewModel sang View
 
     protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
     {

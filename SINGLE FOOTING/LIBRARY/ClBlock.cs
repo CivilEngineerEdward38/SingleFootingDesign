@@ -160,7 +160,7 @@ public class ClBlock
             tr.Commit();
         }
     }
-    public static void EnsureBlockSoThepMong(double circleRadius = 2.5)
+    public static void EnsureBlockSoThepMong(double circleRadius = 4)
     {
         string blockName = "SO-THEP MONG V2";
         string attTag = "SO";

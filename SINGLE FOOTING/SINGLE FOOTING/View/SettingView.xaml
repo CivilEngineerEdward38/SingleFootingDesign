@@ -9,7 +9,7 @@
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              x:Name="SettingUC" Background="SeaShell">
     <UserControl.Resources>
-        <ResourceDictionary Source="/SINGLE FOOTING;component/SINGLE FOOTING/MyResource/Styles.xaml"/>
+        <ResourceDictionary Source="../../Style/Styles.xaml"/>
     </UserControl.Resources>
     <!--Tạo sự kiện load can vas-->
     <i:Interaction.Triggers>

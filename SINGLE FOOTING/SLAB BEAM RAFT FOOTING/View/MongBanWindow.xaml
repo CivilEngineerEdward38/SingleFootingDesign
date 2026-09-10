@@ -1,0 +1,1372 @@
+﻿<Window x:Class="ACAD_API.SLAB_BEAM_RAFT_FOOTING.View.MongBanWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ACAD_API.SLAB_BEAM_RAFT_FOOTING.View"
+        mc:Ignorable="d"
+        Title="MongBanWindow" Height="850"
+        Width="920"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        ShowInTaskbar="True"
+        FontSize="11"
+        FontFamily="Tohoma"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        x:Name="MainWindow"
+        xmlns:view="clr-namespace:ACAD_API.SLAB_BEAM_RAFT_FOOTING.View"
+        xmlns:viewModel="clr-namespace:ACAD_API.SLAB_BEAM_RAFT_FOOTING.ViewModel"
+    
+        >
+    <Window.Resources>
+        <ResourceDictionary>
+            <!-- 1. Chỉ nhúng file bên ngoài qua Source -->
+            <ResourceDictionary.MergedDictionaries>
+            <!-- Dùng Pack URI tuyệt đối thay cho đường dẫn tương đối ../ -->
+                <ResourceDictionary Source="../../Style/Styles.xaml"/>
+        </ResourceDictionary.MergedDictionaries>
+
+            <!-- 2. Khai báo DataTemplate bên ngoài MergedDictionaries -->
+            <DataTemplate DataType="{x:Type viewModel:TaskBarControlViewModel}">
+                <view:TaskBarViewMongBan />
+            </DataTemplate>
+            <!--<cvt:StringContentToColor x:Key="StringContentToColor" />-->
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <!--Khai báo grid local-->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="760" />
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
+        <!--Khai báo grid local-->
+        <GroupBox Grid.Row="1"
+           Header="Input"
+           BorderBrush="#00008b"
+           Margin="3 0 0 0">
+            <Grid>
+                <!--khai báo 4 lưới nhập liệu-->
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="225" />
+                    <ColumnDefinition Width="225" />
+                    <ColumnDefinition Width="225" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <!--Cột 1-->
+                <GroupBox Grid.Column="0" Header="Bản móng" BorderBrush="#00008b" Margin="3 0 0 0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                        </Grid.RowDefinitions>
+                        <!--#region Chiều rộng bản-->
+                        <TextBlock Grid.Row="0"
+                                   Grid.Column="0"
+                                   Text="Chiều rộng bản"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <TextBox Grid.Row="0"
+                                 Grid.Column="1"
+                                 Text="{Binding ThongSoMongBan.ChieuRongMong, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 Style="{StaticResource TextBoxStyle}" />
+                        <TextBlock Grid.Row="0"
+                                   Grid.Column="2"
+                                   Text="mm"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <!--#endregion-->
+                        <!--#region Chiều dài bản-->
+                        <TextBlock Grid.Row="1"
+                                   Grid.Column="0"
+                                   Text="Chiều dài bản"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <TextBox Grid.Row="1"
+                                 Grid.Column="1"
+                                 Text="{Binding ThongSoMongBan.ChieuDaiMong, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 Style="{StaticResource TextBoxStyle}" />
+                        <TextBlock Grid.Row="1"
+                                   Grid.Column="2"
+                                   Text="mm"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <!--#endregion-->
+                        <!--#region Chiều cao bản -->
+                        <TextBlock Grid.Row="2"
+                                   Grid.Column="0"
+                                   Text="Chiêu cao bản"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <TextBox Grid.Row="2"
+                                 Grid.Column="1"
+                                 Text="{Binding ThongSoMongBan.ChieuCaoBan, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 Style="{StaticResource TextBoxStyle}" />
+                        <TextBlock Grid.Row="2"
+                                   Grid.Column="2"
+                                   Text="mm"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <!--#endregion-->
+                        <!--#region Chiều Rộng đục lỗ-->
+                        <TextBlock Grid.Row="3"
+                                   Grid.Column="0"
+                                   Text="Đục lỗ"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <TextBox Grid.Row="3"
+                                 Grid.Column="1"
+                                 Text="{Binding ThongSoMongBan.DucLoMong, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 Style="{StaticResource TextBoxStyle}" />
+                        <TextBlock Grid.Row="3"
+                                   Grid.Column="2"
+                                   Text="mm"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <!--#endregion-->
+                        <Rectangle Grid.Row="4"
+                                   Height="1"
+                                   Fill="#00008b"
+                                   VerticalAlignment="Top"
+                                   Margin="0 -1 0 0"
+                                   HorizontalAlignment="Stretch"
+                                   Grid.ColumnSpan="3" />
+                        <TextBlock Grid.Row="4"
+                                   Grid.ColumnSpan="3"
+                                   Margin="0 5 0 0"
+                                   Text="Ô bản 2 cạnh" />
+                        <!--#region Đường kính ô bản 2 cạnh-->
+                        <TextBlock Grid.Row="5"
+                                   Grid.Column="0"
+                                   Text="ĐK Thép "
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <ComboBox Grid.Row="5"
+                                  Grid.Column="1"
+                                  Style="{StaticResource ComboBoxStyle}"
+                                  Height="24"
+                                  ItemsSource="{Binding MongBanModel.LayoutMongBanModel.AllDuongKinh}"
+                                  SelectedItem="{Binding ThongSoMongBan.DKThep_Oban_1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBlock Grid.Row="5"
+                                   Grid.Column="2"
+                                   Text="mm"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <!--#endregion-->
+                        <!--#region Khoảng cách ô bản 2 cạnh-->
+                        <TextBlock Grid.Row="6"
+                                   Grid.Column="0"
+                                   Text="KC thép"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <TextBox Grid.Row="6"
+                                 Grid.Column="1"
+                                 Text="{Binding ThongSoMongBan.KCThep_Oban_1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 Style="{StaticResource TextBoxStyle}" />
+                        <TextBlock Grid.Row="6"
+                                   Grid.Column="2"
+                                   Text="mm"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <!--#endregion-->
+                        <!--#region Cắt thép ô bản 2 cạnh-->
+                        <CheckBox Grid.Row="7"
+                                  Grid.Column="0"
+                                  Content="Cắt thép"
+                                  Style="{StaticResource CheckBoxStyle}"
+                                  IsChecked="{Binding HaveCutThep_Oban1}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding HaveCutThepOban1Command}"
+                                                           CommandParameter="{Binding ElementName=MainWindow}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </CheckBox>
+                        <!--#endregion-->
+                        <Rectangle Grid.Row="8"
+                                   Height="1"
+                                   Fill="#00008b"
+                                   VerticalAlignment="Top"
+                                   Margin="0 -1 0 0"
+                                   HorizontalAlignment="Stretch"
+                                   Grid.ColumnSpan="3" />
+                        <TextBlock Grid.Row="8"
+                                   Grid.ColumnSpan="3"
+                                   Margin="0 5 0 0"
+                                   Text="Ô bản 3 cạnh" />
+                        <!--#region Đường kính ô bản 3 cạnh-->
+                        <TextBlock Grid.Row="9"
+                                   Grid.Column="0"
+                                   Text="ĐK Thép "
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <ComboBox Grid.Row="9"
+                                  Grid.Column="1"
+                                  Style="{StaticResource ComboBoxStyle}"
+                                  Height="24"
+                                  ItemsSource="{Binding MongBanModel.LayoutMongBanModel.AllDuongKinh}"
+                                  SelectedItem="{Binding ThongSoMongBan.DKThep_Oban_2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBlock Grid.Row="9"
+                                   Grid.Column="2"
+                                   Text="mm"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <!--#endregion-->
+                        <!--#region Khoảng cách ô bản 3 cạnh-->
+                        <TextBlock Grid.Row="10"
+                                   Grid.Column="0"
+                                   Text="KC Thép"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <TextBox Grid.Row="10"
+                                 Grid.Column="1"
+                                 Text="{Binding ThongSoMongBan.KCThep_Oban_2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 Style="{StaticResource TextBoxStyle}" />
+                        <TextBlock Grid.Row="10"
+                                   Grid.Column="2"
+                                   Text="mm"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <!--#endregion-->
+                        <!--#region Cắt thép ô bản 3 cạnh-->
+                        <CheckBox Grid.Row="11"
+                                  Grid.Column="0"
+                                  Content="Cắt thép"
+                                  IsChecked="{Binding HaveCutThep_Oban2}"
+                                  Style="{StaticResource CheckBoxStyle}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding HaveCutThepOban2Command}"
+                                   CommandParameter="{Binding ElementName=MainWindow}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </CheckBox>
+                        <!--#endregion-->
+                        <Rectangle Grid.Row="12"
+                                   Height="1"
+                                   Fill="#00008b"
+                                   VerticalAlignment="Top"
+                                   Margin="0 -1 0 0"
+                                   HorizontalAlignment="Stretch"
+                                   Grid.ColumnSpan="3" />
+                        <TextBlock Grid.Row="12"
+                                   Grid.ColumnSpan="3"
+                                   Margin="0 5 0 0"
+                                   Text="Thanh thép chống" />
+                        <!--#region Loại thép chống-->
+                        <TextBlock Grid.Row="13"
+                                   Grid.Column="0"
+                                   Text="Loại chống "
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <ComboBox Grid.Row="13"
+                                  Grid.Column="1"
+                                  Style="{StaticResource ComboBoxStyle}"
+                                  Height="24"
+                                  ItemsSource="{Binding LayoutMongBanModel.ListThanhThepChong}"
+                                  SelectedItem="{Binding LayoutMongBanModel.SelectedLoaiChong, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBlock Grid.Row="13"
+                                   Grid.Column="2"
+                                   Text="mm"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <!--#endregion-->
+                        <!--#region Đường kính thép chống-->
+                        <TextBlock Grid.Row="14"
+                                   Grid.Column="0"
+                                   Text="ĐK Thép "
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <ComboBox Grid.Row="14"
+                                  Grid.Column="1"
+                                  Style="{StaticResource ComboBoxStyle}"
+                                  Height="24"
+                                  ItemsSource="{Binding MongBanModel.LayoutMongBanModel.AllDuongKinh}"
+                                  SelectedItem="{Binding ThongSoMongBan.DKThepChong, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBlock Grid.Row="14"
+                                   Grid.Column="2"
+                                   Text="mm"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <!--#endregion-->
+                        <!--#region Khoảng cách ô bản 2 cạnh-->
+                        <TextBlock Grid.Row="15"
+                                   Grid.Column="0"
+                                   Text="KC Thép Ô bản 1"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <TextBox Grid.Row="15"
+                                 Grid.Column="1"
+                                 Text="{Binding ThongSoMongBan.KCThepChong_Oban1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 Style="{StaticResource TextBoxStyle}" />
+                        <TextBlock Grid.Row="15"
+                                   Grid.Column="2"
+                                   Text="mm"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <!--#endregion-->
+                        <!--#region Khoảng cách ô bản 2 cạnh-->
+                        <TextBlock Grid.Row="16"
+                                   Grid.Column="0"
+                                   Text="KC Thép Ô bản 2"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <TextBox Grid.Row="16"
+                                 Grid.Column="1"
+                                 Text="{Binding ThongSoMongBan.KCThepChong_Oban2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 Style="{StaticResource TextBoxStyle}" />
+                        <TextBlock Grid.Row="16"
+                                   Grid.Column="2"
+                                   Text="mm"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <!--#endregion-->
+                        <Rectangle Grid.Row="17"
+                                   Height="1"
+                                   Fill="#00008b"
+                                   VerticalAlignment="Top"
+                                   Margin="0 -1 0 0"
+                                   HorizontalAlignment="Stretch"
+                                   Grid.ColumnSpan="3" />
+                        <CheckBox Grid.Row="17"
+                                  Grid.Column="0"
+                                  Grid.ColumnSpan="3"
+                                  Content="Đối trọng ?"
+                                  Margin="0 5 0 0"
+                                  Style="{StaticResource CheckBoxStyle}"
+                                  IsChecked="{Binding HaveDoiTrong}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding HaveDoiTrongCommand}"
+                                                           CommandParameter="{Binding ElementName=MainWindow}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </CheckBox>
+                        <!--#region Chiều dày đối trọng -->
+                        <TextBlock Grid.Row="18"
+                                   Grid.Column="0"
+                                   Text="Chiều cao ĐT"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <TextBox Grid.Row="18"
+                                 Grid.Column="1"
+                                 IsEnabled="{Binding IsEnableDoiTrong}"
+                                 Text="{Binding ThongSoMongBan.ChieuCaoDoiTrong, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 Style="{StaticResource TextBoxStyle}" />
+                        <TextBlock Grid.Row="18"
+                                   Grid.Column="2"
+                                   Text="mm"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <!--#endregion-->
+                        <Rectangle Grid.Row="19"
+                                   Height="1"
+                                   Fill="#00008b"
+                                   VerticalAlignment="Top"
+                                   Margin="0 -1 0 0"
+                                   HorizontalAlignment="Stretch"
+                                   Grid.ColumnSpan="3" />
+                        <TextBlock Grid.Row="20"
+                                   Grid.Column="0"
+                                   Grid.ColumnSpan="3"
+                                   Text="Đệm cát"
+                                   Margin="0 5 0 0"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <!--#region Chiều dày đệm cát -->
+                        <TextBlock Grid.Row="21"
+                                   Grid.Column="0"
+                                   Text="Chiều dày ĐC"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <TextBox Grid.Row="21"
+                                 Grid.Column="1"
+                                 Text="{Binding ThongSoMongBan.H_DemCat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 Style="{StaticResource TextBoxStyle}" />
+                        <TextBlock Grid.Row="21"
+                                   Grid.Column="2"
+                                   Text="mm"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <!--#endregion-->
+                        <!--#region Độ dốc mở mái -->
+                        <TextBlock Grid.Row="22"
+                                   Grid.Column="0"
+                                   Text="Hệ số mái taluy"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <TextBox Grid.Row="22"
+                                 Grid.Column="1"
+                                 Text="{Binding HeSoMai, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 Style="{StaticResource TextBoxStyle}" />
+                        <TextBlock Grid.Row="22"
+                                   Grid.Column="2"
+                                   Text=""
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <!--#endregion-->
+                        <!--#region Chiều cao đất đắp -->
+                        <TextBlock Grid.Row="23"
+                                   Grid.Column="0"
+                                   Text="H đắp "
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <TextBox Grid.Row="23"
+                                 Grid.Column="1"
+                                 Text="{Binding HDapMax, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 Style="{StaticResource TextBoxStyle}" />
+                        <TextBlock Grid.Row="23"
+                                   Grid.Column="2"
+                                   Text="mm"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <!--#endregion-->
+                    </Grid>
+                </GroupBox>
+                <!--Cột 1-->
+                <!--Cột 2-->
+                <GroupBox Grid.Column="1"
+                          BorderBrush="#00008b"
+                          Margin="3 0 0 0"
+                          Header="Cổ móng">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                        </Grid.RowDefinitions>
+                        <!--#region Chiều sâu chôn móng -->
+                        <TextBlock Grid.Row="0"
+                                   Grid.Column="0"
+                                   Text="Chiều sâu chôn"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <TextBox Grid.Row="0"
+                                 Grid.Column="1"
+                                 Text="{Binding ThongSoMongBan.ChieuSauChonMong, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 Style="{StaticResource TextBoxStyle}" />
+                        <TextBlock Grid.Row="0"
+                                   Grid.Column="2"
+                                   Text="mm"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <!--#endregion-->
+                        <!--#region Chiều cao cổ móng -->
+                        <TextBlock Grid.Row="1"
+                                   Grid.Column="0"
+                                   Text="Chiều cao cổ"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <TextBox Grid.Row="1"
+                                 Grid.Column="1"
+                                 Text="{Binding ThongSoMongBan.ChieuCaoCoMong, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 Style="{StaticResource TextBoxStyle}" />
+                        <TextBlock Grid.Row="1"
+                                   Grid.Column="2"
+                                   Text="mm"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <!--#endregion-->
+                        <!--#region Chiều Rông cổ móng Bc -->
+                        <TextBlock Grid.Row="2"
+                                   Grid.Column="0"
+                                   Text="Rộng cổ Bc"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <TextBox Grid.Row="2"
+                                 Grid.Column="1"
+                                 Text="{Binding ThongSoMongBan.RongCoMong_Top, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 Style="{StaticResource TextBoxStyle}" />
+                        <TextBlock Grid.Row="2"
+                                   Grid.Column="2"
+                                   Text="mm"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <!--#endregion-->
+                        <!--#region Chiều Rông cổ móng Bot -->
+                        <TextBlock Grid.Row="3"
+                                   Grid.Column="0"
+                                   Text="Rộng cổ B'c"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <TextBox Grid.Row="3"
+                                 Grid.Column="1"
+                                 Text="{Binding ThongSoMongBan.RongCoMong_Bot, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 Style="{StaticResource TextBoxStyle}" />
+                        <TextBlock Grid.Row="3"
+                                   Grid.Column="2"
+                                   Text="mm"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <!--#endregion-->
+                        <!--#region KC mép dầm - cột  -->
+                        <TextBlock Grid.Row="4"
+                                   Grid.Column="0"
+                                   Text="KC mép dầm-cột"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <TextBox Grid.Row="4"
+                                 Grid.Column="1"
+                                 Text="{Binding KC_Mep_DamCot, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 Style="{StaticResource TextBoxStyle}" />
+                        <TextBlock Grid.Row="4"
+                                   Grid.Column="2"
+                                   Text="mm"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <!--#endregion-->
+                        <!--#region Lệch tâm cổ Bc nếu có  -->
+                        <TextBlock Grid.Row="5"
+                                   Grid.Column="0"
+                                   Text="Lêch tâm cổ Top"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <TextBox Grid.Row="5"
+                                 Grid.Column="1"
+                                 Text="{Binding LechTamCoTop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 Style="{StaticResource TextBoxStyle}" />
+                        <TextBlock Grid.Row="5"
+                                   Grid.Column="2"
+                                   Text="mm"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <!--#endregion-->
+                        <Rectangle Grid.Row="6"
+                                   Height="1"
+                                   Fill="#00008b"
+                                   VerticalAlignment="Top"
+                                   Margin="0 -1 0 0"
+                                   HorizontalAlignment="Stretch"
+                                   Grid.ColumnSpan="3" />
+                        <!--#region Đường kính thép chủ cổ móng -->
+                        <TextBlock Grid.Row="6"
+                                   Grid.Column="0"
+                                   Text="ĐK Thép chủ"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <ComboBox Grid.Row="6"
+                                  Grid.Column="1"
+                                  Style="{StaticResource ComboBoxStyle}"
+                                  Height="24"
+                                  ItemsSource="{Binding MongBanModel.LayoutMongBanModel.AllDuongKinh}"
+                                  SelectedItem="{Binding ThongSoMongBan.DKThepChu_CM, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBlock Grid.Row="6"
+                                   Grid.Column="2"
+                                   Text="mm"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <!--#endregion-->
+                        <!--#region Số lượng thép chủ cổ móng -->
+                        <TextBlock Grid.Row="7"
+                                   Grid.Column="0"
+                                   Text="SL Thép chủ"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <TextBox Grid.Row="7"
+                                 Grid.Column="1"
+                                 Text="{Binding ThongSoMongBan.SLThepChu_CM, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 Style="{StaticResource TextBoxStyle}" />
+                        <TextBlock Grid.Row="7"
+                                   Grid.Column="2"
+                                   Text="mm"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <!--#endregion-->
+                        <!--#region Đường kính đai CM -->
+                        <TextBlock Grid.Row="8"
+                                   Grid.Column="0"
+                                   Text="ĐK Thép đai"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <ComboBox Grid.Row="8"
+                                  Grid.Column="1"
+                                  Style="{StaticResource ComboBoxStyle}"
+                                  Height="24"
+                                  ItemsSource="{Binding MongBanModel.LayoutMongBanModel.AllDuongKinh}"
+                                  SelectedItem="{Binding ThongSoMongBan.DKThepDai_CM, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBlock Grid.Row="8"
+                                   Grid.Column="2"
+                                   Text="mm"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <!--#endregion-->
+                        <!--#region Khoảng cách thép đai CM -->
+                        <TextBlock Grid.Row="9"
+                                   Grid.Column="0"
+                                   Text="KC Thép đai"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <TextBox Grid.Row="9"
+                                 Grid.Column="1"
+                                 Text="{Binding ThongSoMongBan.KCThepDai_CM, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 Style="{StaticResource TextBoxStyle}" />
+                        <TextBlock Grid.Row="9"
+                                   Grid.Column="2"
+                                   Text="mm"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <!--#endregion-->
+                        <!--#region Khoảng rải đai 100-->
+                        <CheckBox  Grid.Row="10"
+                                   Grid.Column="0"
+                                   Content="Rải đai 100"
+                                   IsChecked="{Binding HaveRai100}"
+                                   Style="{StaticResource CheckBoxStyle}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding HaveRai100Command}"
+                                                           CommandParameter="{Binding ElementName=MainWindow}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </CheckBox>
+                        <TextBox Grid.Row="10"
+                                 Grid.Column="1"
+                                 IsEnabled="{Binding IsEnable_Rai100}"
+                                 Style="{StaticResource TextBoxStyle}"
+                                 Text="{Binding KCRaiDai100, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBlock  Grid.Row="10"
+                                    Grid.Column="2"
+                                    Text="mm"
+                                    Style="{StaticResource DataGridTextBlockStyle}" />
+                        <!--#endregion-->
+                        <!--#region Số thanh ghép -->
+                        <TextBlock Grid.Row="11"
+                                   Grid.Column="0"
+                                   Text="Số thanh ghép"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <TextBox Grid.Row="11"
+                                 Grid.Column="1"
+                                 Style="{StaticResource TextBoxStyle}"
+                                 Text="{Binding SLThanhGhepCM, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBlock Grid.Row="11"
+                                   Grid.Column="2"
+                                   Text="mm"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <!--#endregion-->
+
+                        <TextBlock Grid.Row="12"
+                                   Grid.Column="0"
+                                   Grid.ColumnSpan="3"
+                                   Style="{StaticResource DataGridTextBlockStyle}"
+                                   Text="{Binding KhoangHoThepCM, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                   Margin="0 0 0 2" />
+                        <Rectangle Grid.Row="13"
+                                   Height="1"
+                                   Fill="#00008b"
+                                   VerticalAlignment="Top"
+                                   Margin="0 -1 0 0"
+                                   HorizontalAlignment="Stretch"
+                                   Grid.ColumnSpan="3" />
+                        <CheckBox Grid.Row="13"
+                                  Grid.Column="0"
+                                
+                                  Content="Thang leo ?"
+                                  Margin="0 5 0 0"
+                                  IsChecked="{Binding HaveThangLeo}"
+                                  Style="{StaticResource CheckBoxStyle}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding HaveThangLeoCommand}"
+                                                           CommandParameter="{Binding ElementName=MainWindow}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </CheckBox>
+                        <ComboBox Grid.Row="13"
+                                  Grid.Column="1"
+                                  Style="{StaticResource ComboBoxStyle}"
+                                  Height="24"
+                                  IsEnabled="{Binding HaveThangLeo}"
+                                  ItemsSource="{Binding MongBanModel.LayoutMongBanModel.AllDuongKinh}"
+                                  SelectedItem="{Binding ThongSoMongBan.DKThep_ThangLeo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <GroupBox Grid.Row="14"
+                                  Grid.Column="0"
+                                  Grid.ColumnSpan="3"
+                                  Height="180"
+                                  Header="Minh họa thép cổ móng"
+                                  Margin="0 0 0 0"
+                                  BorderBrush="#00008b">
+                            <Image Source="{Binding CurrentImageSource}" />
+                            
+                        </GroupBox>
+                    </Grid>
+                </GroupBox>
+                <!--Cột 2-->
+                <!--Cột 3-->
+                <GroupBox Grid.Column="2"
+                          BorderBrush="#00008b"
+                          Margin="3 0 0 0"
+                          Header="Dầm móng">
+                    <Grid>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                        </Grid.RowDefinitions>
+                        <!--#region Chiều cao dầm -->
+                        <TextBlock Grid.Row="0"
+                                   Grid.Column="0"
+                                   Text="Chiều cao dầm"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <TextBox Grid.Row="0"
+                                 Grid.Column="1"
+                                 Text="{Binding ThongSoMongBan.ChieuCaoDam, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 Style="{StaticResource TextBoxStyle}" />
+                        <TextBlock Grid.Row="0"
+                                   Grid.Column="2"
+                                   Text="mm"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <!--#endregion-->
+                        <!--#region Chiều rộng dầm -->
+                        <TextBlock Grid.Row="1"
+                                   Grid.Column="0"
+                                   Text="Chiều rộng dầm"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <TextBox Grid.Row="1"
+                                 Grid.Column="1"
+                                 Text="{Binding ThongSoMongBan.ChieuRongDam, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 Style="{StaticResource TextBoxStyle}" />
+                        <TextBlock Grid.Row="1"
+                                   Grid.Column="2"
+                                   Text="mm"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <!--#endregion-->
+                        <!--#region Đường kính thép chủ dầm -->
+                        <TextBlock Grid.Row="2"
+                                   Grid.Column="0"
+                                   Text="ĐK Thép chủ"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <ComboBox Grid.Row="2"
+                                  Grid.Column="1"
+                                  Style="{StaticResource ComboBoxStyle}"
+                                  Height="24"
+                                  ItemsSource="{Binding MongBanModel.LayoutMongBanModel.AllDuongKinh}"
+                                  SelectedItem="{Binding ThongSoMongBan.DKThepChu_Dam, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBlock Grid.Row="2"
+                                   Grid.Column="2"
+                                   Text="mm"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <!--#endregion-->
+                        <!--#region Số lượng thép chủ dầm -->
+                        <TextBlock Grid.Row="3"
+                                   Grid.Column="0"
+                                   Text="SL Thép chủ"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <TextBox Grid.Row="3"
+                                 Grid.Column="1"
+                                 Text="{Binding ThongSoMongBan.SLThepChu_Dam, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 Style="{StaticResource TextBoxStyle}" />
+                        <TextBlock Grid.Row="3"
+                                   Grid.Column="2"
+                                   Text="mm"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <!--#endregion-->
+                        <GroupBox Grid.Row="4"
+                                  Grid.Column="0"
+                                  Grid.ColumnSpan="3"
+                                  Header="Kiểu bố trí">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <RadioButton Grid.Row="0"
+                                             Content="Bố trí 1 hàng"
+                                             Style="{StaticResource RadioButtonStyle}"
+                                             IsChecked="{Binding Is1Hang, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction Command="{Binding BoTriThepDam1HangCommand}"
+                                            CommandParameter="{Binding ElementName=MainWindow}">
+                                            </i:InvokeCommandAction>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </RadioButton>
+                                <RadioButton Grid.Row="1"
+                                             Content="Bố trí 2 hàng"
+                                             Style="{StaticResource RadioButtonStyle}"
+                                             IsChecked="{Binding Is2Hang, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction Command="{Binding BoTriThepDam2HangCommand}"
+                                            CommandParameter="{Binding ElementName=MainWindow}">
+                                            </i:InvokeCommandAction>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </RadioButton>
+                                <CheckBox Grid.Row="2"
+                                          Content="Bố trí đều"
+                                          Margin="20 0 0 0"
+                                          Style="{StaticResource CheckBoxStyle}"
+                                          IsChecked="{Binding IsDeuNhau}">
+
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction Command="{Binding HaveBoTriDeuNhauCommand}"
+                                            CommandParameter="{Binding ElementName=MainWindow}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </CheckBox>
+                                <StackPanel Grid.Row="3"
+                                            Orientation="Horizontal"
+                                            HorizontalAlignment="Left">
+                                <TextBlock Margin="25  0 0 0"
+                                           Text="SL hàng 2"
+                                           Style="{StaticResource DataGridTextBlockStyle}" />
+                                <TextBox Style="{StaticResource TextBoxStyle}"
+                                         Width="80"
+                                         IsEnabled="{Binding IsEnable_SLThanhHang2}"
+                                         Text="{Binding SLThanhHang2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                         Margin="20 0 0 0" />
+                                </StackPanel>
+                                <TextBlock Grid.Row="4"
+                                           Style="{StaticResource DataGridTextBlockStyle}"
+                                           Text="{Binding ThongBaoKhoangHo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                           Margin="0 0 0 2"
+                                         />
+                                <!--<TextBlock Grid.Row="4"
+                                           Style="{StaticResource DataGridTextBlockStyle}"
+                                           Text="{Binding ThongBaoKhoangHo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                           Margin="0 0 0 2"
+                                           Foreground="{Binding ThongBaoKhoangHo,
+                            Converter={StaticResource StringContentToColor}}" />-->
+                            </Grid>
+                        </GroupBox>
+                        <!--#region Đường kính thép đai dầm -->
+                        <TextBlock Grid.Row="5"
+                                   Grid.Column="0"
+                                   Text="ĐK Thép đai"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <ComboBox Grid.Row="5"
+                                  Grid.Column="1"
+                                  Margin="4 8 4 4"
+                                  Style="{StaticResource ComboBoxStyle}"
+                                  Height="24"
+                                  ItemsSource="{Binding MongBanModel.LayoutMongBanModel.AllDuongKinh}"
+                                  SelectedItem="{Binding ThongSoMongBan.DKThepDai_Dam, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+
+                        <TextBlock Grid.Row="5"
+                                   Grid.Column="2"
+                                   Text="mm"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <!--#endregion-->
+                        <!--#region Số lượng thép chủ dầm -->
+                        <TextBlock Grid.Row="8"
+                                   Grid.Column="0"
+                                   Text="Số lớp thép"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <TextBox Grid.Row="8"
+                                 Grid.Column="1"
+                                 Text="{Binding SoHangThepGia, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 Style="{StaticResource TextBoxStyle}" />
+                        <TextBlock Grid.Row="8"
+                                   Grid.Column="2"
+                                   Text="mm"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <!--#endregion-->
+                        <CheckBox Grid.Row="9"
+                                  Grid.Column="0"
+                                  Grid.ColumnSpan="3"
+                                  Content="Đai đỡ thép giá"
+                                  Style="{StaticResource CheckBoxStyle}"
+                                  Margin="3"
+                                  IsChecked="{Binding IsDaiGia, UpdateSourceTrigger=PropertyChanged}">
+
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding HaveDaiDoThepGiaCommand}"
+                                                           CommandParameter="{Binding ElementName=MainWindow}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+
+                        </CheckBox>
+                        <GroupBox Grid.Row="10"
+                                  Grid.Column="0"
+                                  Grid.ColumnSpan="3"
+                                  Height="180"
+                                  Header="Minh họa thép dầm móng"
+                                  Margin="0 0 0 0"
+                                  BorderBrush="#00008b">
+                            <Image Source="{Binding ImgDam}" />
+                        </GroupBox>
+                        <TextBlock Grid.Row="11"
+                                   Grid.Column="0"
+                                   Text="Chọn móng"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <ComboBox Grid.Row="11"
+                                  Grid.Column="1"
+                                  Style="{StaticResource ComboBoxStyle}"
+                                  Height="24"
+                                  Grid.ColumnSpan="2"
+                                  ItemsSource="{Binding ListThongSoMong, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                  SelectedItem="{Binding ThongSoMongBan}"
+                                  DisplayMemberPath="TenMong"
+                                  SelectedIndex="{Binding SelectedIndex}" />
+
+                        <TextBlock Grid.Row="12"
+                                   Grid.Column="0"
+                                   Text="Mã số"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <TextBox Grid.Row="12"
+                                 Grid.Column="1" Grid.ColumnSpan="2"
+                                 Text="{Binding LayoutMongBanModel.MaSoDuAn_Detail, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 Style="{StaticResource TextBoxStyle}" />
+
+
+                        <TextBlock Grid.Row="13"
+                                   Grid.Column="0"
+                                   Text="STT"
+                                   Style="{StaticResource DataGridTextBlockStyle}" />
+                        <TextBox Grid.Row="13"
+                                 Grid.Column="1"
+                                 Text="{Binding LayoutMongBanModel.SoBanVe_Detail, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 Style="{StaticResource TextBoxStyle}" />
+                    </Grid>
+                </GroupBox>
+                    
+           
+                <!--Cột 3-->
+                <GroupBox Grid.Column="3"
+           BorderBrush="#00008b"
+           Margin="3 0 0 0"
+           Header="Layout">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="1*" />
+
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Row="0"
+                    Grid.Column="0"
+                    Style="{StaticResource DataGridTextBlockStyle}"
+                    Text="Tên móng" />
+                        <TextBox Grid.Row="0"
+                  Grid.Column="1"
+                  Style="{StaticResource TextBoxStyle}"
+                  Text="{Binding ThongSoMongBan.TenMong, Mode=TwoWay,
+             UpdateSourceTrigger=PropertyChanged}" />
+
+                        <TextBlock Grid.Row="0"
+                    Grid.Column="2"
+                    Style="{StaticResource DataGridTextBlockStyle}"
+                    Text="" />
+                        <!--#region Tim móng-->
+                        <TextBlock Grid.Row="1"
+                    Grid.Column="0"
+                    Style="{StaticResource DataGridTextBlockStyle}"
+                    Text="Tim móng (mm)" />
+                        <TextBox Grid.Row="1"
+                  Grid.Column="1"
+                  Style="{StaticResource TextBoxStyle}"
+                  Text="{Binding ThongSoMongBan.TimMong, Mode=TwoWay,
+             UpdateSourceTrigger=PropertyChanged}" />
+
+                        <TextBlock Grid.Row="1"
+                    Grid.Column="2"
+                    Style="{StaticResource DataGridTextBlockStyle}"
+                    Text="" />
+
+
+                        <!--#region Mác bê tông-->
+                        <TextBlock Grid.Row="2"
+                    Grid.Column="0"
+                    Style="{StaticResource DataGridTextBlockStyle}"
+                    Text="Mác Bê Tông" />
+                        <ComboBox Grid.Row="2"
+                   Grid.Column="1"
+                   Style="{StaticResource ComboBoxStyle}"
+                   Height="24"
+                   ItemsSource="{Binding MongBanModel.LayoutMongBanModel.MacBeTong}"
+                   SelectedItem="{Binding LayoutMongBanModel.SelectedMacBeTong}" />
+                        <TextBlock Grid.Row="2"
+                    Grid.Column="2"
+                    Style="{StaticResource DataGridTextBlockStyle}"
+                    Text="" />
+                        <!--#region Mác cốt thép-->
+                        <TextBlock Grid.Row="3"
+                    Grid.Column="0"
+                    Style="{StaticResource DataGridTextBlockStyle}"
+                    Text="Mác Cốt thép" />
+                        <ComboBox Grid.Row="3"
+                   Grid.Column="1"
+                   Style="{StaticResource ComboBoxStyle}"
+                   Height="24"
+                   ItemsSource="{Binding MongBanModel.LayoutMongBanModel.MacThep}"
+                   SelectedItem="{Binding LayoutMongBanModel.SelectedMacThep}" />
+                        <TextBlock Grid.Row="3"
+                    Grid.Column="2"
+                    Style="{StaticResource DataGridTextBlockStyle}"
+                    Text="" />
+                        <!--#region Hướng tuyến-->
+                        <TextBlock Grid.Row="4"
+                    Grid.Column="0"
+                    Style="{StaticResource DataGridTextBlockStyle}"
+                    Text="Hướng Tuyến" />
+                        <ComboBox Grid.Row="4"
+                   Grid.Column="1"
+                   Style="{StaticResource ComboBoxStyle}"
+                   Height="24"
+                   ItemsSource="{Binding MongBanModel.LayoutMongBanModel.HuongTuyen}"
+                   SelectedItem="{Binding LayoutMongBanModel.SelectedHuongTuyen}" />
+                        <TextBlock Grid.Row="4"
+                    Grid.Column="2"
+                    Style="{StaticResource DataGridTextBlockStyle}"
+                    Text="" />
+                        <!--#region Bulong neo-->
+                        <TextBlock Grid.Row="5"
+                    Grid.Column="0"
+                    Style="{StaticResource DataGridTextBlockStyle}"
+                    Text="Góc lái" />
+                        <ComboBox Grid.Row="5"
+                   Grid.Column="1"
+                   Style="{StaticResource ComboBoxStyle}"
+                   Height="24"
+                   ItemsSource="{Binding MongBanModel.LayoutMongBanModel.GocLai}"
+                   SelectedItem="{Binding LayoutMongBanModel.SelectedGocLai}" />
+                        <TextBlock Grid.Row="5"
+                    Grid.Column="2"
+                    Style="{StaticResource DataGridTextBlockStyle}"
+                    Text="" />
+                        <!--#region Bulong neo-->
+                        <TextBlock Grid.Row="6"
+                    Grid.Column="0"
+                    Style="{StaticResource DataGridTextBlockStyle}"
+                    Text="Khoảng hở thép" />
+                        <TextBox Grid.Row="6"
+                  Grid.Column="1"
+                  Style="{StaticResource TextBoxStyle}"
+                  Text="{Binding LayoutMongBanModel.KhoangHo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBlock Grid.Row="6"
+                    Grid.Column="2"
+                    Style="{StaticResource DataGridTextBlockStyle}"
+                    Text="" />
+                        <!--#region Scale mặt bằng-->
+                        <TextBlock Grid.Row="7"
+                    Grid.Column="0"
+                    Style="{StaticResource DataGridTextBlockStyle}"
+                    Text="TL Layout-1:" />
+                        <ComboBox Grid.Row="7"
+                   Grid.Column="1"
+                   Style="{StaticResource ComboBoxStyle}"
+                   Height="24"
+                   ItemsSource="{Binding MongBanModel.LayoutMongBanModel.Scale}"
+                   SelectedItem="{Binding LayoutMongBanModel.Selected_Scale_Layout}" />
+                        <TextBlock Grid.Row="7"
+                    Grid.Column="2"
+                    Style="{StaticResource DataGridTextBlockStyle}"
+                    Text="" />
+                        <!--#region Scale mặt bằng BT Thép-->
+                        <TextBlock Grid.Row="8"
+                    Grid.Column="0"
+                    Style="{StaticResource DataGridTextBlockStyle}"
+                    Text="TL MB Thép-1:" />
+                        <ComboBox Grid.Row="8"
+                   Grid.Column="1"
+                   Style="{StaticResource ComboBoxStyle}"
+                   Height="24"
+                   ItemsSource="{Binding MongBanModel.LayoutMongBanModel.Scale}"
+                   SelectedItem="{Binding LayoutMongBanModel.Selected_Scale_MBThep}" />
+                        <TextBlock Grid.Row="8"
+                    Grid.Column="2"
+                    Style="{StaticResource DataGridTextBlockStyle}"
+                    Text="" />
+                        <!--#region Scale mặt đứng BT Thép-->
+                        <TextBlock Grid.Row="9"
+                    Grid.Column="0"
+                    Style="{StaticResource DataGridTextBlockStyle}"
+                    Text="TL MĐ Thép-1:" />
+                        <ComboBox Grid.Row="9"
+                   Grid.Column="1"
+                   Style="{StaticResource ComboBoxStyle}"
+                   Height="24"
+                   ItemsSource="{Binding MongBanModel.LayoutMongBanModel.Scale}"
+                   SelectedItem="{Binding LayoutMongBanModel.Selected_Scale_MatDungThep}" />
+                        <TextBlock Grid.Row="9"
+                    Grid.Column="2"
+                    Style="{StaticResource DataGridTextBlockStyle}"
+                    Text="" />
+                        <!--#region Scale mặt cắt cổ móng -->
+                        <TextBlock Grid.Row="10"
+                    Grid.Column="0"
+                    Style="{StaticResource DataGridTextBlockStyle}"
+                    Text="TL MC Cổ 1:" />
+                        <ComboBox Grid.Row="10"
+                   Grid.Column="1"
+                   Style="{StaticResource ComboBoxStyle}"
+                   Height="24"
+                   ItemsSource="{Binding MongBanModel.LayoutMongBanModel.Scale}"
+                   SelectedItem="{Binding LayoutMongBanModel.Selected_Scale_SC_Column}" />
+                        <TextBlock Grid.Row="10"
+                    Grid.Column="2"
+                    Style="{StaticResource DataGridTextBlockStyle}"
+                    Text="" />
+                        <!--#region Scale mặt cắt dầm móng -->
+                        <TextBlock Grid.Row="11"
+                    Grid.Column="0"
+                    Style="{StaticResource DataGridTextBlockStyle}"
+                    Text="TL MC Dầm 1:" />
+                        <ComboBox Grid.Row="11"
+                   Grid.Column="1"
+                   Style="{StaticResource ComboBoxStyle}"
+                   Height="24"
+                   ItemsSource="{Binding MongBanModel.LayoutMongBanModel.Scale}"
+                   SelectedItem="{Binding LayoutMongBanModel.Selected_Scale_Dam}" />
+                        <TextBlock Grid.Row="11"
+                    Grid.Column="2"
+                    Style="{StaticResource DataGridTextBlockStyle}"
+                    Text="" />
+                        <!--#region Giai doan thiet ke -->
+                        <TextBlock Grid.Row="12"
+                    Grid.Column="0"
+                    Style="{StaticResource DataGridTextBlockStyle}"
+                    Text="GĐTK" />
+                        <ComboBox Grid.Row="12"
+                   Grid.Column="1"
+                   Style="{StaticResource ComboBoxStyle}"
+                   Height="24"
+                   ItemsSource="{Binding MongBanModel.LayoutMongBanModel.GDTK}"
+                   SelectedItem="{Binding LayoutMongBanModel.Selected_GDTK}" />
+                        <TextBlock Grid.Row="12"
+                    Grid.Column="2"
+                    Style="{StaticResource DataGridTextBlockStyle}"
+                    Text="" />
+                        <!--#region Hatch scale -->
+                        <TextBlock Grid.Row="13"
+                    Grid.Column="0"
+                    Style="{StaticResource DataGridTextBlockStyle}"
+                    Text="TL Hacth 1:" />
+                        <TextBox Grid.Row="13"
+                  Grid.Column="1"
+                  Style="{StaticResource TextBoxStyle}"
+                  Text="{ Binding LayoutMongBanModel.HacthScale,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBlock Grid.Row="13"
+                    Grid.Column="2"
+                    Style="{StaticResource DataGridTextBlockStyle}"
+                    Text="" />
+                        <!--#region Lớp bê tông bảo vệ đáy-->
+                        <TextBlock Grid.Row="14"
+                    Grid.Column="0"
+                    Style="{StaticResource DataGridTextBlockStyle}"
+                    Text="BTBV Đáy (mm)" />
+                        <TextBox Grid.Row="14"
+                  Grid.Column="1"
+                  Style="{StaticResource TextBoxStyle}"
+                  Text="{Binding LayoutMongBanModel.BTBV_Day, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBlock Grid.Row="14"
+                    Grid.Column="2"
+                    Style="{StaticResource DataGridTextBlockStyle}"
+                    Text="" />
+                        <!--#region Lớp bê tông bảo vệ khác-->
+                        <TextBlock Grid.Row="15"
+                    Grid.Column="0"
+                    Style="{StaticResource DataGridTextBlockStyle}"
+                    Text="BTBV Khác (mm)" />
+                        <TextBox Grid.Row="15"
+                  Grid.Column="1"
+                  Style="{StaticResource TextBoxStyle}"
+                  Text="{Binding LayoutMongBanModel.BTBV_Khac, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBlock Grid.Row="15"
+                    Grid.Column="2"
+                    Style="{StaticResource DataGridTextBlockStyle}"
+                    Text="" />
+
+                        <!--#region Dự trù khối lượng-->
+                        <TextBlock Grid.Row="16"
+                    Grid.Column="0"
+                    Style="{StaticResource DataGridTextBlockStyle}"
+                    Text="Dự trù BT (%)" />
+                        <TextBox Grid.Row="16"
+                  Grid.Column="1"
+                  Style="{StaticResource TextBoxStyle}"
+                  Text="{Binding LayoutMongBanModel.DuTruKL_BT, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBlock Grid.Row="16"
+                    Grid.Column="2"
+                    Style="{StaticResource DataGridTextBlockStyle}"
+                    Text="" />
+
+                        <!--#region Dự trù khối lượng-->
+                        <TextBlock Grid.Row="17"
+                    Grid.Column="0"
+                    Style="{StaticResource DataGridTextBlockStyle}"
+                    Text="Dự trù Thép (%)" />
+                        <TextBox Grid.Row="17"
+                  Grid.Column="1"
+                  Style="{StaticResource TextBoxStyle}"
+                  Text="{Binding LayoutMongBanModel.DuTruKL_CotThep, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBlock Grid.Row="17"
+                    Grid.Column="2"
+                    Style="{StaticResource DataGridTextBlockStyle}"
+                    Text="" />
+
+
+                        <!--#region Mã só công trình-->
+                        <TextBlock Grid.Row="18"
+                    Grid.Column="0"
+                    Style="{StaticResource DataGridTextBlockStyle}"
+                    Text="Số thân cột" />
+                        <TextBox Grid.Row="18"
+                  Grid.Column="1"
+                  Style="{StaticResource TextBoxStyle}"
+                  Text="{Binding LayoutMongBanModel.SoThanCot, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBlock Grid.Row="18"
+                    Grid.Column="2"
+                    Style="{StaticResource DataGridTextBlockStyle}"
+                    Text="" />
+
+
+                        <!--#region Mã só công trình-->
+                        <TextBlock Grid.Row="19"
+                    Grid.Column="0"
+                    Style="{StaticResource DataGridTextBlockStyle}"
+                    Text="Mã số dự án" />
+                        <TextBox Grid.Row="19"
+                  Grid.Column="1"
+                  Style="{StaticResource TextBoxStyle}"
+                  Text="{Binding LayoutMongBanModel.MaSoDuAn, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBlock Grid.Row="19"
+                    Grid.Column="2"
+                    Style="{StaticResource DataGridTextBlockStyle}"
+                    Text="" />
+                        <!--#region Số bản vẽ-->
+                        <TextBlock Grid.Row="20"
+                    Grid.Column="0"
+                    Style="{StaticResource DataGridTextBlockStyle}"
+                    Text="Số bản vẽ" />
+                        <TextBox Grid.Row="20"
+                  Grid.Column="1"
+                  Style="{StaticResource TextBoxStyle}"
+                  Text="{Binding LayoutMongBanModel.SoBanVe, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBlock Grid.Row="20"
+                    Grid.Column="2"
+                    Style="{StaticResource DataGridTextBlockStyle}"
+                    Text="" />
+                        <StackPanel Grid.Row="21"
+                     Grid.Column="0"
+                     Grid.ColumnSpan="3"
+                     Orientation="Horizontal"
+                     VerticalAlignment="Center"
+                     HorizontalAlignment="Left">
+                            <RadioButton Style="{StaticResource RadioButtonStyle}"
+                          Content="Khung Ngang"
+                          IsChecked="{Binding IsKhungNgang, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <i:InvokeCommandAction Command="{Binding KhungA3NgangCommand}"
+                                                CommandParameter="{Binding ElementName=MainWindow}">
+                                        </i:InvokeCommandAction>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </RadioButton>
+                            <RadioButton Style="{StaticResource RadioButtonStyle}"
+                          Content="Khung Dọc"
+                          IsChecked="{Binding IsKhungDoc, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <i:InvokeCommandAction Command="{Binding KhungA3DocCommand}"
+                                                CommandParameter="{Binding ElementName=MainWindow}">
+                                        </i:InvokeCommandAction>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </RadioButton>
+                        </StackPanel>
+                        <!--#region Số bản vẽ-->
+                        <!--
+                         <TextBlock Grid.Row="19"
+                                    Grid.Column="0"
+                                    Style="{StaticResource DataGridTextBlockStyle}"
+                                    Text="Tên móng Layout" />
+                         <TextBox Grid.Row="19"
+                                  Grid.Column="1"
+                                  Style="{StaticResource TextBoxStyle}"
+                                  Text="{Binding TenMongLayOut, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                         <TextBlock Grid.Row="19"
+                                    Grid.Column="2"
+                                    Style="{StaticResource DataGridTextBlockStyle}"
+                                    Text="" />-->
+                    </Grid>
+                </GroupBox>
+            </Grid>
+        </GroupBox>
+        <StackPanel Grid.Row="2"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right">
+            <Button Content="Load Khung tên"
+                    Style="{StaticResource ButtonStyle}"
+                    Height="30"
+                    Width="100"
+                    Foreground="White"
+                    Command="{Binding LoadKhungTenCommand}"
+                    CommandParameter="{Binding ElementName=MainWindow}" />
+            <Button Content="Load Data"
+                    Style="{StaticResource ButtonStyle}"
+                    Height="30"
+                    Width="100"
+                    Foreground="White"
+                    Command="{Binding LoadDataCommand}"
+                    CommandParameter="{Binding ElementName=MainWindow}" />
+            <Button Content="Vẽ"
+                    Style="{StaticResource ButtonStyle}"
+                    Height="30"
+                    Width="100"
+                    Foreground="White"
+                    Command="{Binding VeAcadCommand}"
+                    CommandParameter="{Binding ElementName=MainWindow}" />
+            <Button Content="Cancel"
+                    Style="{StaticResource ButtonStyle}"
+                    Height="30"
+                    Width="100"
+                    Foreground="White"
+                    Command="{Binding CancelCommand}"
+                    CommandParameter="{Binding ElementName=MainWindow}" />
+        </StackPanel>
+    </Grid>
+</Window>

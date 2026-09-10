@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="700" Background="AliceBlue">
     <UserControl.Resources>
-        <ResourceDictionary Source="../MyResource/Styles.xaml"/>
+        <ResourceDictionary Source="../../Style/Styles.xaml"/>
     </UserControl.Resources>
     <Grid>
         <TextBox Width="700" Height="600" Margin="5" Text="Ghi chú"/>

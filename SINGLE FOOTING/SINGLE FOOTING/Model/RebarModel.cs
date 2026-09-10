@@ -16,7 +16,7 @@ using Application = Autodesk.AutoCAD.ApplicationServices.Application;
 using CadApp = Autodesk.AutoCAD.ApplicationServices.Application;
 namespace SINGLE_FOOTING.SINGLE_FOOTING.Model
 {
-    public class RebarModel : BaseViewModel
+    public class RebarModel : BaseViewModel //thực thi interface 
     {
         private List<int> _allDuongKinhThep;
 
@@ -359,8 +359,8 @@ namespace SINGLE_FOOTING.SINGLE_FOOTING.Model
             Point3d pTag5 = new Point3d(xStick, (yStickFirst.Value + yStickLast.Value) / 2.0, 0);
             Point3d pInTag5 = new Point3d(pTag5.X + 21, pTag5.Y, 0);
             Point3d pInTag5_text = new Point3d(p7.X + btbvVe, pTag5.Y + btbvVe, 0); // điểm chèn text Ø12@200
-            Point3d pInTag6 = new Point3d(pInTag5.X + 5, pInTag5.Y, 0);
-            Point3d pInTag7 = new Point3d(pInTag6.X + 5, pInTag5.Y, 0);
+            Point3d pInTag6 = new Point3d(pInTag5.X + 8, pInTag5.Y, 0);
+            Point3d pInTag7 = new Point3d(pInTag6.X + 8, pInTag5.Y, 0);
             #endregion
             #region Method tag thep
             ClCAD.SetLayerCurrent("DIM");

@@ -11,7 +11,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../MyResource/Styles.xaml" />
+                <ResourceDictionary Source="../../Style/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -22,10 +22,10 @@
             </i:EventTrigger>
         </i:Interaction.Triggers>
         <Button Style="{StaticResource ButtonStyle }" Width="32" DockPanel.Dock="Left" Command="{Binding GotoWebCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}">
-            <Image Source="../Img/information-284-32.png"/>
+            <Image Source="../../Img/information-284-32.png"/>
         </Button>
         <Button DockPanel.Dock="Right" Width="40" Style="{StaticResource ButtonStyle}" Background="White" Command="{Binding ClosedWindowCommand}" CommandParameter="{Binding ElementName=MainWindow}">
-            <Image Source="../Img/close-37-32.png"/>
+            <Image Source="../../Img/close-37-32.png"/>
         </Button>
         <ComboBox DockPanel.Dock="Right" Width="60" Style="{StaticResource ComboBoxStyle}" ItemsSource="{Binding DataContext.LanguageModel.AllLanguages,RelativeSource={RelativeSource AncestorType=Window}}"
        SelectedItem="{Binding DataContext.LanguageModel.SelectedLanguage,RelativeSource={RelativeSource AncestorType=Window},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
