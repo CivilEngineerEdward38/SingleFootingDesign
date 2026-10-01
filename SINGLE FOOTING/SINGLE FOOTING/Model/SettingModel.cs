@@ -263,8 +263,8 @@ namespace ACAD_API.SINGLE_FOOTING.Model
                 new Point3d(p1.X, p13.Y, 0),
                 new Point3d(p4.X, p13.Y, 0)
             };
-            ClCAD.CreateDimension_X(dsX, ChonTyLe, 1, 2, false);
-            ClCAD.CreateDimension_X(dsX2, ChonTyLe, 2, 2, false);
+            ClCAD.CreateDimension_XThuan(dsX, ChonTyLe, 1, 2, false);
+            ClCAD.CreateDimension_XThuan(dsX2, ChonTyLe, 2, 2, false);
             List<Point3d> dsY = new List<Point3d>()
             {
                 new Point3d(p13.X, p14.Y, 0), // Đỉnh BT lót (trên)
@@ -278,20 +278,20 @@ namespace ACAD_API.SINGLE_FOOTING.Model
                 new Point3d(p13.X, p2.Y, 0),
                 new Point3d(p13.X, p1.Y, 0)
             };
-            ClCAD.CreateDimension_Y(dsY, ChonTyLe, 1, 2, false);
-            ClCAD.CreateDimension_Y(dsY2, ChonTyLe, 2, 2, false);
+            ClCAD.CreateDimension_Y2Thuan(dsY, ChonTyLe, 1, 2, false);
+            ClCAD.CreateDimension_Y2Thuan(dsY2, ChonTyLe, 2, 2, false);
             List<Point3d> dsCMphuongX = new List<Point3d>()
             {
-                new Point3d(p6.X, p6.Y, 0),
+                new Point3d(p6.X, p6.Y, 0), 
                 new Point3d(p7.X, p7.Y, 0)
             };
-            ClCAD.CreateDimension_X(dsCMphuongX, ChonTyLe, 1, 2, true);
+            ClCAD.CreateDimension_XThuan(dsCMphuongX, ChonTyLe, 1, 2, true);
             List<Point3d> dsCMphuongY = new List<Point3d>()
             {
                 new Point3d(p11.X, p11.Y, 0),
                 new Point3d(p12.X, p12.Y, 0)
             };
-            ClCAD.CreateDimension_Y(dsCMphuongY, ChonTyLe, 1, 2, true);
+            ClCAD.CreateDimension_Y2Thuan(dsCMphuongY, ChonTyLe, 1, 2, true);
             #endregion
         }
         public void VeMatDungMongCoThang(Point3d ptDiemVe)
@@ -368,8 +368,8 @@ namespace ACAD_API.SINGLE_FOOTING.Model
                 new Point3d(p1.X, p14.Y, 0),
                 new Point3d(p10.X, p14.Y, 0)
             };
-            ClCAD.CreateDimension_X(dsX, ChonTyLe, 1, 2, false);
-            ClCAD.CreateDimension_X(dsX2, ChonTyLe, 2, 2, false);
+            ClCAD.CreateDimension_XThuan(dsX, ChonTyLe, 1, 2, false);
+            ClCAD.CreateDimension_XThuan(dsX2, ChonTyLe, 2, 2, false);
             //Phương đứng 
             List<Point3d> dsY = new List<Point3d>()
             {
@@ -384,29 +384,29 @@ namespace ACAD_API.SINGLE_FOOTING.Model
                 new Point3d(p11.X, p11.Y, 0),
                 new Point3d(p5.X, p5.Y, 0)
             };
-            ClCAD.CreateDimension_Y1(dsY, ChonTyLe, 1, 2, false);
-            ClCAD.CreateDimension_Y(dsY2, ChonTyLe, 2, 2, false);
+            ClCAD.CreateDimension_YThuan(dsY, ChonTyLe, 1, 2, false);
+            ClCAD.CreateDimension_YThuan(dsY2, ChonTyLe, 2, 2, false);
             //Mép cổ móng bên trái 
             List<Point3d> dsMepCoTrai = new List<Point3d>()
             {
                 new Point3d(p3.X, p3.Y, 0),
                 new Point3d(p4.X, p4.Y, 0),
             };
-            ClCAD.CreateDimension_X(dsMepCoTrai, ChonTyLe, 1, 2, true);
+            ClCAD.CreateDimension_XThuan(dsMepCoTrai, ChonTyLe, 1, 2, true);
             //Mép cổ móng bên phải 
             List<Point3d> dsMepCoPhai = new List<Point3d>()
             {
                 new Point3d(p7.X, p7.Y, 0),
                 new Point3d(p8.X, p8.Y, 0),
             };
-            ClCAD.CreateDimension_X(dsMepCoPhai, ChonTyLe, 1, 2, true);
+            ClCAD.CreateDimension_XThuan(dsMepCoPhai, ChonTyLe, 1, 2, true);
             //Dim cổ móng
             List<Point3d> dsDimBcHc = new List<Point3d>()
             {
                 new Point3d(p5.X, p5.Y, 0),
                 new Point3d(p6.X, p6.Y, 0),
             };
-            ClCAD.CreateDimension_X(dsDimBcHc, ChonTyLe, 2, 2, true);
+            ClCAD.CreateDimension_XThuan(dsDimBcHc, ChonTyLe, 2, 2, true);
             // Chèn block tại điểm chọn với giá trị mặt cắt "1"
             ClBlock.InsertMCHLBlock(p5MC1, "1");
             ClBlock.InsertMCHLBlock(p6MC1, "1");

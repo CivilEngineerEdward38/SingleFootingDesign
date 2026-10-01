@@ -72,12 +72,17 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App\ClMain.cs" />
+    <Compile Include="Command\PECC3Command.cs" />
     <Compile Include="LIBRARY\BaseViewModel.cs" />
     <Compile Include="LIBRARY\ClBlock.cs" />
     <Compile Include="LIBRARY\ClCAD.cs" />
+    <Compile Include="LIBRARY\ClKiHieu.cs" />
     <Compile Include="LIBRARY\FindChildClass.cs" />
     <Compile Include="LIBRARY\RelayCommandment.cs" />
+    <Compile Include="LIBRARY\SetLayout.cs" />
     <Compile Include="LIBRARY\WPF\Converted\StringContentToColorcs.cs" />
+    <Compile Include="PILE FOUNDATION\Model\ThongSoMong.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -116,7 +121,13 @@
     <Compile Include="SINGLE FOOTING\View\WinDowSingleFooting.xaml.cs">
       <DependentUpon>WinDowSingleFooting.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SLAB BEAM RAFT FOOTING\Model\ThongSoMongBancs.cs" />
+    <Compile Include="SLAB BEAM RAFT FOOTING\Model\DrawMongBan.cs" />
+    <Compile Include="SLAB BEAM RAFT FOOTING\Model\GetInforMongBan.cs" />
+    <Compile Include="SLAB BEAM RAFT FOOTING\Model\LayoutMongBan.cs" />
+    <Compile Include="SLAB BEAM RAFT FOOTING\Model\MongBanModel.cs" />
+    <Compile Include="SLAB BEAM RAFT FOOTING\Model\PointsLayoutModel.cs" />
+    <Compile Include="SLAB BEAM RAFT FOOTING\Model\ThongSoMongBan.cs" />
+    <Compile Include="SLAB BEAM RAFT FOOTING\Model\TinhKhoiLuongMongBan.cs" />
     <Compile Include="SLAB BEAM RAFT FOOTING\ViewModel\MongBanViewModel.cs" />
     <Compile Include="SLAB BEAM RAFT FOOTING\ViewModel\TaskBarControlViewModel.cs" />
     <Compile Include="SLAB BEAM RAFT FOOTING\View\MongBanWindow.xaml.cs">
@@ -125,6 +136,7 @@
     <Compile Include="SLAB BEAM RAFT FOOTING\View\TaskBarViewMongBan.xaml.cs">
       <DependentUpon>TaskBarViewMongBan.xaml</DependentUpon>
     </Compile>
+    <Compile Include="XData\XDataMong.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

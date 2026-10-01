@@ -2,7 +2,7 @@
 
 namespace SINGLE_FOOTING.SLAB_BEAM_RAFT_FOOTING.Model
 {
-    public class ThongSoMongBancs
+    public class ThongSoMongBan
     {
 
         #region Bản móng     

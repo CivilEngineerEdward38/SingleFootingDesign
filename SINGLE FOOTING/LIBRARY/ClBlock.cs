@@ -503,6 +503,70 @@ public class ClBlock
             tr.Commit();
         }
     }
+    #region Lấy class của a Minh
+    public static void InsertBlockTagThep2(string NameBL, Point3d ptInsert, string sh, int soluong, int dk, double kcach, double scale, double rotation)
+    {
+        Autodesk.AutoCAD.DatabaseServices.Database db = Application.DocumentManager.MdiActiveDocument.Database;
+        using (Transaction tr = db.TransactionManager.StartTransaction())
+        {
+            BlockTable acBlkTbl = tr.GetObject(db.BlockTableId, OpenMode.ForRead) as BlockTable;
+            if (!acBlkTbl.Has(NameBL)) return;
+            ObjectId blkRecId = acBlkTbl[NameBL];
+            if (blkRecId != ObjectId.Null)
+            {
+                BlockTableRecord acBlkTblRec = tr.GetObject(blkRecId, OpenMode.ForRead) as BlockTableRecord;
+                using (BlockReference acBlkRef = new BlockReference(ptInsert, acBlkTblRec.Id))
+                {
+                    acBlkRef.ScaleFactors = new Scale3d(scale);
+                    acBlkRef.Rotation = rotation;
+                    BlockTableRecord acCurSpaceBlkTblRec = tr.GetObject(db.CurrentSpaceId, OpenMode.ForWrite) as BlockTableRecord;
+                    acCurSpaceBlkTblRec.AppendEntity(acBlkRef);
+                    tr.AddNewlyCreatedDBObject(acBlkRef, true);
+                    if (acBlkTblRec.HasAttributeDefinitions)
+                    {
+                        foreach (ObjectId objID in acBlkTblRec)
+                        {
+                            DBObject dbObj = tr.GetObject(objID, OpenMode.ForRead);
+                            if (dbObj is AttributeDefinition acAtt)
+                            {
+                                if (acAtt.Tag == "SH")
+                                {
+                                    using (AttributeReference acAttRef = new AttributeReference())
+                                    {
+                                        acAttRef.SetAttributeFromBlock(acAtt, acBlkRef.BlockTransform);
+                                        acAttRef.Position = acAtt.Position.TransformBy(acBlkRef.BlockTransform);
+                                        acAttRef.TextString = sh.ToString();
+                                        acBlkRef.AttributeCollection.AppendAttribute(acAttRef);
+                                        tr.AddNewlyCreatedDBObject(acAttRef, true);
+                                    }
+                                }
+                                else if (acAtt.Tag == "Ø")
+                                {
+                                    using (AttributeReference acAttRef = new AttributeReference())
+                                    {
+                                        acAttRef.SetAttributeFromBlock(acAtt, acBlkRef.BlockTransform);
+                                        acAttRef.Position = acAtt.Position.TransformBy(acBlkRef.BlockTransform);
+
+                                        string noidung = "Ø" + dk.ToString();
+                                        if (soluong > 0) noidung = soluong.ToString() + noidung;
+                                        if (kcach > 0) noidung += "a" + kcach.ToString();
+
+                                        acAttRef.TextString = noidung;
+                                        acBlkRef.AttributeCollection.AppendAttribute(acAttRef);
+                                        tr.AddNewlyCreatedDBObject(acAttRef, true);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            tr.Commit();
+        }
+
+    }
+    #endregion
 }
+
 
 

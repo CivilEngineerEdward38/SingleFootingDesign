@@ -398,7 +398,7 @@ public class ClCAD
             tr.Commit();
         }
     }
-    public static void CreateDimension_X(List<Point3d> dsX, double chonTyLe, int ihang, double textHeight, bool phiaTren = true)
+    public static void CreateDimension_XThuan(List<Point3d> dsX, double chonTyLe, int ihang, double textHeight, bool phiaTren = true)
     {
         double kcDim = textHeight * 3;
         double huong = phiaTren ? 1 : -1;
@@ -432,7 +432,7 @@ public class ClCAD
             tr.Commit();
         }
     }
-    public static void CreateDimension_Y(List<Point3d> dsX, double chonTyLe, int ihang, double textHeight, bool benPhai = true)
+    public static void CreateDimension_YThuan(List<Point3d> dsX, double chonTyLe, int ihang, double textHeight, bool benPhai = true)
     {
         double kcDim = textHeight * 3;
         double huong = benPhai ? 1 : -1;
@@ -441,7 +441,7 @@ public class ClCAD
             DimY(dsX[i], dsX[i + 1], huong * ihang * kcDim);
         }
     }
-    public static void CreateDimension_Y1(List<Point3d> dsX, double chonTyLe, int ihang, double textHeight, bool benPhai = true)
+    public static void CreateDimension_Y2Thuan(List<Point3d> dsX, double chonTyLe, int ihang, double textHeight, bool benPhai = true)
     {
         //Hàm này tương tự Dimcontinue tránh bị nhảy Dim
         double kcDim = textHeight * 3;
@@ -540,7 +540,7 @@ public class ClCAD
             tr.Commit();
         }
     }
-    public static void CreateDimension_Y1_WithLabel( List<Point3d> dsX,  List<string> labels,string tenTextStyle,   double chonTyLe,  int ihang, double textHeight,  bool benPhai = true)
+    public static void CreateDimension_Y2_WithLabel( List<Point3d> dsX,  List<string> labels,string tenTextStyle,   double chonTyLe,  int ihang, double textHeight,  bool benPhai = true)
     {
         if (dsX == null || dsX.Count < 2)
             return;
@@ -579,5 +579,426 @@ public class ClCAD
         return DT;
     }
     #endregion
+    public static double CreateHatchFromListPointP(List<Point3d> listPoint, string nameHatch, double patternScale)
+    {
+        double Square = 0;
+        Document doc = Application.DocumentManager.MdiActiveDocument;
+        Database db = doc.Database;
+        using (doc.LockDocument())
+        using (Transaction tr = db.TransactionManager.StartTransaction())
+        {
+            BlockTable acBlkTbl = tr.GetObject(db.BlockTableId, OpenMode.ForRead) as BlockTable;
+            BlockTableRecord acBlkTblRec = tr.GetObject(acBlkTbl[BlockTableRecord.ModelSpace], OpenMode.ForWrite) as BlockTableRecord;
+            Autodesk.AutoCAD.DatabaseServices.Polyline pline = new Autodesk.AutoCAD.DatabaseServices.Polyline();
+            pline.SetDatabaseDefaults();
+            for (int i = 0; i < listPoint.Count; i++)
+            {
+                Point3d pt = listPoint[i];
+                pline.AddVertexAt(i, new Point2d(pt.X, pt.Y), 0, 0, 0);
+            }
+            pline.Closed = true;
+            Square = pline.Area;
+            acBlkTblRec.AppendEntity(pline);
+            tr.AddNewlyCreatedDBObject(pline, true);
+            ObjectIdCollection acObjIdColl = new ObjectIdCollection { pline.ObjectId };
+            Hatch hatchvl = new Hatch();
+
+            hatchvl.SetDatabaseDefaults();
+            hatchvl.PatternScale = patternScale;
+            hatchvl.SetHatchPattern(HatchPatternType.CustomDefined, nameHatch);
+            acBlkTblRec.AppendEntity(hatchvl);
+            tr.AddNewlyCreatedDBObject(hatchvl, true);
+
+            hatchvl.AppendLoop(HatchLoopTypes.Outermost, acObjIdColl);
+            hatchvl.EvaluateHatch(true);
+
+            hatchvl.Associative = true;
+
+            //pline.Erase(true);
+            tr.Commit();
+        }
+
+        return Square;
+    }
+    #region Gom nhóm các class của a Minh 
+    public static void DimX2(Point3d P1, Point3d P2, double Denta_Y)
+    {
+        if (P1.X == P2.X) return;
+        Document doc = Application.DocumentManager.MdiActiveDocument;
+        Database db = doc.Database;
+        using (doc.LockDocument())
+        using (Transaction tr = db.TransactionManager.StartTransaction())
+        {
+            BlockTable acBlkTbl = tr.GetObject(db.BlockTableId, OpenMode.ForRead) as BlockTable;
+            BlockTableRecord acBlkTblRec = tr.GetObject(acBlkTbl[BlockTableRecord.ModelSpace], OpenMode.ForWrite) as BlockTableRecord;
+            RotatedDimension acRotDim = new RotatedDimension();
+            acRotDim.SetDatabaseDefaults();
+            acRotDim.XLine1Point = P1;
+            acRotDim.XLine2Point = P2;
+            acRotDim.Rotation = 0;
+            double Y;
+            if (Denta_Y > 0) Y = Math.Max(P1.Y, P2.Y);
+            else Y = Math.Min(P1.Y, P2.Y);
+            acRotDim.DimLinePoint = new Point3d((P1.X + P2.X) / 2, Y + Denta_Y, 0);
+            acRotDim.DimensionStyle = db.Dimstyle;
+            acBlkTblRec.AppendEntity(acRotDim);
+            tr.AddNewlyCreatedDBObject(acRotDim, true);
+            tr.Commit();
+        }
+    }
+    public static void DimX2(Point3d P1, Point3d P2, double Denta_Y, string TextValue)
+    {
+        if (P1.X == P2.X) return;
+        Document doc = Application.DocumentManager.MdiActiveDocument;
+        Database db = doc.Database;
+        using (doc.LockDocument())
+        using (Transaction tr = db.TransactionManager.StartTransaction())
+        {
+            BlockTable acBlkTbl = tr.GetObject(db.BlockTableId, OpenMode.ForRead) as BlockTable;
+            BlockTableRecord acBlkTblRec = tr.GetObject(acBlkTbl[BlockTableRecord.ModelSpace], OpenMode.ForWrite) as BlockTableRecord;
+            RotatedDimension acRotDim = new RotatedDimension();
+            acRotDim.SetDatabaseDefaults();
+            acRotDim.XLine1Point = P1;
+            acRotDim.XLine2Point = P2;
+            acRotDim.Rotation = 0;
+            double Y;
+            if (Denta_Y > 0) Y = Math.Max(P1.Y, P2.Y);
+            else Y = Math.Min(P1.Y, P2.Y);
+            acRotDim.DimLinePoint = new Point3d((P1.X + P2.X) / 2, Y + Denta_Y, 0);
+            acRotDim.DimensionStyle = db.Dimstyle;
+            acRotDim.DimensionText = TextValue;
+            acBlkTblRec.AppendEntity(acRotDim);
+            tr.AddNewlyCreatedDBObject(acRotDim, true);
+            tr.Commit();
+        }
+    }
+    public static void DimX2(double X1, double X2, double Y, double Denta_Y)
+    {
+        if (X1 == X2) return;
+        Document doc = Application.DocumentManager.MdiActiveDocument;
+        Database db = doc.Database;
+        using (doc.LockDocument())
+        using (Transaction tr = db.TransactionManager.StartTransaction())
+        {
+            BlockTable acBlkTbl = tr.GetObject(db.BlockTableId, OpenMode.ForRead) as BlockTable;
+            BlockTableRecord acBlkTblRec = tr.GetObject(acBlkTbl[BlockTableRecord.ModelSpace], OpenMode.ForWrite) as BlockTableRecord;
+            RotatedDimension acRotDim = new RotatedDimension();
+            acRotDim.SetDatabaseDefaults();
+            acRotDim.XLine1Point = new Point3d(X1, Y, 0);
+            acRotDim.XLine2Point = new Point3d(X2, Y, 0);
+            acRotDim.Rotation = 0;
+            acRotDim.DimLinePoint = new Point3d((X1 + X2) / 2, Y + Denta_Y, 0);
+            acRotDim.DimensionStyle = db.Dimstyle;
+            acBlkTblRec.AppendEntity(acRotDim);
+            tr.AddNewlyCreatedDBObject(acRotDim, true);
+            tr.Commit();
+        }
+    }
+    public static void DimX2(double X1, double X2, double Y, double Denta_Y, string TextValue)
+    {
+        if (X1 == X2) return;
+        Document doc = Application.DocumentManager.MdiActiveDocument;
+        Database db = doc.Database;
+        using (doc.LockDocument())
+        using (Transaction tr = db.TransactionManager.StartTransaction())
+        {
+            BlockTable acBlkTbl = tr.GetObject(db.BlockTableId, OpenMode.ForRead) as BlockTable;
+            BlockTableRecord acBlkTblRec = tr.GetObject(acBlkTbl[BlockTableRecord.ModelSpace], OpenMode.ForWrite) as BlockTableRecord;
+            RotatedDimension acRotDim = new RotatedDimension();
+            acRotDim.SetDatabaseDefaults();
+            acRotDim.XLine1Point = new Point3d(X1, Y, 0);
+            acRotDim.XLine2Point = new Point3d(X2, Y, 0);
+            acRotDim.Rotation = 0;
+            acRotDim.DimLinePoint = new Point3d((X1 + X2) / 2, Y + Denta_Y, 0);
+            acRotDim.DimensionStyle = db.Dimstyle;
+            acRotDim.DimensionText = TextValue;
+            acBlkTblRec.AppendEntity(acRotDim);
+            tr.AddNewlyCreatedDBObject(acRotDim, true);
+            tr.Commit();
+        }
+    }
+    public static void DimY2(Point3d P1, Point3d P2, double Denta_X)
+    {
+        if (P1.Y == P2.Y) return;
+        Document doc = Application.DocumentManager.MdiActiveDocument;
+        Database db = doc.Database;
+        using (doc.LockDocument())
+        using (Transaction tr = db.TransactionManager.StartTransaction())
+        {
+            BlockTable acBlkTbl = tr.GetObject(db.BlockTableId, OpenMode.ForRead) as BlockTable;
+            BlockTableRecord acBlkTblRec = tr.GetObject(acBlkTbl[BlockTableRecord.ModelSpace], OpenMode.ForWrite) as BlockTableRecord;
+            RotatedDimension acRotDim = new RotatedDimension();
+            acRotDim.SetDatabaseDefaults();
+            acRotDim.XLine1Point = P1;
+            acRotDim.XLine2Point = P2;
+            acRotDim.Rotation = Math.PI / 2;
+            double X;
+            if (Denta_X > 0) X = Math.Max(P1.X, P2.X);
+            else X = Math.Min(P1.X, P2.X);
+            acRotDim.DimLinePoint = new Point3d(X + Denta_X, (P1.Y + P2.Y) / 2, 0);
+            acRotDim.DimensionStyle = db.Dimstyle;
+            acBlkTblRec.AppendEntity(acRotDim);
+            tr.AddNewlyCreatedDBObject(acRotDim, true);
+            tr.Commit();
+        }
+    }
+    public static void CreateDimension_X2(List<Point3d> dsX, double SelectedScale, double ihang)
+    {
+        for (int i = 0; i < dsX.Count - 1; i++)
+        {
+            DimX2(dsX[i], dsX[i + 1], -ihang * 700 * SelectedScale * 0.01);
+        }
+    }
+    public static void CreateDimension_Y2(List<Point3d> dsX, double SelectedScale, double ihang)
+    {
+        for (int i = 0; i < dsX.Count - 1; i++)
+        {
+            DimY2(dsX[i], dsX[i + 1], -ihang * 700 * SelectedScale * 0.01);
+        }
+    }
+    public static void DimY2(Point3d P1, Point3d P2, double Denta_X, string TextValue)
+    {
+        if (P1.Y == P2.Y) return;
+        Document doc = Application.DocumentManager.MdiActiveDocument;
+        Database db = doc.Database;
+        using (doc.LockDocument())
+        using (Transaction tr = db.TransactionManager.StartTransaction())
+        {
+            BlockTable acBlkTbl = tr.GetObject(db.BlockTableId, OpenMode.ForRead) as BlockTable;
+            BlockTableRecord acBlkTblRec = tr.GetObject(acBlkTbl[BlockTableRecord.ModelSpace], OpenMode.ForWrite) as BlockTableRecord;
+            RotatedDimension acRotDim = new RotatedDimension();
+            acRotDim.SetDatabaseDefaults();
+            acRotDim.XLine1Point = P1;
+            acRotDim.XLine2Point = P2;
+            acRotDim.Rotation = Math.PI / 2;
+            double X;
+            if (Denta_X > 0) X = Math.Max(P1.X, P2.X);
+            else X = Math.Min(P1.X, P2.X);
+            acRotDim.DimLinePoint = new Point3d(X + Denta_X, (P1.Y + P2.Y) / 2, 0);
+            acRotDim.DimensionStyle = db.Dimstyle;
+            acRotDim.DimensionText = TextValue;
+            acBlkTblRec.AppendEntity(acRotDim);
+            tr.AddNewlyCreatedDBObject(acRotDim, true);
+            tr.Commit();
+        }
+    }
+    public static void DimY2(double Y1, double Y2, double X, double Denta_X)
+    {
+        if (Y1 == Y2) return;
+        Document doc = Application.DocumentManager.MdiActiveDocument;
+        Database db = doc.Database;
+        using (doc.LockDocument())
+        using (Transaction tr = db.TransactionManager.StartTransaction())
+        {
+            BlockTable acBlkTbl = tr.GetObject(db.BlockTableId, OpenMode.ForRead) as BlockTable;
+            BlockTableRecord acBlkTblRec = tr.GetObject(acBlkTbl[BlockTableRecord.ModelSpace], OpenMode.ForWrite) as BlockTableRecord;
+            RotatedDimension acRotDim = new RotatedDimension();
+            acRotDim.SetDatabaseDefaults();
+            acRotDim.XLine1Point = new Point3d(X, Y1, 0);
+            acRotDim.XLine2Point = new Point3d(X, Y2, 0);
+            acRotDim.Rotation = Math.PI / 2;
+            acRotDim.DimLinePoint = new Point3d(X + Denta_X, (Y1 + Y2) / 2, 0);
+            acRotDim.DimensionStyle = db.Dimstyle;
+            acBlkTblRec.AppendEntity(acRotDim);
+            tr.AddNewlyCreatedDBObject(acRotDim, true);
+            tr.Commit();
+        }
+    }
+    public static void DimY2(double Y1, double Y2, double X, double Denta_X, string TextValue)
+    {
+        if (Y1 == Y2) return;
+        Document doc = Application.DocumentManager.MdiActiveDocument;
+        Database db = doc.Database;
+        using (doc.LockDocument())
+        using (Transaction tr = db.TransactionManager.StartTransaction())
+        {
+            BlockTable acBlkTbl = tr.GetObject(db.BlockTableId, OpenMode.ForRead) as BlockTable;
+            BlockTableRecord acBlkTblRec = tr.GetObject(acBlkTbl[BlockTableRecord.ModelSpace], OpenMode.ForWrite) as BlockTableRecord;
+            RotatedDimension acRotDim = new RotatedDimension();
+            acRotDim.SetDatabaseDefaults();
+            acRotDim.XLine1Point = new Point3d(X, Y1, 0);
+            acRotDim.XLine2Point = new Point3d(X, Y2, 0);
+            acRotDim.Rotation = Math.PI / 2;
+            acRotDim.DimLinePoint = new Point3d(X + Denta_X, (Y1 + Y2) / 2, 0);
+            acRotDim.DimensionStyle = db.Dimstyle;
+            acRotDim.DimensionText = TextValue;
+            acBlkTblRec.AppendEntity(acRotDim);
+            tr.AddNewlyCreatedDBObject(acRotDim, true);
+            tr.Commit();
+        }
+    }
+    public static void CreateDText(string text, Point3d pPosition, string nameTextStyle, double heigh, int color,
+    TextHorizontalMode canLe, double rotation)
+    {
+        Document doc = Application.DocumentManager.MdiActiveDocument;
+        Database db = doc.Database;
+        using (doc.LockDocument())
+        using (Transaction tr = db.TransactionManager.StartTransaction())
+        {
+            BlockTable acBlkTbl = tr.GetObject(db.BlockTableId, OpenMode.ForRead) as BlockTable;
+            BlockTableRecord acBlkTblRec = tr.GetObject(acBlkTbl[BlockTableRecord.ModelSpace], OpenMode.ForWrite) as BlockTableRecord;
+            DBText newText = new DBText();
+            newText.SetDatabaseDefaults();
+            TextStyleTable acTextStyleTable1 = tr.GetObject(db.TextStyleTableId, OpenMode.ForRead) as TextStyleTable;
+            newText.TextStyleId = acTextStyleTable1[nameTextStyle];
+            newText.TextString = text;
+            newText.Height = heigh;
+            newText.ColorIndex = color;
+            newText.Position = pPosition;
+            newText.Rotation = rotation;
+            newText.HorizontalMode = canLe;
+            newText.VerticalMode = TextVerticalMode.TextVerticalMid;
+            newText.AlignmentPoint = pPosition;
+            acBlkTblRec.AppendEntity(newText);
+            tr.AddNewlyCreatedDBObject(newText, true);
+            tr.Commit();
+        }
+    }
+    public static Polyline CreatePolylineFromListPointsReturnPolyline(List<Point3d> lstPoint, bool IsClosed)
+    {
+        Polyline pline = null;
+        Document doc = Application.DocumentManager.MdiActiveDocument;
+        Database db = doc.Database;
+        using (doc.LockDocument())
+        using (Transaction tr = db.TransactionManager.StartTransaction())
+        {
+            BlockTable acBlkTbl = tr.GetObject(db.BlockTableId, OpenMode.ForRead) as BlockTable;
+            BlockTableRecord acBlkTblRec = tr.GetObject(acBlkTbl[BlockTableRecord.ModelSpace], OpenMode.ForWrite) as BlockTableRecord;
+            pline = new Autodesk.AutoCAD.DatabaseServices.Polyline();
+            for (int i = 0; i < lstPoint.Count; i++)
+            {
+                pline.AddVertexAt(i, new Point2d(lstPoint[i].X, lstPoint[i].Y), 0, 0, 0);
+            }
+            pline.Closed = IsClosed;
+            pline.SetDatabaseDefaults();
+            acBlkTblRec.AppendEntity(pline);
+            tr.AddNewlyCreatedDBObject(pline, true);
+            tr.Commit();
+        }
+        return pline;
+    }
+    public static void CreateCircle(Point3d pCenter, double radius)
+    {
+        Document doc = Application.DocumentManager.MdiActiveDocument;
+        Database db = doc.Database;
+        using (doc.LockDocument())
+        using (Transaction tr = db.TransactionManager.StartTransaction())
+        {
+            BlockTableRecord rec = tr.GetObject(db.CurrentSpaceId, OpenMode.ForWrite) as BlockTableRecord;
+            Autodesk.AutoCAD.DatabaseServices.Circle circle = new Autodesk.AutoCAD.DatabaseServices.Circle();
+            circle.SetDatabaseDefaults();
+            circle.Center = pCenter;
+            circle.Radius = radius;
+            rec.AppendEntity(circle);
+            tr.AddNewlyCreatedDBObject(circle, true);
+            tr.Commit();
+        }
+    }
+    public static Point3d MiddlePoint(Point3d p1, Point3d p2)
+    {
+        Point3d ptd = new Point3d(p1.X / 2 + p2.X / 2, p1.Y / 2 + p2.Y / 2, 0);
+        return ptd;
+    }
+    public static Point3d IntersectPoint(Entity l1, Entity l2)
+    {
+        Point3dCollection pts = new Point3dCollection();
+        l1.IntersectWith(l2, Intersect.ExtendArgument, pts, IntPtr.Zero, IntPtr.Zero);
+        foreach (Point3d point1 in pts) return point1;
+        return new Point3d(-10001, 22122, 25333);
+    }
+    public static Point3d IntersectPoint(Line l1, Line l2)
+    {
+        Point3dCollection pts = new Point3dCollection();
+        l1.IntersectWith(l2, Intersect.ExtendArgument, pts, IntPtr.Zero, IntPtr.Zero);
+        foreach (Point3d point1 in pts) return point1;
+        return new Point3d(-10001, 22122, 25333);
+    }
+    public static Point3d IntersectPoint(Polyline l1, Line l2)
+    {
+        Point3dCollection pts = new Point3dCollection();
+        l1.IntersectWith(l2, Intersect.ExtendArgument, pts, IntPtr.Zero, IntPtr.Zero);
+        foreach (Point3d point1 in pts) return point1;
+        return new Point3d(-10001, 22122, 25333);
+    }
+    public static Circle CreateCircleReturn(Point3d pCenter, double radius)
+    {
+        Circle circle = new Circle();
+        Document doc = Application.DocumentManager.MdiActiveDocument;
+        Database db = doc.Database;
+        using (doc.LockDocument())
+        using (Transaction tr = db.TransactionManager.StartTransaction())
+        {
+            BlockTableRecord rec = tr.GetObject(db.CurrentSpaceId, OpenMode.ForWrite) as BlockTableRecord;
+            circle = new Autodesk.AutoCAD.DatabaseServices.Circle();
+            circle.SetDatabaseDefaults();
+            circle.Center = pCenter;
+            circle.Radius = radius;
+            rec.AppendEntity(circle);
+            tr.AddNewlyCreatedDBObject(circle, true);
+            tr.Commit();
+        }
+        return circle;
+    }
+    public static Line CreateReturnLine(Point3d P1, Point3d P2)
+    {
+        Line acLine;
+        Document doc = Application.DocumentManager.MdiActiveDocument;
+        Database db = doc.Database;
+        using (doc.LockDocument())
+        using (Transaction tr = db.TransactionManager.StartTransaction())
+        {
+            BlockTable acBlkTbl = tr.GetObject(db.BlockTableId, OpenMode.ForRead) as BlockTable;
+            BlockTableRecord acBlkTblRec = tr.GetObject(acBlkTbl[BlockTableRecord.ModelSpace], OpenMode.ForWrite) as BlockTableRecord;
+            acLine = new Line(P1, P2);
+            acLine.SetDatabaseDefaults();
+            acLine.ColorIndex = 256;
+            acBlkTblRec.AppendEntity(acLine);
+            tr.AddNewlyCreatedDBObject(acLine, true);
+            tr.Commit();
+        }
+        return acLine;
+    }
+    public static void DeleteObject(ObjectId id)
+    {
+        Document doc = Application.DocumentManager.MdiActiveDocument;
+        Database db = doc.Database;
+        using (doc.LockDocument())
+        using (Transaction tr = db.TransactionManager.StartTransaction())
+        {
+            var obj = tr.GetObject(id, OpenMode.ForWrite); // var là từ khóa dùng để khai báo biến không phải là kiểu dữ liệu
+            obj.Erase();
+            tr.Commit();
+        }
+    }
+    public static void VeHinhChuNhat(Point3d ptDuoiTrai, Point3d ptTrenPhai)
+    {
+        double dentaY = ptTrenPhai.Y - ptDuoiTrai.Y;
+        double dentaX = ptTrenPhai.X - ptDuoiTrai.X;
+        Point3d p1 = ptDuoiTrai;
+        Point3d p2 = new Point3d(p1.X, p1.Y + dentaY, 0);
+        Point3d p3 = new Point3d(p1.X + dentaX, p2.Y, 0);
+        Point3d p4 = new Point3d(p3.X, p1.Y, 0);
+        List<Point3d> lsPoint = new List<Point3d>() { p1, p2, p3, p4, p1 };
+        ClCAD.CreatePolylineFromListPoints(lsPoint, true);
+    }
+    public static void AddRegAppTableRecord(string regAppName)
+    {
+        Document doc = Application.DocumentManager.MdiActiveDocument;
+        Database db = doc.Database;
+        using (Transaction tr = doc.TransactionManager.StartTransaction())
+        {
+            RegAppTable rat = (RegAppTable)tr.GetObject(db.RegAppTableId, OpenMode.ForRead, false);
+            if (!rat.Has(regAppName))
+            {
+                rat.UpgradeOpen();
+                RegAppTableRecord ratr = new RegAppTableRecord { Name = regAppName };
+                rat.Add(ratr);
+                tr.AddNewlyCreatedDBObject(ratr, true);
+                tr.Commit();
+            }
+        }
+    }
+    #endregion
+
 
 }
